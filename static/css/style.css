@@ -7,7 +7,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 .signup_form{
   width: 500px;
@@ -187,4 +187,144 @@ body{
   font-size: 22px;
   margin-bottom: 50px;
   font-weight: bold;
+}
+
+
+
+
+
+
+.profile_edit_container{
+  max-width: 400px;
+  padding: 25px;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.profile_edit_container .img-box{
+  height: 97px;
+  width: 100%;
+  margin-bottom: 45px;
+  position: relative;
+}
+.profile_edit_container .img-box .cover_img{
+  max-height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.profile_edit_container .img-box .dp{
+  width: 75px;
+  position: absolute;
+  object-fit: cover;
+  height: 75px;
+  bottom: -25px;
+  border-radius: 50%;
+  left: 50%;
+  transform: translate(-50%, 0px);
+}
+.profile_edit_container .img-box .edit_btn{
+  font-size: 17px;
+  position: absolute;
+  left: 52%;
+  bottom: -22px;
+  background: white;
+  border-radius: 50%;
+  padding: 8px 8px 8px 10px;
+  border: 1px solid #d6d6d6;
+}
+.profile_edit_container .img-box #id_dp{
+  position: absolute;
+  width: 33px;
+  height: 33px;
+  position: absolute;
+  left: 52%;
+  bottom: -22px;
+  margin-bottom: 0px;
+  border-radius: 50%;
+  opacity: 0;
+}
+.profile_edit_container .img-box .edit_cover{
+  font-size: 17px;
+  padding: 10px 10px 10px 12px;
+  border-radius: 50%;
+  right: 15px;
+  top: 15px;
+  position: absolute;
+  background: white;
+  border: 1px solid #e0e0e0;
+}
+.profile_edit_container .img-box #id_coverimage{
+  width: 41px;
+  padding: 10px 10px 10px 12px;
+  border-radius: 50%;
+  right: 15px;
+  top: 15px;
+  position: absolute;
+  height: 41px;
+  opacity: 0;
+}
+.profile_edit_container .details_section{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+
+
+.profile_edit_container .input_div{
+  position: relative;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+.profile_edit_container label{
+  width: 100%;
+  display: block;
+  font-size: 11px;
+  top: 17px;
+  left: 18px;
+  color: gray;
+  position: absolute;
+  transition: 0.5s;
+  z-index: -1;
+}
+.profile_edit_container label.active{
+  top: -9px;
+  z-index: 1;
+  width: fit-content;
+  background: white;
+  padding: 0px 12px;
+}
+.profile_edit_container input{
+  width: 100%;
+  font-size: 14px;
+  z-index: 0;
+  background-color: transparent;
+  height: 45px;
+  padding-left: 18px;
+  border: none;
+  margin-bottom: 14px;
+  border: 1px solid rgb(226, 226, 226);
+  outline: none;
+}
+.profile_edit_container textarea{
+  width: 100%;
+  font-size: 14px;
+  z-index: 0;
+  background-color: transparent;
+  height: 85px;
+  padding: 14px;
+  border: none;
+  margin-bottom: 14px;
+  position: relative;
+  border: 1px solid rgb(226, 226, 226);
+  outline: none;
 }

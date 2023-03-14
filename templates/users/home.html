@@ -1,6 +1,107 @@
-Home page
+{% load static %}
+<!doctype html>
+<html lang="en">
 
-{{user.username}}
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- fontawesome  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- custom css    -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
 
 
-<img src="{{profile.dp.url}}" />
+
+
+    <form action="" id="profile_edit_form" method="POST" enctype="multipart/form-data" class="profile_edit_container">
+        {% csrf_token %}
+        
+
+        <div class="img-box">
+            <img src="{{profile.coverimage.url}}" class="cover_img" alt="">
+            <img class="dp" src="{{profile.dp.url}}" />
+
+            <i class="edit_cover fa-regular fa-pen-to-square"></i>
+            <input type="file" name="coverimage" accept="image/*" id="id_coverimage">
+
+            <i class="edit_btn fa-regular fa-pen-to-square"></i>
+            <input type="file" name="dp" accept="image/*" id="id_dp">
+        </div>
+        
+        <div class="details_section">
+
+            
+            <div class="input_div">
+                {{form.username.label_tag }}
+                {{form.username}}    
+            </div>
+            <div class="input_div">
+                {{form.name.label_tag }}
+                {{form.name}}    
+            </div>
+            <div class="input_div">
+                {{form.email.label_tag }}
+                {{form.email}}    
+            </div>
+            <div class="input_div">
+                {{form.location.label_tag }}
+                {{form.location}}    
+            </div>
+            <div class="input_div">
+                {{form.phone_number.label_tag }}
+                {{form.phone_number}}    
+            </div>
+            <div class="input_div">
+                {{form.website.label_tag }}
+                {{form.website}}    
+            </div>
+            <div class="input_div">
+                {{form.bio.label_tag }}
+                {{form.bio}}    
+            </div>
+            <div class="input_div">
+                {{form.facebook.label_tag }}
+                {{form.facebook}}    
+            </div>
+            <div class="input_div">
+                {{form.twitter.label_tag }}
+                {{form.twitter}}    
+            </div>
+            <div class="input_div">
+                {{form.linkedin.label_tag }}
+                {{form.linkedin}}    
+            </div>
+            <div class="input_div">
+                {{form.instagram.label_tag }}
+                {{form.instagram}}    
+            </div>
+
+            <button type="submit">Submit</button>
+        </div>
+
+    </form>
+
+
+    
+
+
+
+
+  <!-- custom js  -->
+  <script src="{% static 'js/script.js' %}"></script>
+
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+</body>
+
+</html>
