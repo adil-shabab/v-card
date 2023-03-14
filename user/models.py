@@ -10,7 +10,7 @@ class Profile(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     email = models.EmailField(max_length=200, blank=True, null=True)
     bio= models.TextField(blank=True, null=True)
-    dp = models.ImageField(blank=True, null=True, upload_to= 'profiles/', default="profiles/download_1.jpeg")
+    dp = models.ImageField(blank=True, null=True, upload_to= 'dp/', default="profiles/download_1.jpeg")
     coverimage = models.ImageField(blank=True, null=True, upload_to= 'covers/', default="covers/images.png")
     location = models.CharField(max_length=200, blank=True, null=True)
     username = models.CharField(max_length=200, blank=True, null=True)
@@ -23,4 +23,4 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=12, null=True, blank=True)
 
     def __str__(self):
-        return str(self.user.name)
+        return str(self.user.username)

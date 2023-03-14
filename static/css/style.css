@@ -1,0 +1,190 @@
+*{
+  padding: 0px;
+  margin: 0;
+  box-sizing: border-box;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.signup_form{
+  width: 500px;
+  padding: 50px 53px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.signup_form .form-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.signup_form h2{
+  font-family: math;
+  text-transform: uppercase;
+  font-size: 27px;
+}
+.signup_form  h4{
+  font-family: math;
+  font-size: 17px;
+  margin-bottom: 28px;
+}
+.signup_form h4 a{
+  text-decoration: none;
+}
+.signup_form .input_div{
+  position: relative;
+  margin-bottom: 5px;
+  width: 100%;
+}
+.signup_form .form-container label{
+  width: 100%;
+  display: block;
+  font-size: 14px;
+  top: 17px;
+  left: 18px;
+  color: gray;
+  position: absolute;
+  transition: 0.5s;
+  z-index: -1;
+}
+.signup_form .form-container label.active{
+  top: -9px;
+  z-index: 1;
+  width: fit-content;
+  background: white;
+  padding: 0px 12px;
+}
+.signup_form .form-container input{
+  width: 100%;
+  z-index: 0;
+  background-color: transparent;
+  height: 55px;
+  padding-left: 18px;
+  border: none;
+  margin-bottom: 20px;
+  border: 1px solid rgb(226, 226, 226);
+  outline: none;
+}
+.signup_form .form-container button{
+  border: none;
+  outline: none;
+  padding: 12px 50px;
+  color: white;
+  background: #6ea358;
+  float: right;
+  width: 80%;
+  border-radius: 25px;
+}
+
+
+
+
+.google_btn{
+  width: 100%;
+  margin-top: 50px;
+  border: 1px solid rgb(205, 205, 205);
+  background: white;
+  outline: none;
+  padding: 13px 35px;
+  border-radius: 25px;
+  position: relative;
+}
+.google_btn span{
+  padding-left: 50px;
+}
+.google_btn::after{
+  content: '';
+  background: url(../img/google-icon.jpg);
+  width: 25px;
+  height: 25px;
+  left: 114px;
+  position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+
+
+
+.login_form{
+  width: 500px;
+  padding: 50px 53px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.login_form .form-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.login_form .input_div{
+  position: relative;
+  margin-bottom: 5px;
+  width: 100%;
+}
+.login_form .form-container label{
+  width: 100%;
+  display: block;
+  font-size: 14px;
+  top: 17px;
+  left: 18px;
+  color: gray;
+  position: absolute;
+  transition: 0.5s;
+  z-index: -1;
+}
+.login_form .form-container label.active{
+  top: -9px;
+  z-index: 1;
+  width: fit-content;
+  background: white;
+  padding: 0px 12px;
+}
+.login_form .form-container input{
+  width: 100%;
+  z-index: 0;
+  background-color: transparent;
+  height: 55px;
+  padding-left: 18px;
+  border: none;
+  margin-bottom: 20px;
+  border: 1px solid rgb(226, 226, 226);
+  outline: none;
+}
+.login_form .signin-button{
+  border: none;
+  outline: none;
+  padding: 12px 20px;
+  color: white;
+  background: #6ea358;
+  float: right;
+  width: 50%;
+}
+.login_form .bottom_txt{
+  margin-top: 25px;
+  font-family: math;
+}
+.login_form .bottom_txt a{
+  text-decoration: none;
+}
+.login_form  h4{
+  font-family: math;
+  text-transform: uppercase;
+  font-size: 22px;
+  margin-bottom: 50px;
+  font-weight: bold;
+}

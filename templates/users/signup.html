@@ -1,0 +1,103 @@
+{% load static %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- fontawesome  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- custom css    -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+    
+    
+    
+    {% get_providers as socialaccount_providers %}
+
+
+    {% get_providers as socialaccount_providers %}
+    
+    
+    
+    
+    <form method="POST" class="signup_form" action="{% url 'user-signup' %}">
+        <h2>Create an account</h2>
+        <h4>Already have an account? <span><a href="{% url 'user-login' %}">Sign in</a></span></h4>
+        
+        
+        
+        
+        
+        {% csrf_token %}
+        <div class="form-container">
+            
+            {% for field in form %}
+            <div class="input_div">
+                <label>{{field.label}}</label>
+                {{field}}
+            </div>
+            {% endfor %}
+            
+            <button type="submit" >Create account</button>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>    
+        
+        
+        {% for provider in socialaccount_providers %}
+        {% if provider.id == "openid" %}
+        {% for brand in provider.get_brands %}
+        <div>
+            <a title="{{brand.name}}" class="socialaccount_provider {{provider.id}} {{brand.id}}" href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">{{brand.name}}</a>
+          </div>
+        {% endfor %}
+        {% endif %}
+          <div class="mt-5">
+            <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" 
+               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+               <img 
+                src="
+               {% with 'images/'|add:provider.name|add:'.png' as image %}
+                {% static image %}
+               {% endwith %}
+               " alt="{{ provider.name }}" style="width: 350px;"/>
+               </a>
+          </div>
+        <!-- <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}"  href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><button class="google_btn"><span>Singup With Google</span></button></a> -->
+        {% endfor %}
+
+    </form>
+
+
+
+
+
+  <!-- custom js  -->
+  <script src="{% static 'js/script.js' %}"></script>
+
+
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+</body>
+
+</html>
