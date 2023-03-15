@@ -27,8 +27,8 @@
         
 
         <div class="img-box">
-            <img src="{{profile.coverimage.url}}" class="cover_img" alt="">
-            <img class="dp" src="{{profile.dp.url}}" />
+            <img src="{{profile.coverimage.url}}" class="cover_img" id="cover_img" alt="">
+            <img id="dp_img" class="dp" src="{{profile.dp.url}}" />
 
             <i class="edit_cover fa-regular fa-pen-to-square"></i>
             <input type="file" name="coverimage" accept="image/*" id="id_coverimage">
@@ -39,53 +39,64 @@
         
         <div class="details_section">
 
+            <div class="w-100 slider active">
+                <div class="input_div">
+                    {{form.username.label_tag }}
+                    {{form.username}}    
+                </div>
+                <div class="input_div">
+                    {{form.name.label_tag }}
+                    {{form.name}}    
+                </div>
+                <div class="input_div">
+                    {{form.email.label_tag }}
+                    {{form.email}}    
+                </div>
+                <div class="input_div">
+                    {{form.location.label_tag }}
+                    {{form.location}}    
+                </div>
+                <div class="input_div">
+                    {{form.phone_number.label_tag }}
+                    {{form.phone_number}}    
+                </div>
+                <div class="input_div">
+                    {{form.website.label_tag }}
+                    {{form.website}}    
+                </div>
+                <div class="input_div">
+                    {{form.bio.label_tag }}
+                    {{form.bio}}    
+                </div>
+                <span class="next">Next</span>
+            </div>
             
-            <div class="input_div">
-                {{form.username.label_tag }}
-                {{form.username}}    
-            </div>
-            <div class="input_div">
-                {{form.name.label_tag }}
-                {{form.name}}    
-            </div>
-            <div class="input_div">
-                {{form.email.label_tag }}
-                {{form.email}}    
-            </div>
-            <div class="input_div">
-                {{form.location.label_tag }}
-                {{form.location}}    
-            </div>
-            <div class="input_div">
-                {{form.phone_number.label_tag }}
-                {{form.phone_number}}    
-            </div>
-            <div class="input_div">
-                {{form.website.label_tag }}
-                {{form.website}}    
-            </div>
-            <div class="input_div">
-                {{form.bio.label_tag }}
-                {{form.bio}}    
-            </div>
-            <div class="input_div">
-                {{form.facebook.label_tag }}
-                {{form.facebook}}    
-            </div>
-            <div class="input_div">
-                {{form.twitter.label_tag }}
-                {{form.twitter}}    
-            </div>
-            <div class="input_div">
-                {{form.linkedin.label_tag }}
-                {{form.linkedin}}    
-            </div>
-            <div class="input_div">
-                {{form.instagram.label_tag }}
-                {{form.instagram}}    
+            
+            
+            <div class="w-100 slider">
+                <div class="input_div">
+                    {{form.facebook.label_tag }}
+                    {{form.facebook}}    
+                </div>
+                <div class="input_div">
+                    {{form.twitter.label_tag }}
+                    {{form.twitter}}    
+                </div>
+                <div class="input_div">
+                    {{form.linkedin.label_tag }}
+                    {{form.linkedin}}    
+                </div>
+                <div class="input_div">
+                    {{form.instagram.label_tag }}
+                    {{form.instagram}}    
+                </div>
+                <span class="previous">Previous</span>
+                <button class="btn_submit" type="submit">Submit</button>
             </div>
 
-            <button type="submit">Submit</button>
+
+
+
         </div>
 
     </form>

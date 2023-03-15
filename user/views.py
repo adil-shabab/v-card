@@ -13,8 +13,9 @@ import requests
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
-# Create your views here.
 
+
+# Create your views here.
 def user_login(request):
     if request.user.is_authenticated:
         return redirect ('home')
