@@ -288,7 +288,12 @@ body{
   z-index: 11;
   left: 0;
 }
-
+.profile_edit_container .details_section .add_btn{
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+}
 
 
 .profile_edit_container .input_div{
@@ -351,4 +356,41 @@ body{
   color: white;
   border-radius: 25px;
   margin-top: 12px;
+}
+
+
+
+
+
+.modal-content{
+  max-width: 375px;
+  
+  margin: 40% auto 0px;
+}
+.modal-content input{
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #c6b8b8;
+  outline: none;
+  margin-bottom: 10px;
+}
+.modal-footer{
+  border-top: none !important;
+}
+
+
+
+.edit__btn{
+  position: absolute;
+  cursor: pointer;
+  right: 50px;
+  top: 13px;
+  font-size: 18px;
+}
+.trash__btn{
+  position: absolute;
+  cursor: pointer;
+  right: 16px;
+  top: 13px;
+  font-size: 18px;
 }

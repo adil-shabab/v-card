@@ -13,6 +13,27 @@ import requests
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+# from .serializers import ExtraFieldSerializer
+
+
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .models import ExtraField
+from .serializers import ExtraFieldSerializer
+
+
+
+from rest_framework.authtoken.models import Token
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
 
 
 # Create your views here.
@@ -59,6 +80,9 @@ def user_signup(request):
 
             user_profile = Profile(user = user,username=user.username, email=user.email, name=user.username)
             user_profile.save()
+            
+            Token.objects.create(user=user)
+
 
             mp.success(request, "User account created")
 
@@ -89,6 +113,9 @@ def logout_user(request):
 def home(request):
 
 
+
+
+
     profile = Profile.objects.get(user=request.user)
     form = ProfileForm(instance=profile)
 
@@ -115,3 +142,110 @@ def home(request):
     context = {'user': request.user, 'profile':profile, 'form':form}
 
     return render(request, 'users/home.html', context)
+
+
+
+
+
+
+
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import ExtraField
+from .serializers import ExtraFieldSerializer
+
+class ExtraFieldView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ExtraFieldSerializer(data=request.data)
+        user = request.user
+        request.data['user'] = user.id
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        extra_fields = ExtraField.objects.filter(user=request.user)
+        serializer = ExtraFieldSerializer(extra_fields, many=True)
+        return Response(serializer.data)
+
+    def put(self, request, id):
+        extra_field = ExtraField.objects.filter(user=request.user, id=id).first()
+        if not extra_field:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = ExtraFieldSerializer(extra_field, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def delete(self, request, id):
+        extra_field = ExtraField.objects.get(id=id)
+        # if not extra_field:
+        #     return Response(status=status.HTTP_404_NOT_FOUND)
+        extra_field.delete()
+        # return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ObtainAuthToken(APIView):
+    """
+    API view to obtain an authentication token for a user
+    """
+
+    def post(self, request, format=None):
+        """
+        Validate a user's credentials and return an authentication token
+        """
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if username is None or password is None:
+            return Response({'error': 'Please provide both username and password'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user = authenticate(username=username, password=password)
+
+        if not user:
+            return Response({'error': 'Invalid credentials'},
+                            status=status.HTTP_401_UNAUTHORIZED)
+
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response({'token': token.key})
+
+
+
+
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from allauth.socialaccount.models import SocialAccount
+
+class MyAPIView(APIView):
+    # permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        # Retrieve the user's social account for Google
+        social_account = request.user.socialaccount_set.filter(provider='google').first()
+
+        print(social_account)
+
+        
+        if social_account:
+            # Retrieve the access token from the social account
+
+            token = Token.objects.get(user=social_account.user)
+            print(token)
+        
+            return Response({'access_token': str(token)})
+        else:
+            return Response({'error': 'No social account found for Google.'}, status=400)

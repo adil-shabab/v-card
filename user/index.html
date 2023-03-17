@@ -1,0 +1,106 @@
+<script>
+    // define a function to fetch ExtraField data
+// define a function to fetch ExtraField data
+const token = '92a30a2ae303bc8f2f80bc673e457ef0b047b146';
+
+const data = {
+  name: 'Example Field',
+  description: 'This is an example field.',
+  is_social: true
+};
+
+fetch('http://127.0.0.1:8000/user/extrafields/', {
+  method: 'POST',
+  headers: {
+    'Authorization': `Token ${token}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+})
+.then(response => {
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error('Failed to create extra field.');
+  }
+})
+.then(data => {
+  console.log(data); // Do something with the newly created extra field data
+})
+.catch(error => {
+  console.error(error);
+});
+
+
+
+
+
+
+
+
+
+fetch('http://127.0.0.1:8000/user/extrafields/', {
+  headers: {
+    'Authorization': `Token ${token}`
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error(error));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Replace the URL with the URL of your API endpoint to obtain a token
+const tokenUrl = 'http://127.0.0.1:8000/user/get/token/';
+
+// Replace the username and password with the user's credentials
+const username = 'sharon';
+const password = '3197';
+
+// Send a POST request to obtain an access token
+fetch(tokenUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({username: username, password: password}),
+})
+.then(response => response.json())
+.then(data => {
+  // Store the access token in local storage
+  localStorage.setItem('token', data.token);
+})
+.catch(error => console.error(error));
+
+
+
+
+
+
+
+
+
+fetch('http://127.0.0.1:8000/user/get/google/token/')
+  .then(response => response.json())
+  .then(data => {
+    const accessToken = data.access_token;
+    // Do something with the access token
+    console.log(accessToken)
+  })
+  .catch(error => console.error(error));
+
+</script>

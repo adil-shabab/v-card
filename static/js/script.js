@@ -89,7 +89,7 @@ if(document.querySelector('.profile_edit_container') != null){
 
 
 
-    form = document.querySelector('.profile_edit_container')
+    let form = document.querySelector('#profile_edit_form')
 
     form.querySelectorAll('.input_div input').forEach((input) => {
         if (input.value !== "") {

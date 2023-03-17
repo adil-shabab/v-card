@@ -40,6 +40,8 @@
         <div class="details_section">
 
             <div class="w-100 slider active">
+
+                {{access_token}}
                 <div class="input_div">
                     {{form.username.label_tag }}
                     {{form.username}}    
@@ -74,38 +76,343 @@
             
             
             <div class="w-100 slider">
-                <div class="input_div">
-                    {{form.facebook.label_tag }}
-                    {{form.facebook}}    
+                <div id="social_icons">
+                    <div class="input_div">
+                        {{form.facebook.label_tag }}
+                        {{form.facebook}}    
+                    </div>
+                    <div class="input_div">
+                        {{form.twitter.label_tag }}
+                        {{form.twitter}}    
+                    </div>
+                    <div class="input_div">
+                        {{form.linkedin.label_tag }}
+                        {{form.linkedin}}    
+                    </div>
+                    <div class="input_div">
+                        {{form.instagram.label_tag }}
+                        {{form.instagram}}    
+                    </div>
+                    <div class="input_div">
+                        {{form.add_on.label_tag }}
+                        {{form.add_on}}    
+                    </div>
                 </div>
-                <div class="input_div">
-                    {{form.twitter.label_tag }}
-                    {{form.twitter}}    
-                </div>
-                <div class="input_div">
-                    {{form.linkedin.label_tag }}
-                    {{form.linkedin}}    
-                </div>
-                <div class="input_div">
-                    {{form.instagram.label_tag }}
-                    {{form.instagram}}    
-                </div>
+
+                <span data-bs-toggle="modal" data-bs-target="#exampleModal" class="add_btn">Add Custom Field</span>
                 <span class="previous">Previous</span>
                 <button class="btn_submit" type="submit">Submit</button>
             </div>
-
-
-
-
+                        
         </div>
-
+        
     </form>
+    
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add_custom_btn">
+                        <input required id="name" type="text" placeholder="Name">
+                        <input required id="description" type="text" placeholder="Description">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModalTwo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="update_extra_field_form">
+                        <input required id="name" type="text" placeholder="Name">
+                        <input required id="description" type="text" placeholder="Description">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     
 
 
+    <script>
 
+
+
+
+
+        const form = document.getElementById('add_custom_btn');
+        const parent_div = document.getElementById('social_icons');
+    
+        function getAccessToken() {
+            return fetch('http://127.0.0.1:8000/user/get/google/token/')
+                .then(response => response.json())
+                .then(data => data.access_token);
+        }
+    
+        function createExtraField(access_token, data) {
+            return fetch('http://127.0.0.1:8000/user/extrafields/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Token ${access_token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to create extra field.');
+                    }
+                })
+                .then(data => {
+                    console.log(data); // Do something with the newly created extra field data
+                    return getallextra(access_token);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    
+        function insertData(data) {
+            for (let i = 0; i < data.length; i++) {
+                const div = document.createElement('div');
+                div.classList.add('input_div');
+    
+                const label = document.createElement('label');
+                label.textContent = data[i].name;
+
+
+                const edit_icon = document.createElement('i');
+                edit_icon.classList.add('fa-regular')
+                edit_icon.classList.add('fa-pen-to-square')
+                edit_icon.classList.add('edit__btn')
+                edit_icon.setAttribute('data-bs-toggle', 'modal')
+                edit_icon.setAttribute('data-bs-target', '#exampleModalTwo')
+                edit_icon.setAttribute('value', data[i].id)
+
+
+                const trash_icon = document.createElement('i');
+                trash_icon.classList.add('fa-solid')
+                trash_icon.classList.add('fa-trash')
+                trash_icon.classList.add('trash__btn')
+                trash_icon.setAttribute('value', data[i].id)
+
+
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = data[i].description;
+                input.setAttribute('disabled', '')
+    
+                div.appendChild(label);
+                div.appendChild(input);
+                div.appendChild(edit_icon);
+                div.appendChild(trash_icon);
+    
+                parent_div.appendChild(div);
+    
+                if (input.value !== '') {
+                    label.classList.add('active');
+                }
+            }
+        }
+    
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+    
+            const data = {
+                name: form.querySelector('#name').value,
+                description: form.querySelector('#description').value,
+                is_social: true
+            };
+    
+            getAccessToken()
+                .then(access_token => createExtraField(access_token, data));
+        });
+    
+
+
+
+
+
+
+        function getExtrabyId(access_token, extraField) {
+            
+                let form = document.getElementById('update_extra_field_form');
+                form.querySelector('#name').value = extraField.name;
+                form.querySelector('#description').value = extraField.description;
+
+        }
+
+
+
+
+
+
+
+
+
+
+        function getallextra(access_token) {
+            fetch('http://127.0.0.1:8000/user/extrafields/', {
+                headers: {
+                'Authorization': `Token ${access_token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                insertData(data)
+
+                document.querySelectorAll('.edit__btn').forEach((item) => item.addEventListener('click', function(){
+                    const id = item.getAttribute('value')
+                    localStorage.setItem('id', id)
+                    const extraField = data.find(extra => extra.id == id)
+                    console.log(extraField)
+                    if (extraField) {
+                    getAccessToken()
+                        .then(access_token => getExtrabyId(access_token, extraField));
+                    } else {
+                    console.log(`Extra field with id ${id} not found`)
+                    }
+                }));
+                
+                document.querySelectorAll('.trash__btn').forEach((item) => item.addEventListener('click', function(){
+                    const id = item.getAttribute('value')
+                    localStorage.setItem('id', id)
+                    const extraField = data.find(extra => extra.id == id)
+                    console.log(extraField)
+                    if (extraField) {
+                    getAccessToken()
+                        .then(access_token => deleteExtraById(access_token, extraField.id));
+                    } else {
+                    console.log(`Extra field with id ${id} not found`)
+                    }
+                }));
+
+
+                })
+                .catch(error => console.error(error));
+        }
+
+        getAccessToken()
+            .then(access_token => getallextra(access_token));
+
+
+
+
+
+
+
+
+
+        const updateForm = document.getElementById('update_extra_field_form');
+        function updateExtraField(access_token, id, data) {
+            return fetch(`http://127.0.0.1:8000/user/extrafields/${id}/`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Token ${access_token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to update extra field.');
+                    }
+                })
+                .then(data => {
+                    console.log(data); // Do something with the updated extra field data
+                    return getallextra(access_token);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        updateForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const id = localStorage.getItem('id')
+            const data = {
+                name: updateForm.querySelector('#name').value,
+                description: updateForm.querySelector('#description').value,
+                is_social: true
+            };
+
+            getAccessToken()
+                .then(access_token => updateExtraField(access_token, id, data));
+        });
+
+
+
+
+
+
+
+
+        function deleteExtraById(access_token, id) {
+            fetch(`http://127.0.0.1:8000/user/extrafields/${id}/`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Token ${access_token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`Extra field with ID ${id} was deleted successfully.`);
+                } else {
+                    throw new Error(`Failed to delete extra field with ID ${id}.`);
+                }
+            })
+            .catch(error => console.error(error));
+        }
+
+
+
+
+
+    </script>
+
+
+
+
+    <script>
+
+        
+ 
+
+
+    </script>
+    
 
   <!-- custom js  -->
   <script src="{% static 'js/script.js' %}"></script>
