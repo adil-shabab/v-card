@@ -17,6 +17,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 # from .serializers import ExtraFieldSerializer
+from django.contrib.auth.hashers import make_password
 
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -56,7 +57,7 @@ def user_login(request):
         if user is not None:
             user.backend = 'django.contrib.auth.backends.ModelBackend' # set the backend attribute
             login(request, user)
-            return redirect('profile')
+            return redirect('home')
         else:
             mp.error(request, "Username or password incorrect")
 
@@ -80,8 +81,15 @@ def user_signup(request):
 
             user_profile = Profile(user = user,username=user.username, email=user.email, name=user.username)
             user_profile.save()
+
+            token, created = Token.objects.get_or_create(user=user)
+            request.session['env_token'] = token.key
+
+            tokens = request.session.get('env_token', None)
+
+            print(tokens)
             
-            Token.objects.create(user=user)
+            # Token.objects.create(user=user)
 
 
             mp.success(request, "User account created")
@@ -112,10 +120,6 @@ def logout_user(request):
 @login_required(login_url='user-login')
 def home(request):
 
-
-
-
-
     profile = Profile.objects.get(user=request.user)
     form = ProfileForm(instance=profile)
 
@@ -124,7 +128,7 @@ def home(request):
         if form.is_valid():
             form.save()
             
-            return redirect('home')
+            return redirect('get-user', request.user.id)
 
 
     if request.user.is_authenticated:
@@ -139,7 +143,7 @@ def home(request):
             profile.save()
 
 
-    context = {'user': request.user, 'profile':profile, 'form':form}
+    context = {'user': request.user, 'profile':profile, 'form':form, }
 
     return render(request, 'users/home.html', context)
 
@@ -199,27 +203,33 @@ class ObtainAuthToken(APIView):
     API view to obtain an authentication token for a user
     """
 
-    def post(self, request, format=None):
+    def get(self, request):
         """
         Validate a user's credentials and return an authentication token
         """
-        username = request.data.get('username')
-        password = request.data.get('password')
 
-        if username is None or password is None:
-            return Response({'error': 'Please provide both username and password'},
-                            status=status.HTTP_400_BAD_REQUEST)
+        
+        # username = request.data.get('username')
+        # password = request.data.get('password')
 
-        user = authenticate(username=username, password=password)
+        # if username is None or password is None:
+        #     return Response({'error': 'Please provide both username and password'},
+        #                     status=status.HTTP_400_BAD_REQUEST)
 
-        if not user:
-            return Response({'error': 'Invalid credentials'},
-                            status=status.HTTP_401_UNAUTHORIZED)
+        # user = authenticate(username=username, password=password)
 
-        token, created = Token.objects.get_or_create(user=user)
+        # if not user:
+        #     return Response({'error': 'Invalid credentials'},
+        #                     status=status.HTTP_401_UNAUTHORIZED)
 
-        return Response({'token': token.key})
+        # token, created = Token.objects.get_or_create(user=user)
 
+        # return Response({'token': token.key})
+
+        token = request.session.get('env_token', None)
+        return Response({'token': token})
+
+        
 
 
 
@@ -237,8 +247,6 @@ class MyAPIView(APIView):
         # Retrieve the user's social account for Google
         social_account = request.user.socialaccount_set.filter(provider='google').first()
 
-        print(social_account)
-
         
         if social_account:
             # Retrieve the access token from the social account
@@ -246,6 +254,35 @@ class MyAPIView(APIView):
             token = Token.objects.get(user=social_account.user)
             print(token)
         
-            return Response({'access_token': str(token)})
+            return Response({'access_token': str(token), 'status':0})
         else:
-            return Response({'error': 'No social account found for Google.'}, status=400)
+            return Response({'error': 'No social account found for Google.', 'status': 1}, status=400)
+
+
+
+
+import os
+from django.conf import settings
+
+def get_user(request, pk):
+    user = User.objects.get(id=pk)
+    profile = Profile.objects.get(user=request.user)
+
+    import qrcode
+
+    # Generate QR code image
+    data = f'http://127.0.0.1:8000/user/get/{pk}'
+    img = qrcode.make(data)
+
+    # Save image to /media/qr directory
+    filename = f'{user.username}.jpeg'
+    save_path = os.path.join(settings.BASE_DIR, 'static', 'qr', filename)
+    img.save(save_path)
+
+    context = {
+        'user': user,
+        'profile': profile,
+        'qr': img,
+    }
+
+    return render(request, 'users/user.html', context)

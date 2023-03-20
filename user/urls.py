@@ -11,12 +11,15 @@ from rest_framework import routers
 
 urlpatterns = [
     path('signin', user_login, name="user-login"),
+    path('logout', logout_user, name="user-logout"),
     path('signup', user_signup, name="user-signup"),
     path('home', home, name="home"),
     path('extrafields/', ExtraFieldView.as_view(), name='extrafields-list-create'),
     path('extrafields/<int:id>/', ExtraFieldView.as_view(), name='extrafields-detail'),
     path('get/token/', ObtainAuthToken.as_view(), name='token_obtain'),
     path('get/google/token/', MyAPIView.as_view(), name='token_google'),
+    path('get/<str:pk>', get_user, name='get-user'),
+
 ]
 
 

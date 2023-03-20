@@ -1,0 +1,5 @@
+{% load static %}
+{{profile.name}}
+
+<!-- <img src="{{ MEDIA_URL }}/qr/{{ user.username }}.jpeg" alt="QR code"> -->
+<img src="{% static 'qr/'|add:user.username|add:'.jpeg' %}" alt="QR code">

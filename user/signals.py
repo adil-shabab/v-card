@@ -18,6 +18,9 @@ def create_user_profile(request, user, **kwargs):
 
     Token.objects.create(user=user)
 
+    token, created = Token.objects.get_or_create(user=user)
+    request.session['env_token'] = token.key
+
 
 
 

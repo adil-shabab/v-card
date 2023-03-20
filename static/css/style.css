@@ -380,17 +380,29 @@ body{
 
 
 
-.edit__btn{
+.edit__btn, .edit__btns{
   position: absolute;
   cursor: pointer;
   right: 50px;
   top: 13px;
   font-size: 18px;
 }
-.trash__btn{
+.trash__btn, .trash__btns{
   position: absolute;
   cursor: pointer;
   right: 16px;
   top: 13px;
   font-size: 18px;
+}
+
+
+
+
+.input_div input.error{
+  border: 0.5px solid red;
+  position: relative;
+}
+.input_div input.error::after{
+  content: 'please fill this';
+
 }
