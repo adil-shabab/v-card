@@ -2,11 +2,28 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE, SET_NULL
 
+
+
+
+class Icon(models.Model):
+    icon_html = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.icon_html
+
+
+
 class ExtraField(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     description = models.CharField(max_length=180)
     is_social = models.BooleanField(default=False)
+
+    icon = models.OneToOneField(Icon, on_delete=models.CASCADE, null=True, blank=True)
+
+
+
+
 
 
 
@@ -14,6 +31,7 @@ class ExtraField(models.Model):
 
 
 class Profile(models.Model):
+    slug = models.SlugField(unique=True, editable=False, null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     email = models.EmailField(max_length=200, blank=True, null=True)

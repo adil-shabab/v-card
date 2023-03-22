@@ -26,7 +26,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import ExtraField
-from .serializers import ExtraFieldSerializer
+from .serializers import *
 
 
 
@@ -65,6 +65,7 @@ def user_login(request):
 
 
 
+from django.utils.text import slugify
 
 def user_signup(request):
     form = CustomUserCreationForm()
@@ -74,12 +75,14 @@ def user_signup(request):
         if form.is_valid():
             user = form.save(commit = False)
             user.username = user.username.lower()
+            
             user.backend = 'django.contrib.auth.backends.ModelBackend'  # set the backend attribute
             user.save()
 
 
+            slug  = slugify(user.username.lower())
 
-            user_profile = Profile(user = user,username=user.username, email=user.email, name=user.username)
+            user_profile = Profile(user = user,username=user.username, email=user.email, name=user.username, slug = slug)
             user_profile.save()
 
             token, created = Token.objects.get_or_create(user=user)
@@ -128,7 +131,7 @@ def home(request):
         if form.is_valid():
             form.save()
             
-            return redirect('get-user', request.user.id)
+            return redirect('get-user', profile.slug)
 
 
     if request.user.is_authenticated:
@@ -260,18 +263,17 @@ class MyAPIView(APIView):
 
 
 
-
 import os
 from django.conf import settings
 
-def get_user(request, pk):
-    user = User.objects.get(id=pk)
-    profile = Profile.objects.get(user=request.user)
+def get_user(request, slug):
+    profile = Profile.objects.get(slug=slug)
+    user = User.objects.get(pk=request.user.pk)
 
     import qrcode
 
     # Generate QR code image
-    data = f'http://127.0.0.1:8000/user/get/{pk}'
+    data = f'http://127.0.0.1:8000/user/get/{slug}'
     img = qrcode.make(data)
 
     # Save image to /media/qr directory
@@ -286,3 +288,51 @@ def get_user(request, pk):
     }
 
     return render(request, 'users/user.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+class IconView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    # def post(self, request):
+    #     serializer = ExtraFieldSerializer(data=request.data)
+    #     user = request.user
+    #     request.data['user'] = user.id
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        icons = Icon.objects.all()
+        serializer = IconSerializer(icons, many=True)
+        return Response(serializer.data)
+
+    # def put(self, request, id):
+    #     extra_field = ExtraField.objects.filter(user=request.user, id=id).first()
+    #     if not extra_field:
+    #         return Response(status=status.HTTP_404_NOT_FOUND)
+    #     serializer = ExtraFieldSerializer(extra_field, data=request.data, partial=True)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    # def delete(self, request, id):
+    #     extra_field = ExtraField.objects.get(id=id)
+    #     # if not extra_field:
+    #     #     return Response(status=status.HTTP_404_NOT_FOUND)
+    #     extra_field.delete()
+    #     # return Response(status=status.HTTP_204_NO_CONTENT)

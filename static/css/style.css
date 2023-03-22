@@ -406,3 +406,50 @@ body{
   content: 'please fill this';
 
 }
+
+
+.social_parent_form{
+
+}
+.social_parent_form #social_media_ul{
+  padding: 0px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.social_parent_form #social_media_ul li{
+  list-style: none;
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+.social_parent_form #social_media_ul .social_media_icon{
+  font-size: 20px;
+  padding: 7px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #0d6efd;
+  color: #0d6efd;
+}
+.social_parent_form #social_media_ul .social_media_icon.active{
+  background: #0d6efd;
+  color: white;
+}
+.pre_icon{
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  border-right: 1px solid gray;
+  padding-right: 11px;
+}
+
+
+.profile_edit_container #social_icons .input_div input {
+  padding-left: 52px;
+}
+.profile_edit_container #social_icons .input_div label {
+  left : 45px;
+  top: 14px;
+}
+.profile_edit_container #social_icons .input_div label.active {
+  top: -9px;
+}

@@ -78,30 +78,18 @@
                     <div class="input_div">
                         {{form.facebook.label_tag }}
                         {{form.facebook}}    
-                        <div class="pre_icon">
-                            <i class="fa-brands fa-facebook"></i>
-                        </div>
                     </div>
                     <div class="input_div">
                         {{form.twitter.label_tag }}
                         {{form.twitter}}    
-                        <div class="pre_icon">
-                            <i class="fa-brands fa-twitter"></i>
-                        </div>
                     </div>
                     <div class="input_div">
                         {{form.linkedin.label_tag }}
                         {{form.linkedin}}    
-                        <div class="pre_icon">
-                            <i class="fa-brands fa-linkedin"></i>
-                        </div>
                     </div>
                     <div class="input_div">
                         {{form.instagram.label_tag }}
                         {{form.instagram}}    
-                        <div class="pre_icon">
-                            <i class="fa-brands fa-instagram"></i>
-                        </div>
                     </div>
 
                     <div id="add_on_field">
@@ -148,7 +136,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body social">
+                <div class="modal-body">
                     <form id="add_custom_btn">
                         <div class="social_parent_form"></div>
                         <input required id="name" type="text" placeholder="Name">
@@ -164,8 +152,6 @@
     </div>
 
 
-
-
     <div class="modal fade" id="exampleModalTwo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -173,7 +159,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body social">
+                <div class="modal-body">
                     <form id="update_extra_field_form">
                         <div class="social_parent_form"></div>
                         <input required id="name" type="text" placeholder="Name">
@@ -199,7 +185,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="add_custom_btn_without_social">
-                        <!-- <div class="social_parent_form"></div> -->
+                        <div class="social_parent_form"></div>
                         <input required id="name" type="text" placeholder="Name">
                         <input required id="description" type="text" placeholder="Description">
                         <div class="modal-footer">
@@ -223,7 +209,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="update_extra_field_form_without_social">
-                        <!-- <div class="social_parent_form"></div> -->
+                        <div class="social_parent_form"></div>
                         <input required id="name" type="text" placeholder="Name">
                         <input required id="description" type="text" placeholder="Description">
                         <div class="modal-footer">
@@ -247,14 +233,18 @@
        
        function withSocial(){
 
+
+
         const baseUrl = 'http://127.0.0.1:8000';
         const form = document.getElementById('add_custom_btn');
         const parent_div = document.getElementById('add_on_field');
     
 
 
+
+
     function insertIcon(data){
-        let modal_body = document.querySelectorAll('.modal-body.social form')
+        let modal_body = document.querySelectorAll('.modal-body form')
         
         modal_body.forEach((item)=>{
 
@@ -317,12 +307,6 @@
 
 
 
-  
-  
-
-
-
-
 
 
 
@@ -334,7 +318,7 @@
 
 
         
-function getCookie(name) {
+     function getCookie(name) {
   var cookieValue = null;
   if (document.cookie && document.cookie !== '') {
     var cookies = document.cookie.split(';');
@@ -404,11 +388,14 @@ function getCookie(name) {
             parent_div.innerHTML=""
             for (let i = 0; i < data.length; i++) {
 
+
+
                 const div = document.createElement('div');
                 div.classList.add('input_div');
     
                 const label = document.createElement('label');
                 label.textContent = data[i].name;
+
 
                 const edit_icon = document.createElement('i');
                 edit_icon.classList.add('fa-regular')
@@ -418,50 +405,25 @@ function getCookie(name) {
                 edit_icon.setAttribute('data-bs-target', '#exampleModalTwo')
                 edit_icon.setAttribute('value', data[i].id)
 
+
                 const trash_icon = document.createElement('i');
                 trash_icon.classList.add('fa-solid')
                 trash_icon.classList.add('fa-trash')
                 trash_icon.classList.add('trash__btn')
                 trash_icon.setAttribute('value', data[i].id)
 
+
+                
                 const input = document.createElement('input');
                 input.type = 'text';
                 input.value = data[i].description;
                 input.setAttribute('disabled', '')
-
-
-                const icon_div = document.createElement('div')
-                icon_div.classList.add('pre_icon')
-
-                function getIcon(access_token) {
-                    fetch(`${baseUrl}/user/icons/`, {
-                        headers: {
-                        'Authorization': `Token ${access_token}`
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(file=> {
-                        const icon = file.find(item => item.id === data[i].icon);
-                        // do something with the icon
-                        icon_div.innerHTML = icon.icon_html
-                    })
-                    .catch(error => console.error(error));
-                }
-
-
-                getAccessToken()
-                .then(access_token => {
-                getIcon(access_token);
-                });
-
-                
+    
                 div.appendChild(label);
                 div.appendChild(input);
                 div.appendChild(edit_icon);
                 div.appendChild(trash_icon);
-                div.appendChild(icon_div);
-
-                
+    
                 parent_div.appendChild(div);
     
                 if (input.value !== '') {

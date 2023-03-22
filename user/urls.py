@@ -18,8 +18,9 @@ urlpatterns = [
     path('extrafields/<int:id>/', ExtraFieldView.as_view(), name='extrafields-detail'),
     path('get/token/', ObtainAuthToken.as_view(), name='token_obtain'),
     path('get/google/token/', MyAPIView.as_view(), name='token_google'),
-    path('get/<str:pk>', get_user, name='get-user'),
+    path('get/<slug:slug>', get_user, name='get-user'),
 
+    path('icons/', IconView.as_view(), name='icon-list'),
 ]
 
 
