@@ -16,13 +16,15 @@ def create_user_profile(request, user, **kwargs):
     
     
     slug = slugify(user.username.lower())
-    user_profile = Profile(user = user,username=user.username, email=user.email, name=user.username, dp=None, slug = slug)
+    user_profile = Profile(user = user,username=user.username, name=user.username, dp=None, slug = slug)
     user_profile.save()
 
     Token.objects.create(user=user)
 
     token, created = Token.objects.get_or_create(user=user)
     request.session['env_token'] = token.key
+
+    EmailId.objects.create(user=user, email_type='Personal', email_id = user.email)
 
 
 

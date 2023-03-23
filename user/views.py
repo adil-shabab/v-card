@@ -90,6 +90,9 @@ def user_signup(request):
 
             tokens = request.session.get('env_token', None)
 
+            EmailId.objects.create(user=user, email_type='Personal', email_id = user.email)
+
+
             print(tokens)
             
             # Token.objects.create(user=user)
@@ -384,4 +387,46 @@ class PhoneView(APIView):
         # if not phone_number:
         #     return Response(status=status.HTTP_404_NOT_FOUND)
         phone_number.delete()
+        # return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+
+
+    
+class EmailView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = EmailFieldSerializer(data=request.data)
+        user = request.user
+        request.data['user'] = user.id
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        email_id = EmailId.objects.filter(user=request.user)
+        serializer = EmailFieldSerializer(email_id, many=True)
+        return Response(serializer.data)
+
+    def put(self, request, id):
+        email_id = EmailId.objects.filter(user=request.user, id=id).first()
+        if not email_id:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = EmailFieldSerializer(email_id, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def delete(self, request, id):
+        email_id = EmailId.objects.get(id=id)
+        # if not email_id:
+        #     return Response(status=status.HTTP_404_NOT_FOUND)
+        email_id.delete()
         # return Response(status=status.HTTP_204_NO_CONTENT)

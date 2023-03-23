@@ -453,43 +453,60 @@ body{
 .profile_edit_container #social_icons .input_div label.active {
   top: -9px;
 }
-.phone_number_parent{
+
+
+.phone_number_parent, .email_id_parent{
   height: 45px;
   margin-bottom: 19px;
   position: relative;
   display: flex;
 }
-.phone_number_parent .submit_btn{
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    background: #6262f5;
-    color: white;
-    padding: 10px 17px;
-    max-height: 45px;
-    cursor: pointer;
+.phone_number_parent.form select , .email_id_parent.form select{
+  border: 1px solid rgb(213, 213, 213);
+  padding: 10px;
 }
-.phone_number_parent .edit_number_btn{
+.phone_number_parent .submit_btn, .email_id_parent .submit_btn{
+  position: absolute;
+  right: 38px;
+  cursor: pointer;
+  font-size: 21px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.phone_number_parent .close_btn, .email_id_parent .close_btn{
+  position: absolute;
+  right: 10px;
+  font-size: 21px;
+  height: 100%;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone_number_parent .edit_number_btn, .email_id_parent .edit_email_btn{
   position: absolute;
   cursor: pointer;
   right: 50px;
   top: 13px;
   font-size: 18px;
 }
-.phone_number_parent .trash_number_btn{
+.phone_number_parent .trash_number_btn, .email_id_parent .trash_email_btn{
   position: absolute;
   cursor: pointer;
   right: 16px;
   top: 13px;
   font-size: 18px;
 }
-.phone_number_parent .select_option_parent{
+.phone_number_parent .select_option_parent, .email_id_parent .select_option_parent{
   position: absolute;
   left: 0px;
   width: 30%;
   height: 100%;
 }
-.phone_number_parent .select_option_parent select{
+.phone_number_parent .select_option_parent select, .email_id_parent .select_option_parent select{
   width: 100%;
   height: 100%;
   border: 1px solid #cbcbcb;
@@ -498,18 +515,34 @@ body{
   position: relative;
   opacity: 0;
 }
-.phone_number_parent.active .select_option_parent select{
+.phone_number_parent.active .select_option_parent select, .email_id_parent.active .select_option_parent select{
   z-index: 1;
   opacity: 1;
 }
-.phone_number_parent.active .phone_type_edit{
+.phone_number_parent.active .phone_type_edit, .email_id_parent.active .email_type_edit{
   z-index: -1;
   opacity: 0;
 }
-.phone_number_parent.active .save_edit{
+.phone_number_parent.active .save_edit, .email_id_parent.active .save_edit{
   position: absolute;
   cursor: pointer;
   right: 50px;
   top: 13px;
   font-size: 18px;
+}
+.phone_number_parent.form, .email_id_parent.form{
+  margin-top: 20px;
+}
+#all_mobile_numbers, #all_email_ids{
+  margin-top: 20px;
+}
+#add_on_field_without_social_media input{
+  padding-left: 55px;
+}
+#add_on_field_without_social_media .pre_icons{
+  position: absolute;
+  left: 4px;
+  top: 12px;
+  padding: 0px 10px;
+  border-right: 1px solid gray;
 }

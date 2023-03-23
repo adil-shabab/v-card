@@ -19,17 +19,17 @@ class CustomUserCreationForm(UserCreationForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['whatsapp','company', 'designation' ,'location', 'phone_number','name', 'email', 'username', 'bio', 'dp', 'coverimage', 'facebook', 'twitter', 'instagram', 'linkedin', 'website']
+        fields = ['whatsapp','company', 'address', 'vedio', 'designation' ,'location', 'name', 'username', 'bio', 'dp', 'coverimage', 'facebook', 'twitter', 'instagram', 'linkedin', 'website']
 
 
         widgets = {
             'location' : TextInput(attrs={'required':''}),
-            'email' : TextInput(attrs={'required':''}),
-            'phone_number' : TextInput(attrs={'required':''}),
+            # 'email' : TextInput(attrs={'required':''}),
+            # 'phone_number' : TextInput(attrs={'required':''}),
             'name' : TextInput(attrs={'required':''}),
             'username' : TextInput(attrs={'required':''}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super(ProfileForm, self).__init__(*args, **kwargs)
-        self.fields['email'].required = True
+    # def __init__(self, *args, **kwargs):
+    #     super(ProfileForm, self).__init__(*args, **kwargs)
+    #     self.fields['email'].required = True

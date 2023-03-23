@@ -13,6 +13,12 @@ class PhoneFieldSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class EmailFieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmailId
+        fields = '__all__'
+
+
 
 class IconSerializer(serializers.ModelSerializer):
     class Meta:

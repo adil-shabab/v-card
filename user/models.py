@@ -28,6 +28,12 @@ class PhoneNumber(models.Model):
     phone_number = models.CharField(max_length=12)
 
 
+class EmailId(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    email_type = models.CharField(max_length=150, null=True, blank=True)
+    email_id = models.EmailField()
+
+
 
 
 
@@ -39,8 +45,9 @@ class Profile(models.Model):
     slug = models.SlugField(unique=True, editable=False, null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, blank=True, null=True)
-    email = models.EmailField(max_length=200, blank=True, null=True)
+    # email = models.EmailField(max_length=200, blank=True, null=True)
     bio= models.TextField(blank=True, null=True)
+    address= models.TextField(blank=True, null=True)
     dp = models.ImageField(blank=True, null=True, upload_to= 'dp/', default="dp/default.png")
     coverimage = models.ImageField(blank=True, null=True, upload_to= 'cover/', default="cover/default.jpg")
     location = models.CharField(max_length=200, blank=True, null=True)
@@ -51,12 +58,13 @@ class Profile(models.Model):
     instagram = models.CharField(max_length=200, blank=True, null=True)
     website = models.CharField(max_length=200, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
-    phone_number = models.CharField(max_length=12, null=True, blank=True)
+    # phone_number = models.CharField(max_length=12, null=True, blank=True)
 
     whatsapp = models.CharField(max_length=12, null=True, blank=True)
     company = models.CharField(max_length=150, null=True, blank=True)
     designation = models.CharField(max_length=150, null=True, blank=True)
     
+    vedio = models.CharField(max_length=250, null=True, blank=True)
 
 
 
