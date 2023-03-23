@@ -7,6 +7,12 @@ class ExtraFieldSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PhoneFieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PhoneNumber
+        fields = '__all__'
+
+
 
 class IconSerializer(serializers.ModelSerializer):
     class Meta:

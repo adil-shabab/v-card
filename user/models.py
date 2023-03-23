@@ -22,6 +22,11 @@ class ExtraField(models.Model):
     icon = models.OneToOneField(Icon, on_delete=models.CASCADE, null=True, blank=True)
 
 
+class PhoneNumber(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone_type = models.CharField(max_length=150)
+    phone_number = models.CharField(max_length=12)
+
 
 
 
@@ -47,6 +52,11 @@ class Profile(models.Model):
     website = models.CharField(max_length=200, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     phone_number = models.CharField(max_length=12, null=True, blank=True)
+
+    whatsapp = models.CharField(max_length=12, null=True, blank=True)
+    company = models.CharField(max_length=150, null=True, blank=True)
+    designation = models.CharField(max_length=150, null=True, blank=True)
+    
 
 
 

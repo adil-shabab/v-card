@@ -1,4 +1,3 @@
-
 from .models import Profile
 from django.forms import ModelForm, fields
 from django.contrib.auth.forms import UserCreationForm
@@ -20,7 +19,7 @@ class CustomUserCreationForm(UserCreationForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['location', 'phone_number','name', 'email', 'username', 'bio', 'dp', 'coverimage', 'facebook', 'twitter', 'instagram', 'linkedin', 'website']
+        fields = ['whatsapp','company', 'designation' ,'location', 'phone_number','name', 'email', 'username', 'bio', 'dp', 'coverimage', 'facebook', 'twitter', 'instagram', 'linkedin', 'website']
 
 
         widgets = {

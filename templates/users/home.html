@@ -43,26 +43,61 @@
 
             <div class="w-100 slider active">
 
-                {{access_token}}
-                <div class="input_div">
-                    {{form.username.label_tag }}
-                    {{form.username}}    
-                </div>
+            <h6 class="mb-4">Personal Information</h6>
+
                 <div class="input_div">
                     {{form.name.label_tag }}
                     {{form.name}}    
                 </div>
                 <div class="input_div">
+                    {{form.company.label_tag }}
+                    {{form.company}}    
+                </div>
+                <div class="input_div">
+                    {{form.designation.label_tag }}
+                    {{form.designation}}    
+                </div>
+
+                <h6 class="mb-5">Contact</h6>
+
+                <h6 class="mb-3"></h6>
+
+                <div class="input_div">
                     {{form.email.label_tag }}
                     {{form.email}}    
                 </div>
+
+                <h6 class="mb-3">Phone number</h6>
+                <span class="mb-5">Add Phone Number</span>
+
+                <div class="phone_number_parent form">
+
+                    <select name="" id="phone_type_add" style="width: 25%;">
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Home">Home</option>
+                        <option value="Company">Company</option>
+                    </select>
+
+                    <input style="width: 75%;" required type="text" class="phone_number">
+                    <span class="submit_btn">Add</span>
+                </div>
+
+                <div id="all_mobile_numbers">
+                    <div class="phone_number_parent">
+                        <input type="text" disabled style="width: 25%;" value="Personal">
+                        <input style="width: 75%;" type="text" disabled value="7012042562">
+                    </div>
+                </div>
+
                 <div class="input_div">
                     {{form.location.label_tag }}
                     {{form.location}}    
                 </div>
+
                 <div class="input_div">
-                    {{form.phone_number.label_tag }}
-                    {{form.phone_number}}    
+                    {{form.whatsapp.label_tag }}
+                    {{form.whatsapp}}    
                 </div>
                 <div class="input_div">
                     {{form.bio.label_tag }}
@@ -239,6 +274,322 @@
 
 
 
+
+    <script>
+        function PhoneNumber(){
+            const baseUrl = 'http://127.0.0.1:8000';
+            const parent_div = document.getElementById('all_mobile_numbers')
+
+
+            
+        
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                    }
+                }
+                return cookieValue;
+            }
+
+
+
+
+
+            function getAccessToken() {
+                return fetch(`${baseUrl}/user/get/google/token/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.status == 0){    
+                            return data.access_token     
+                        }else{
+                            
+                            return fetch('http://127.0.0.1:8000/user/get/token/')
+                            .then(response => response.json())
+                            .then(data => {
+                                return data.token
+                            })
+                        }
+                });
+            }
+
+                
+
+            function getallphone(access_token) {
+                fetch(`${baseUrl}/user/phone-number/`, {
+                    headers: {
+                    'Authorization': `Token ${access_token}`
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        insertNumber(data);
+                        console.log(data)
+
+                    document.querySelectorAll('.edit_number_btn').forEach((item) => item.addEventListener('click', function(){
+                        const id = item.getAttribute('value')
+                        const phone_number = data.find(number => number.id == id)
+                        console.log(phone_number)
+                        if (phone_number) {
+                        getAccessToken()
+                            .then(access_token => getPhonebyId(access_token, phone_number));
+                        } else {
+                        console.log(`Phone NUmber with id ${id} not found`)
+                        }
+                    }));
+                    
+                    document.querySelectorAll('.trash_number_btn').forEach((item) => item.addEventListener('click', function(){
+                        const id = item.getAttribute('value')
+                        const phone_number = data.find(number => number.id == id)
+                        console.log(phone_number)
+                        if (phone_number) {
+                        getAccessToken()
+                            .then(access_token => deletePhoneById(access_token, phone_number.id));
+                        } else {
+                        console.log(`Phone Number with id ${id} not found`)
+                        }
+                    }));
+
+
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            getAccessToken()
+                .then(access_token => getallphone(access_token));
+
+
+
+
+
+
+
+            function insertNumber(data) {
+
+                parent_div.innerHTML=""
+
+                for (let i = 0; i < data.length; i++) {
+
+                    const div = document.createElement('div');
+                    div.classList.add('phone_number_parent');
+                    div.setAttribute('id', `number_${data[i].id}`)
+        
+                    const phone_type = document.createElement('input');
+                    phone_type.classList.add('phone_type_edit')
+                    phone_type.setAttribute('value', data[i].phone_type)
+                    phone_type.setAttribute('type', 'text')
+                    phone_type.setAttribute('disabled', '')
+                    phone_type.style.width = '30%'
+
+
+                    const select_option = document.createElement('div')
+                    select_option.classList.add('select_option_parent')
+                    select_option.innerHTML = `                    
+                                        <select name="" id="phone_type_edit">
+                                            <option value="Work">Work</option>
+                                            <option value="Personal">Personal</option>
+                                            <option value="Home">Home</option>
+                                            <option value="Company">Company</option>
+                                        </select>`
+
+
+
+                    const phone_number = document.createElement('input');
+                    phone_number.classList.add('phone_number_edit')
+                    phone_number.setAttribute('value', data[i].phone_number)
+                    phone_number.setAttribute('type', 'text')
+                    phone_number.setAttribute('disabled', '')
+                    phone_number.style.width = '70%'
+
+
+                    const edit_icon = document.createElement('i');
+                    edit_icon.classList.add('fa-regular')
+                    edit_icon.classList.add('fa-pen-to-square')
+                    edit_icon.classList.add('edit_number_btn')
+                    edit_icon.setAttribute('value', data[i].id)
+
+                    const trash_icon = document.createElement('i');
+                    trash_icon.classList.add('fa-solid')
+                    trash_icon.classList.add('fa-trash')
+                    trash_icon.classList.add('trash_number_btn')
+                    trash_icon.setAttribute('value', data[i].id)
+
+                    
+                    div.appendChild(phone_type);
+                    div.appendChild(phone_number);
+                    div.appendChild(edit_icon);
+                    div.appendChild(trash_icon);
+                    div.appendChild(select_option);
+
+                    parent_div.appendChild(div);
+                }
+            }
+
+
+
+
+
+
+            function createPhone(access_token, data) {
+                return fetch(`${baseUrl}/user/phone-number/`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Token ${access_token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Failed to create extra field.');
+                        }
+                    })
+                    .then(data => {
+                        console.log(data); // Do something with the newly created extra field data
+                        getallphone(access_token);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+
+
+
+            // form.addEventListener('submit', event => {
+            // event.preventDefault();
+
+            const form = document.querySelector('.phone_number_parent')
+            form.querySelector('.submit_btn').addEventListener('click', function(){
+                console.log('clicked')
+                
+                if (! form.querySelector('.phone_number').checkValidity()) {
+                    form.querySelector('.phone_number').reportValidity()
+                }
+
+                const data = {
+                    phone_type: form.querySelector('select').value,
+                    phone_number: form.querySelector('input').value
+                };
+                
+                getAccessToken()
+                    .then(access_token => {
+                    createPhone(access_token, data);
+                });
+            })
+            
+
+            
+
+
+            
+        function getPhonebyId(access_token, phone_number) {
+
+
+            let id = phone_number.id
+            let input_parent = document.getElementById(`number_${id}`)
+
+
+            input_parent.querySelector('.edit_number_btn').classList.add('d-none')
+
+            const save_btn = document.createElement('i')
+            save_btn.classList.add('fa-solid')
+            save_btn.classList.add('fa-check')
+            save_btn.classList.add('save_edit')
+
+            
+            input_parent.appendChild(save_btn)
+
+            save_btn.addEventListener('click', function(){
+
+                const data = {
+                    phone_type : input_parent.querySelector('#phone_type_edit').value,
+                    phone_number : input_parent.querySelector('.phone_number_edit').value
+                }
+
+                getAccessToken()
+                .then(access_token => updatePhone(access_token, id, data));
+            })
+
+
+
+            input_parent.classList.add('active')
+            input_parent.querySelectorAll('input').forEach((input)=>{
+                input.removeAttribute('disabled')
+            })
+
+            let select_div = document.querySelector('#phone_type_edit')
+            select_div.value = phone_number.phone_type       
+        
+        }
+
+
+
+
+
+
+        function updatePhone(access_token, id, data) {
+            return fetch(`${baseUrl}/user/phone-number/${id}/`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Token ${access_token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to update extra field.');
+                    }
+                })
+                .then(data => {
+                    console.log(data); // Do something with the updated extra field data
+                    return getallphone(access_token);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+
+
+
+        
+
+
+
+        function deletePhoneById(access_token, id) {
+            fetch(`${baseUrl}/user/phone-number/${id}/`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Token ${access_token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                return getallphone(access_token);
+            })
+            .catch(error => console.error(error));
+        }
+
+
+        }
+
+
+
+
+
+        PhoneNumber()
+    </script>
     
 
 

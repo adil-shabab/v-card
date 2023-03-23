@@ -4,15 +4,15 @@ const images = Array.from(document.querySelectorAll('.details_section .slider'))
 let index = 0;
 
 // function to show the next image
-// let locationInput = document.getElementById('id_location')
-// let phoneInput = document.getElementById('id_phone_number')
+let locationInput = document.getElementById('id_location')
+let phoneInput = document.getElementById('id_phone_number')
   
-
+console.log(locationInput,phoneInput)
 function showNextImage() {
 
-//   if(locationInput.value != ""){
-//     locationInput.classList.remove('error')
-    // if(phoneInput.value != ""){
+  if(locationInput.value != ""){
+    locationInput.classList.remove('error')
+    if(phoneInput.value != ""){
         console.log('fasdfasdfasdfasdfa')
         // remove the active class from the current image
         images[index].classList.remove('active');
@@ -23,13 +23,13 @@ function showNextImage() {
         
         phoneInput.classList.remove('error')
     }
-//     else{
-//        phoneInput.classList.add('error')
-//     }
-//   }else{
-//     locationInput.classList.add('error')
-//   }
-// }
+    else{
+       phoneInput.classList.add('error')
+    }
+  }else{
+    locationInput.classList.add('error')
+  }
+}
 
 // function to show the next image
 function showPreviousImage() {
