@@ -82,7 +82,7 @@ def user_signup(request):
 
             slug  = slugify(user.username.lower())
 
-            user_profile = Profile(user = user,username=user.username, email=user.email, name=user.username, slug = slug)
+            user_profile = Profile(user = user,username=user.username, name=user.username, slug = slug)
             user_profile.save()
 
             token, created = Token.objects.get_or_create(user=user)
@@ -90,6 +90,8 @@ def user_signup(request):
 
             tokens = request.session.get('env_token', None)
 
+            print(user.email)
+            
             EmailId.objects.create(user=user, email_type='Personal', email_id = user.email)
 
 
