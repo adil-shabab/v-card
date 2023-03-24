@@ -116,8 +116,9 @@ DATABASES = {
         'PASSWORD': 'HACKER@3197',
         'HOST': 'localhost',
         'PORT': '',
-     }
+    }
 }
+
 
 
 # Password validation
