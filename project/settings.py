@@ -114,7 +114,7 @@ DATABASES = {
         'NAME': 'vcard',
         'USER': 'adil',
         'PASSWORD': 'HACKER@3197',
-        'HOST': 'localhost',
+        'HOST': '',
         'PORT': '',
     }
 }
