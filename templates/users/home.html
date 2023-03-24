@@ -542,6 +542,7 @@
 
             save_btn.addEventListener('click', function(){
 
+
                 if (! input_parent.querySelector('.email_id_edit').checkValidity()) {
                     input_parent.querySelector('.email_id_edit').reportValidity()
                 }
@@ -675,11 +676,12 @@
                         if(data.status == 0){    
                             return data.access_token     
                         }else{
-                            
+                            console.log('get access token')
                             return fetch('http://127.0.0.1:8000/user/get/token/')
                             .then(response => response.json())
                             .then(data => {
                                 return data.token
+                                console.log(data.token)
                             })
                         }
                 });
@@ -688,6 +690,8 @@
                 
 
             function getallphone(access_token) {
+                console.log('access_token')
+                console.log(access_token)
                 fetch(`${baseUrl}/user/phone-number/`, {
                     headers: {
                     'Authorization': `Token ${access_token}`

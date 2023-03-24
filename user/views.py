@@ -86,15 +86,17 @@ def user_signup(request):
             user_profile.save()
 
             token, created = Token.objects.get_or_create(user=user)
+            print(token)
             request.session['env_token'] = token.key
+
+            EmailId.objects.create(user=user, email_type='Personal', email_id = user.email)
 
             tokens = request.session.get('env_token', None)
 
-            print(user.email)
-            
-            EmailId.objects.create(user=user, email_type='Personal', email_id = user.email)
 
 
+
+            print(user.email, user)
             print(tokens)
             
             # Token.objects.create(user=user)
@@ -216,25 +218,10 @@ class ObtainAuthToken(APIView):
         Validate a user's credentials and return an authentication token
         """
 
-        
-        # username = request.data.get('username')
-        # password = request.data.get('password')
-
-        # if username is None or password is None:
-        #     return Response({'error': 'Please provide both username and password'},
-        #                     status=status.HTTP_400_BAD_REQUEST)
-
-        # user = authenticate(username=username, password=password)
-
-        # if not user:
-        #     return Response({'error': 'Invalid credentials'},
-        #                     status=status.HTTP_401_UNAUTHORIZED)
-
-        # token, created = Token.objects.get_or_create(user=user)
-
-        # return Response({'token': token.key})
-
-        token = request.session.get('env_token', None)
+        token = request.session.get('env_token')
+        print(token)
+        print('session storage')
+        print(request.session.get('env_token'))
         return Response({'token': token})
 
         

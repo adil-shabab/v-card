@@ -24,6 +24,8 @@ def create_user_profile(request, user, **kwargs):
     token, created = Token.objects.get_or_create(user=user)
     request.session['env_token'] = token.key
 
+
+    print(user)
     EmailId.objects.create(user=user, email_type='Personal', email_id = user.email)
 
 
