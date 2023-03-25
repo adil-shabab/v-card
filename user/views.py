@@ -221,6 +221,7 @@ class ObtainAuthToken(APIView):
         token = request.session.get('env_token')
         print(token)
         print('session storage')
+        print('got access token')
         print(request.session.get('env_token'))
         return Response({'token': token})
 

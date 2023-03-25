@@ -71,7 +71,7 @@
                         <option value="Company">Company</option>
                     </select>
 
-                    <input style="width: 70%;" required type="email" class="email_id">
+                    <input name="email_id" style="width: 70%;" required type="email" class="email_id">
                     <i class="submit_btn fa-solid fa-check"></i>
                     <i class="close_btn fa-solid fa-xmark"></i>
                 </div>
@@ -88,14 +88,14 @@
 
                 <div class="phone_number_parent form d-none">
 
-                    <select name="" id="phone_type_add" style="width: 30%;">
+                    <select id="phone_type_add" style="width: 30%;">
                         <option value="Work">Work</option>
                         <option value="Personal">Personal</option>
                         <option value="Home">Home</option>
                         <option value="Company">Company</option>
                     </select>
 
-                    <input style="width: 70%;" required type="text" class="phone_number">
+                    <input style="width: 70%;" name="phone_number" required type="text" class="phone_number">
                     <i class="submit_btn fa-solid fa-check"></i>
                     <i class="close_btn fa-solid fa-xmark"></i>
                 </div>
@@ -120,6 +120,7 @@
                     {{form.address.label_tag }}
                     {{form.address}}    
                 </div>
+                
                 <span class="next">Next</span>
             </div>
             
@@ -199,6 +200,8 @@
     
 
 
+
+    
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
