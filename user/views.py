@@ -150,7 +150,10 @@ def home(request):
             filename = f"{request.user.username}.jpg"
             path = default_storage.save(f"dp/{filename}", content)
             profile.dp = path
+            profile.name = social_account.extra_data['name']
             profile.save()
+            context = {'user': request.user, 'profile':profile, 'form':form, }
+            return render(request, 'users/home.html', context)
 
 
     context = {'user': request.user, 'profile':profile, 'form':form, }
@@ -230,7 +233,6 @@ class ObtainAuthToken(APIView):
 
 
 
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -259,12 +261,31 @@ class MyAPIView(APIView):
 import os
 from django.conf import settings
 
-def get_user(request, slug):
-    profile = Profile.objects.get(slug=slug)
+@login_required(login_url='user-login')
+def update_card(request, slug):
+    
+    # profile = Profile.objects.get(user=request.user)
     user = User.objects.get(pk=request.user.pk)
+    profile = Profile.objects.get(slug=slug)
+    form = ProfileForm(instance=profile)
+
+    if request.method == 'POST':
+        phone = request.POST.get('phone_number')
+        email = request.POST.get('email_id')
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            first_number = PhoneNumber.objects.filter(user=user)[0]
+            first_number.phone_number = phone
+            first_number.save()            
+            first_email = EmailId.objects.filter(user=user)[0]
+            first_email.email_id = email
+            first_email.save()            
+
+            form.save()
+            
+
 
     import qrcode
-
     # Generate QR code image
     data = f'http://127.0.0.1:8000/user/get/{slug}'
     img = qrcode.make(data)
@@ -278,6 +299,7 @@ def get_user(request, slug):
         'user': user,
         'profile': profile,
         'qr': img,
+        'form': form,
     }
 
     return render(request, 'users/user.html', context)

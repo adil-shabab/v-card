@@ -22,7 +22,7 @@ urlpatterns = [
     path('email-id/<int:id>/', EmailView.as_view(), name='email-id-detail'),
     path('get/token/', ObtainAuthToken.as_view(), name='token_obtain'),
     path('get/google/token/', MyAPIView.as_view(), name='token_google'),
-    path('get/<slug:slug>', get_user, name='get-user'),
+    path('get/<slug:slug>', update_card, name='get-user'),
 
     path('icons/', IconView.as_view(), name='icon-list'),
 ]

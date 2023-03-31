@@ -16,7 +16,7 @@ def create_user_profile(request, user, **kwargs):
     
     
     slug = slugify(user.username.lower())
-    user_profile = Profile(user = user,username=user.username, name=user.username, dp=None, slug = slug)
+    user_profile = Profile(user = user,username=user.username, dp=None, slug = slug)
     user_profile.save()
 
     Token.objects.create(user=user)

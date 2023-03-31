@@ -68,5 +68,11 @@ class Profile(models.Model):
 
 
 
+    # color
+    bg = models.CharField(max_length=250, null=True, blank=True, default='white')
+    color = models.CharField(max_length=250, null=True, blank=True, default='black')
+
+
+
     def __str__(self):
         return str(self.user.username)

@@ -71,7 +71,7 @@
                         <option value="Company">Company</option>
                     </select>
 
-                    <input name="email_id" style="width: 70%;" required type="email" class="email_id">
+                    <input  style="width: 70%;" type="email" class="email_id">
                     <i class="submit_btn fa-solid fa-check"></i>
                     <i class="close_btn fa-solid fa-xmark"></i>
                 </div>
@@ -95,7 +95,7 @@
                         <option value="Company">Company</option>
                     </select>
 
-                    <input style="width: 70%;" name="phone_number" required type="text" class="phone_number">
+                    <input style="width: 70%;" type="text" class="phone_number">
                     <i class="submit_btn fa-solid fa-check"></i>
                     <i class="close_btn fa-solid fa-xmark"></i>
                 </div>
@@ -337,14 +337,12 @@
                     .then(response => response.json())
                     .then(data => {
                         if(data.status == 0){    
-                            return data.access_token     
+                            return data.access_token
                         }else{
-                            
                             return fetch('http://127.0.0.1:8000/user/get/token/')
                             .then(response => response.json())
                             .then(data => {
                                 return data.token
-
                             })
                         }
                 });

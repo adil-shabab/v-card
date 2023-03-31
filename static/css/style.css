@@ -4,9 +4,9 @@
   box-sizing: border-box;
 }
 body{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
   /* min-height: 100vh; */
 }
 .signup_form{
@@ -545,4 +545,124 @@ body{
   top: 12px;
   padding: 0px 10px;
   border-right: 1px solid gray;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.card_section{
+  width: 100%;
+  height: auto;
+  margin-top: 80px;
+}
+.card_section .card{
+  padding: 50px;
+  position: relative;
+  background: rgb(224, 224, 224);
+}
+.card_section .card h4{
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+.card_section .card .name{
+  font-weight: bold;
+}
+.card_section .card .designation{
+  font-size: 14px;
+}
+
+.card_section .card .img_section img{
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+}
+
+.card_section .card .img_section .edit_btn{
+  position: absolute;
+  left: -8px;
+  bottom: 0px;
+  background: white;
+  padding: 6px 7px;
+  color: black;
+  border-radius: 50%;
+}
+.card_section .card .img_section input{
+  width: 32px;
+  height: 29px;
+  left: -9px;
+  position: absolute;
+  bottom: 0px;
+  border-radius: 50%;
+  opacity: 0;
+  z-index: 111;
+}
+.card_section .card .img_section input{
+  width: 20px;
+}
+.card_section .card .img_section{
+  margin-right: 10px;
+  position: relative;
+}
+.card_section .card .qr_code{
+  width: 80px;
+  position: absolute;
+  right: 40px;
+  top: 40px;
+}
+.card_section .card .contact{
+  margin-top: 80px;
+}
+.form_section{
+  margin-top: 50px;
+}
+.form_section input{
+  width: 100%;
+  height: 40px;
+  border: 1px solid rgb(202, 202, 202);
+  outline: none;
+  padding: 10px;
+  margin-top: 10px;
+  display: block;
+}
+.form_section button{
+  margin-top: 15px;
+  background-color: rgb(88, 88, 157);
+  color: white;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+}
+#color-picker-bg,
+#color-picker-text{
+  width: 50px;
 }

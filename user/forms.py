@@ -19,7 +19,7 @@ class CustomUserCreationForm(UserCreationForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['whatsapp','company', 'address', 'vedio', 'designation' ,'location', 'name', 'bio', 'dp', 'coverimage', 'facebook', 'twitter', 'instagram', 'linkedin', 'website']
+        fields = ['whatsapp','bg','color','company', 'address', 'vedio', 'designation' ,'location', 'name', 'bio', 'dp', 'coverimage', 'facebook', 'twitter', 'instagram', 'linkedin', 'website']
 
 
         widgets = {
