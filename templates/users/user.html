@@ -34,13 +34,33 @@
                                 <i class="edit_btn fa-regular fa-pen-to-square"></i>
                             </div>
                             <div class="txt_section">
-                                <h4 class="name" id="full_name">{{profile.name}}</h4>
+                                <h4 class="full_name" id="full_name">{{profile.name}}</h4>
                                 <h4 class="designation" id="designation">{{profile.designation}}</h4>
                             </div>
                         </div>
                         <div class="contact d-flex">
-                            <p class="mb-0 me-3" id="phone">+91 7510393197</p>
-                            <p class="ms-3 mb-0" id="email">shabab@gmail.com</p>
+                            <p class="mb-0 me-3 phone" id="phone">+91 7510393197</p>
+                            <p class="ms-3 mb-0 email" id="email">shabab@gmail.com</p>
+                        </div>
+                        <img src="{% static 'qr/'|add:user.username|add:'.jpeg' %}" alt="" class="qr_code">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="d-flex align-items-center">
+                            <!-- <div class="img_section">
+                                <img src="{{profile.dp.url}}" id="dp_img" alt="" class="img-fluid">
+                                <input type="file" name="dp" accept="image/*" id="id_dp">
+                                <i class="edit_btn fa-regular fa-pen-to-square"></i>
+                            </div> -->
+                            <div class="txt_section">
+                                <h4 class="full_name" id="full_name">{{profile.name}}</h4>
+                                <h4 class="designation" id="designation">{{profile.designation}}</h4>
+                            </div>
+                        </div>
+                        <div class="contact d-flex">
+                            <p class="mb-0 me-3 phone" id="phone">+91 7510393197</p>
+                            <p class="ms-3 mb-0 email" id="email">shabab@gmail.com</p>
                         </div>
                         <img src="{% static 'qr/'|add:user.username|add:'.jpeg' %}" alt="" class="qr_code">
                     </div>
@@ -63,6 +83,7 @@
                     <input name="phone_number" type="text" id="phone_input" placeholder="Enter Your Number" value="">
                     <input name="email_id" type="text" id="email_input" placeholder="Enter Your Email" value="">
                     <input type="color" id="color-picker-bg">
+                    {{form.bg_gradient}}
                     <input type="color" id="color-picker-text">
                     <button type="submit">Submit</button>
                 </div>
@@ -77,10 +98,8 @@
 
 
 
-
-<!-- <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> -->
-
 <script>
+
 let backgroundInput = document.getElementById('id_bg')
 let colorInput = document.getElementById('id_color')
 const colorPickerBg = document.getElementById('color-picker-bg');
@@ -90,23 +109,21 @@ backgroundInput.classList.add('d-none')
 colorInput.classList.add('d-none')
 
 
-document.querySelector('.card').style.backgroundColor = backgroundInput.value
-document.querySelector('.card').style.color = colorInput.value
-
-
+document.querySelectorAll('.card').forEach((item)=> item.style.backgroundColor = backgroundInput.value)
+document.querySelectorAll('.card').forEach((item)=> item.style.color = colorInput.value)
 
 colorPickerBg.addEventListener('input', () => {
-  const card = document.querySelector('.card');
+  const card = document.querySelectorAll('.card');
   const color = colorPickerBg.value;
   backgroundInput.value = color
-  card.style.backgroundColor = color;
+  card.forEach((item)=> item.style.backgroundColor = color);
 });
 
 colorPickerTxt.addEventListener('input', () => {
-  const card = document.querySelector('.card');
+  const card = document.querySelectorAll('.card');
   const color = colorPickerTxt.value;
   colorInput.value = color
-  card.style.color = color;
+  card.forEach((item)=> item.style.color = color);
 });
 
 
@@ -149,6 +166,8 @@ function getAccessToken() {
     });
 }
 
+
+
 function getFirstEmail(access_token) {
     fetch(`${baseUrl}/user/email-id/`, {
         headers: {
@@ -157,7 +176,7 @@ function getFirstEmail(access_token) {
     })
     .then(response => response.json())
     .then(data => {
-        document.querySelector('.card_section #email').innerText = data[0].email_id
+        document.querySelectorAll('.card_section .email').forEach((item)=>item.innerText = data[0].email_id)
         document.querySelector('.form_section #email_input').value = data[0].email_id
         console.log(data)
     })
@@ -176,7 +195,7 @@ function getFirstNumber(access_token) {
     })
     .then(response => response.json())
     .then(data => {
-        document.querySelector('.card_section #phone').innerText = data[0].phone_number
+        document.querySelectorAll('.card_section .phone').forEach((item)=>item.innerText = data[0].phone_number)
         document.querySelector('.form_section #phone_input').value = data[0].phone_number
         console.log(data)
     })
@@ -189,9 +208,9 @@ getAccessToken()
 
 
 
-    function changeInputValue(input_id, id){
+    function changeInputValue(input_id, className){
         let innervalue = document.querySelector(`#${input_id}`).value
-        document.querySelector(`#${id}`).innerText = innervalue;        
+        document.querySelectorAll(`.${className}`).forEach((item)=> item.innerText = innervalue)        
     }
 
     

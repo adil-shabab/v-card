@@ -585,8 +585,8 @@ body{
 }
 .card_section .card{
   padding: 50px;
+  width: 465px;
   position: relative;
-  background: rgb(224, 224, 224);
 }
 .card_section .card h4{
   font-size: 18px;
