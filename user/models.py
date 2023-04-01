@@ -72,7 +72,7 @@ class Profile(models.Model):
     bg = models.CharField(max_length=250, null=True, blank=True, default='white')
     color = models.CharField(max_length=250, null=True, blank=True, default='black')
 
-    bg_gradient = models.CharField(max_length=150, null=True, blank=True)
+    bg_gradient = models.CharField(max_length=350, null=True, blank=True)
     qr_status = models.BooleanField(default=True)
 
 

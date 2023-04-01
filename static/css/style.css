@@ -666,3 +666,18 @@ body{
 #color-picker-text{
   width: 50px;
 }
+.input_color_parent{
+  display: flex;
+}
+.input_color_parent .colorpick-eyedropper-input-trigger{
+  display: none;
+}
+.input_color_parent label{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+.form_section #id_dp{
+  height: 50px;
+}

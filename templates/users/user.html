@@ -30,8 +30,8 @@
                         <div class="d-flex align-items-center">
                             <div class="img_section">
                                 <img src="{{profile.dp.url}}" id="dp_img" alt="" class="img-fluid">
-                                <input type="file" name="dp" accept="image/*" id="id_dp">
-                                <i class="edit_btn fa-regular fa-pen-to-square"></i>
+                                
+                                <!-- <i class="edit_btn fa-regular fa-pen-to-square"></i> -->
                             </div>
                             <div class="txt_section">
                                 <h4 class="full_name" id="full_name">{{profile.name}}</h4>
@@ -82,9 +82,14 @@
                     {{form.color}}
                     <input name="phone_number" type="text" id="phone_input" placeholder="Enter Your Number" value="">
                     <input name="email_id" type="text" id="email_input" placeholder="Enter Your Email" value="">
-                    <input type="color" id="color-picker-bg">
                     {{form.bg_gradient}}
-                    <input type="color" id="color-picker-text">
+                    <div class="input_color_parent">
+                        <label for="">Background Color</label>
+                        <input type="color" id="color-picker-bg">
+                        <label for="" class="ms-5">Text Color</label>
+                        <input type="color" id="color-picker-text">
+                    </div>
+                    <input type="file" name="dp" accept="image/*" id="id_dp">
                     <button type="submit">Submit</button>
                 </div>
             </div>
@@ -99,6 +104,8 @@
 
 
 <script>
+let gradientInput = document.getElementById('id_bg_gradient')
+gradientInput.setAttribute('placeholder', 'Gradient Background')
 
 let backgroundInput = document.getElementById('id_bg')
 let colorInput = document.getElementById('id_color')
@@ -111,6 +118,10 @@ colorInput.classList.add('d-none')
 
 document.querySelectorAll('.card').forEach((item)=> item.style.backgroundColor = backgroundInput.value)
 document.querySelectorAll('.card').forEach((item)=> item.style.color = colorInput.value)
+
+if(gradientInput.value != ""){
+    document.querySelectorAll('.card').forEach((item)=> item.setAttribute('style', gradientInput.value))
+}
 
 colorPickerBg.addEventListener('input', () => {
   const card = document.querySelectorAll('.card');
@@ -125,6 +136,10 @@ colorPickerTxt.addEventListener('input', () => {
   colorInput.value = color
   card.forEach((item)=> item.style.color = color);
 });
+
+gradientInput.addEventListener('input', function(){
+    document.querySelectorAll('.card').forEach((item)=> item.setAttribute('style', gradientInput.value))
+})
 
 
 
