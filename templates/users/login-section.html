@@ -1,30 +1,51 @@
-{% extends "users/base.html" %}
 {% load static %}
+{% load i18n %}
+{% load account socialaccount %}
 
-{% block title %}
-<title>VCARD | ACCOUNT</title>
-<link rel="stylesheet" href="{% static 'css/account.css' %}">
-<!-- fontawesome cdn -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-{% endblock title %}
-
-{% block content %}
-<div class="account_section">
-    <div class="container">
-        <div class="row">
-            <div class="d-md-none d-block col-12">
-                <div class="parent_box">
-                    
+{% get_providers as socialaccount_providers %}
+{% get_providers as socialaccount_providers %}
 
 
-                    {% include "users/footer-box.html" %}
-                </div>
-            </div>
+<div class="login_section">
+    <h1 class="head">Welcome to Mentegoz</h1>
+    <p class="description">Please SIGN IN</p>
+
+    <form action="">
+        {% csrf_token %}
+        <div class="input_div">
+            <input type="text">
+            <label for="">Username :</label>
         </div>
-    </div>
+        <div class="input_div">
+            <input type="password">
+            <label for="">Password :</label>
+        </div>
+
+        <button class="submit_btn rounded-pill" type="submit">Login</button>
+        <p class="signup_txt">Don't have an account ? <a href="">signup</a></p>
+
+
+                
+        {% for provider in socialaccount_providers %}
+        {% if provider.id == "openid" %}
+        {% for brand in provider.get_brands %}
+        <div>
+            <a title="{{brand.name}}" class="socialaccount_provider {{provider.id}} {{brand.id}}" href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">{{brand.name}}</a>
+          </div>
+        {% endfor %}
+        {% endif %}
+          <div class="google_provider">
+            <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" 
+               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+               <img 
+                src="
+               {% with 'images/'|add:provider.name|add:'.png' as image %}
+                {% static image %}
+               {% endwith %}
+               " alt="{{ provider.name }}" class="image"/>
+               </a>
+          </div>
+        {% endfor %}
+
+    </form>
 </div>
-{% endblock content %}
-
-{% block script %}
-
-{% endblock script %}

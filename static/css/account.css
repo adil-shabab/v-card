@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -9,6 +10,85 @@ a{
 a:hover{
     text-decoration: none;
 }
+body{
+    font-family: 'Poppins', sans-serif !important;
+}
+
+
+
+
+
+.login_section{
+    padding: 70px 0px;
+}
+.login_section .head{
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+}
+.login_section .description{
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+.login_section form{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.login_section form .input_div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 30px;
+}
+.login_section form .input_div input{
+    width: 90%;
+    height: 50px;
+    padding: 15px;
+    outline: none;
+    border: 1px solid rgb(198, 198, 198);
+    border-radius: 5px;
+}
+.login_section form .input_div label{
+    position: absolute;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 0px 10px;
+    background: white;
+    left: 30px;
+    left: 46px;
+    top: -11px;
+}
+.login_section form .submit_btn{
+    background: #07074c;
+    color: white;
+    border: none;
+    outline: none;
+    padding: 12px 55px;
+}
+.login_section form .image{
+    width: 300px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 8px;
+}
+.login_section form .signup_txt{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.login_section form .signup_txt a{
+    text-decoration: none;
+}
+
+
+
+
+
 
 
 
@@ -31,6 +111,7 @@ a:hover{
     font-size: 23px;
     color: white;
     padding: 14px;
+    transition: 0.2s;
 }
 .footer_box .box > i:not(.active){
     cursor: pointer;
@@ -43,6 +124,6 @@ a:hover{
     color: white;
     font-size: 23px;
 }
-.footer_box .box > i:nth-child(1).active{
+.footer_box .box > .user.active{
     padding: 12px 14px;
 }

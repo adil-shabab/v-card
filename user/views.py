@@ -61,7 +61,7 @@ def user_login(request):
         else:
             mp.error(request, "Username or password incorrect")
 
-    return render(request, 'users/login-section.html')
+    return render(request, 'users/account-section.html')
 
 
 
