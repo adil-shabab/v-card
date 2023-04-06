@@ -10,7 +10,9 @@ from rest_framework import routers
 
 
 urlpatterns = [
-    path('signin', user_login, name="user-login"),
+    path('login', user_login, name="user-login"),
+
+    # path('signin', user_login, name="user-login"),
     path('logout', logout_user, name="user-logout"),
     path('signup', user_signup, name="user-signup"),
     path('home', home, name="home"),
