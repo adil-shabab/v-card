@@ -61,7 +61,7 @@ def user_login(request):
         else:
             mp.error(request, "Username or password incorrect")
 
-    return render(request, 'users/account-section.html')
+    return render(request, 'users/login-section.html')
 
 
 
@@ -158,7 +158,7 @@ def home(request):
 
     context = {'user': request.user, 'profile':profile, 'form':form, }
 
-    return render(request, 'users/home.html', context)
+    return render(request, 'users/card.html', context)
 
 
 

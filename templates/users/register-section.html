@@ -1,0 +1,38 @@
+
+{% extends "users/base.html" %}
+
+{% block title %}
+  <title>SIGNUP | VCARD</title>
+{% endblock title %}
+
+
+{% block content %}
+    <div class="register_section">
+        <h1 class="head">Welcome to Mentegoz</h1>
+        <p class="description">Register to Sign In</p>
+
+
+        <form action="">
+            <div class="input_div">
+                <input type="email">
+                <label for="">Email :</label>
+            </div>
+            <div class="input_div">
+                <input type="text">
+                <label for="">Username :</label>
+            </div>
+            <div class="input_div">
+                <input type="password">
+                <label for="">Password :</label>
+            </div>
+            <div class="input_div">
+                <input type="password">
+                <label for="">Password confirmation :</label>
+            </div>
+
+            <button type="submit" class="submit_btn rounded-pill">Sign Up</button>
+        </form>
+        
+    </div>
+
+{% endblock content %}

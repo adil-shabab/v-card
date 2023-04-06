@@ -1,0 +1,36 @@
+{% extends "users/base.html" %}
+{% load static %}
+
+
+
+{% block title %}
+  <title>CARD | VCARD</title>
+{% endblock title %}
+
+
+
+
+{% block content %}
+  <div class="card_section">
+    <h3 class="head">Edit Profile</h3>
+
+    <form action="">
+        <h4 class="personal_head">Personal Information</h4>
+        <div class="input_div">
+            {{form.name.label_tag }}
+            {{form.name}}    
+        </div>
+        <div class="input_div">
+            {{form.company.label_tag }}
+            {{form.company}}    
+        </div>
+        <div class="input_div">
+            {{form.designation.label_tag }}
+            {{form.designation}}    
+        </div>
+
+        <h4 class="contact_head">Contact Information</h4>
+
+    </form>
+  </div>
+{% endblock content %}

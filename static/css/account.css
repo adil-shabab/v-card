@@ -21,25 +21,28 @@ body{
 .login_section{
     padding: 70px 0px;
 }
-.login_section .head{
+.login_section .head,
+.register_section .head{
     text-align: center;
     font-size: 26px;
     font-weight: 600;
 }
-.login_section .description{
+.login_section .description,
+.register_section .description{
     margin-bottom: 0px;
     text-align: center;
     font-size: 18px;
     font-weight: 500;
 }
-.login_section form{
-    margin-top: 55px;
+.login_section form, .register_section form{
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.login_section form .input_div{
+.login_section form .input_div,
+.register_section form .input_div{
     width: 100%;
     display: flex;
     justify-content: center;
@@ -47,7 +50,8 @@ body{
     position: relative;
     margin-bottom: 30px;
 }
-.login_section form .input_div input{
+.login_section form .input_div input,
+.register_section form .input_div input{
     width: 90%;
     height: 50px;
     padding: 15px;
@@ -55,17 +59,19 @@ body{
     border: 1px solid rgb(198, 198, 198);
     border-radius: 5px;
 }
-.login_section form .input_div label{
+.login_section form .input_div label,
+.register_section form .input_div label{
     position: absolute;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 300;
     padding: 0px 10px;
     background: white;
     left: 30px;
     left: 46px;
-    top: -11px;
+    top: -8px;
 }
-.login_section form .submit_btn{
+.login_section form .submit_btn,
+.register_section form .submit_btn{
     background: #07074c;
     color: white;
     border: none;
@@ -86,6 +92,75 @@ body{
 }
 
 
+
+
+.register_section{
+    padding: 50px 0px;
+}
+
+
+
+.card_section{
+    padding: 40px 0px;
+}
+.card_section .head{
+    font-size: 26px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 35px;
+    text-align: center;
+}
+.card_section .personal_head, .card_section .contact_head{
+    font-size: 18px;
+    width: 90%;
+    margin: 0px auto 25px;
+    padding-left: 42px;
+    position: relative;
+}
+.card_section .personal_head::before, .card_section .contact_head::before{
+    background: #07074c;
+    color: white;
+    position: absolute;
+    border-radius: 50%;
+    top: -3px;
+    left: 4px;
+    font-size: 14px;
+}
+.card_section .personal_head::before{
+    padding: 5px 11px;
+    content: '1';
+}
+.card_section .contact_head::before{
+    content: '2';
+    padding: 5px 10px;
+}
+.card_section .input_div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+.card_section .input_div input{
+    width: 90%;
+    height: 50px;
+    padding: 15px;
+    outline: none;
+    border: 1px solid rgb(198, 198, 198);
+    border-radius: 5px;
+    font-size: 15px;
+}
+.card_section .input_div label{
+    position: absolute;
+    font-size: 12px;
+    font-weight: 300;
+    padding: 0px 10px;
+    background: white;
+    left: 30px;
+    left: 46px;
+    top: -8px;
+}
 
 
 
