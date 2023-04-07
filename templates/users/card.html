@@ -31,21 +31,50 @@
 
         <h4 class="contact_head">Contact Information</h4>
         <div id="all_emails">
+            
+        </div>
+
+        <div id="add_email_div" class="d-none">
             <div class="input_div">
-                <select name="" id="" disabled>
+                <select name="" id="">
                     <option value="Work">Work</option>
                     <option value="Personal">Personal</option>
                     <option value="Home">Home</option>
                     <option value="Company">Company</option>
                 </select>
-                <input disabled type="email">
+                <input required type="email">
                 <label for="">Email : </label>
-                <i class="edit fa-solid fa-pen-to-square"></i>
-                <i class="trash fa-solid fa-trash"></i>
                 <i class="update fa-solid fa-check"></i>
+                <i class="trash fa-solid fa-xmark"></i>
             </div>
         </div>
 
+        <div id="email_add_btn" class="add_btn"><span>+</span> Add New Email</div>
+        
+        
+        <div id="all_numbers">
+            
+        </div>
+
+        <div id="add_number_div" class="d-none">
+            <div class="input_div">
+                <select name="" id="">
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Home">Home</option>
+                    <option value="Company">Company</option>
+                </select>
+                <input required type="text">
+                <label for="">Number : </label>
+                <i class="update fa-solid fa-check"></i>
+                <i class="trash fa-solid fa-xmark"></i>
+            </div>
+        </div>
+
+        <div id="number_add_btn" class="add_btn"><span>+</span> Add New Number</div>
+
     </form>
+
+
   </div>
 {% endblock content %}

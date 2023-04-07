@@ -11,10 +11,10 @@ from rest_framework import routers
 
 urlpatterns = [
     path('login', user_login, name="user-login"),
+    path('signup', user_signup, name="user-signup"),
+    path('logout', logout_user, name="user-logout"),
 
     # path('signin', user_login, name="user-login"),
-    path('logout', logout_user, name="user-logout"),
-    path('signup', user_signup, name="user-signup"),
     path('home', home, name="home"),
     path('extrafields/', ExtraFieldView.as_view(), name='extrafields-list-create'),
     path('extrafields/<int:id>/', ExtraFieldView.as_view(), name='extrafields-detail'),

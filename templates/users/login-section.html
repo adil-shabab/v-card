@@ -21,19 +21,19 @@
         <h1 class="head">Welcome to Mentegoz</h1>
         <p class="description">Please SIGN IN</p>
 
-        <form action="">
+        <form action="{% url 'user-login' %}" method="POST">
             {% csrf_token %}
             <div class="input_div">
-                <input type="text">
+                <input name="username" type="text">
                 <label for="">Username :</label>
             </div>
             <div class="input_div">
-                <input type="password">
+                <input name="password" type="password">
                 <label for="">Password :</label>
             </div>
 
             <button class="submit_btn rounded-pill" type="submit">Login</button>
-            <p class="signup_txt">Don't have an account ? <a href="">signup</a></p>
+            <p class="signup_txt">Don't have an account ? <a href="{% url 'user-signup' %}">Signup</a></p>
 
 
                     

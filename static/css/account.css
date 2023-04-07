@@ -83,11 +83,14 @@ body{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 8px;
 }
-.login_section form .signup_txt{
+
+.login_section form .signup_txt,
+.register_section form .signup_txt{
     margin-top: 30px;
     margin-bottom: 30px;
 }
-.login_section form .signup_txt a{
+.login_section form .signup_txt a,
+.register_section form .signup_txt a{
     text-decoration: none;
 }
 
@@ -161,10 +164,12 @@ body{
     left: 46px;
     top: -8px;
 }
-.card_section #all_emails{
+.card_section #all_emails,
+.card_section #all_numbers{
     width: 100%;
 }
-.card_section #all_emails .input_div select{
+.card_section #all_emails .input_div select,
+.card_section #all_numbers .input_div select{
     width: 22%;
     height: 50px;
     padding: 0px 15px;
@@ -172,35 +177,92 @@ body{
     outline: none;
     border: 1px solid #c6c6c6;
 }
-.card_section #all_emails .input_div input{
+.card_section #all_emails .input_div input,
+.card_section #all_numbers .input_div input{
     width: 68%;
     border-left: none;
     font-size: 14px;
     border-radius: unset;
 }
-.card_section #all_emails .input_div label{
+.card_section #all_emails .input_div label,
+.card_section #all_numbers .input_div label{
     left: 157px;
 }
-.card_section #all_emails .input_div .trash{
+.card_section #all_emails .input_div .trash,
+.card_section #all_numbers .input_div .trash{
     position: absolute;
     cursor: pointer;
     right: 40px;
     font-size: 20px;
 }
-.card_section #all_emails .input_div .edit{
+.card_section #all_emails .input_div .edit,
+.card_section #all_numbers .input_div .edit{
     position: absolute;
     cursor: pointer;
     right: 68px;
     font-size: 20px;
 }
-.card_section #all_emails .input_div .update{
+.card_section #all_emails .input_div .update,
+.card_section #all_numbers .input_div .update{
     position: absolute;
     cursor: pointer;
     right: 40px;
     font-size: 20px;
 }
+.card_section .add_btn{
+    border: none;
+    outline: none;
+    background: #07074c;
+    color: white;
+    margin-left: 5%;
+    width: fit-content;
+    cursor: pointer;
+    padding: 6px 15px;
+    font-size: 10px;
+    margin-bottom: 20px;
+}
+.card_section .add_btn span{
+    font-size: 15px;
+    margin-right: 3px;
+}
 
 
+
+
+.card_section #add_email_div .input_div select,
+.card_section #add_number_div .input_div select{
+    width: 22%;
+    height: 50px;
+    padding: 0px 15px;
+    font-size: 12px;
+    outline: none;
+    border: 1px solid #c6c6c6;
+}
+.card_section #add_email_div .input_div input,
+.card_section #add_number_div .input_div input{
+    width: 68%;
+    border-left: none;
+    font-size: 14px;
+    border-radius: unset;
+}
+.card_section #add_email_div .input_div label,
+.card_section #add_number_div .input_div label{
+    left: 157px;
+}
+.card_section #add_email_div .input_div .trash,
+.card_section #add_number_div .input_div .trash{
+    position: absolute;
+    cursor: pointer;
+    right: 40px;
+    font-size: 20px;
+}
+.card_section #add_email_div .input_div .update, 
+.card_section #add_number_div .input_div .update{
+    position: absolute;
+    cursor: pointer;
+    right: 66px;
+    font-size: 20px;
+}
 
 
 .footer_box{

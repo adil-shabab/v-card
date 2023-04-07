@@ -74,38 +74,24 @@ def user_signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit = False)
-            user.username = user.username.lower()
             
             user.backend = 'django.contrib.auth.backends.ModelBackend'  # set the backend attribute
             user.save()
 
+            slug  = slugify(user.full_name.lower())
 
-            slug  = slugify(user.username.lower())
-
-            user_profile = Profile(user = user,username=user.username, name=user.username, slug = slug)
+            user_profile = Profile(user = user,  name=user.full_name, slug = slug)
             user_profile.save()
 
             token, created = Token.objects.get_or_create(user=user)
-            print(token)
             request.session['env_token'] = token.key
 
             EmailId.objects.create(user=user, email_type='Personal', email_id = user.email)
 
             tokens = request.session.get('env_token', None)
 
-
-
-
-            print(user.email, user)
-            print(tokens)
-            
-            # Token.objects.create(user=user)
-
-
             mp.success(request, "User account created")
-
             login(request, user)
-
             return redirect('home')
         else:
             for msg in form.error_messages:
@@ -114,7 +100,7 @@ def user_signup(request):
 
     context = {'form':form}
 
-    return render(request, 'users/signup.html', context)
+    return render(request, 'users/register-section.html', context)
 
 
 # logout 
@@ -123,6 +109,60 @@ def logout_user(request):
     logout(request)
     mp.success(request, "Sign Out")
     return redirect('user-login')
+
+
+
+
+
+
+import os
+from django.conf import settings
+
+@login_required(login_url='user-login')
+def update_card(request, slug):
+    
+    # profile = Profile.objects.get(user=request.user)
+    user = User.objects.get(pk=request.user.pk)
+    profile = Profile.objects.get(slug=slug)
+    form = ProfileForm(instance=profile)
+
+    if request.method == 'POST':
+        phone = request.POST.get('phone_number')
+        email = request.POST.get('email_id')
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            first_number = PhoneNumber.objects.filter(user=user)[0]
+            first_number.phone_number = phone
+            first_number.save()            
+            first_email = EmailId.objects.filter(user=user)[0]
+            first_email.email_id = email
+            first_email.save()            
+
+            form.save()
+            
+
+
+    import qrcode
+    # Generate QR code image
+    data = f'http://127.0.0.1:8000/user/get/{slug}'
+    img = qrcode.make(data)
+
+    # Save image to /media/qr directory
+    filename = f'{user.username}.jpeg'
+    save_path = os.path.join(settings.BASE_DIR, 'static', 'qr', filename)
+    img.save(save_path)
+
+    context = {
+        'user': user,
+        'profile': profile,
+        'qr': img,
+        'form': form,
+    }
+
+    return render(request, 'users/user.html', context)
+
+
+
 
 
 
@@ -257,52 +297,6 @@ class MyAPIView(APIView):
             return Response({'error': 'No social account found for Google.', 'status': 1}, status=400)
 
 
-
-import os
-from django.conf import settings
-
-@login_required(login_url='user-login')
-def update_card(request, slug):
-    
-    # profile = Profile.objects.get(user=request.user)
-    user = User.objects.get(pk=request.user.pk)
-    profile = Profile.objects.get(slug=slug)
-    form = ProfileForm(instance=profile)
-
-    if request.method == 'POST':
-        phone = request.POST.get('phone_number')
-        email = request.POST.get('email_id')
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            first_number = PhoneNumber.objects.filter(user=user)[0]
-            first_number.phone_number = phone
-            first_number.save()            
-            first_email = EmailId.objects.filter(user=user)[0]
-            first_email.email_id = email
-            first_email.save()            
-
-            form.save()
-            
-
-
-    import qrcode
-    # Generate QR code image
-    data = f'http://127.0.0.1:8000/user/get/{slug}'
-    img = qrcode.make(data)
-
-    # Save image to /media/qr directory
-    filename = f'{user.username}.jpeg'
-    save_path = os.path.join(settings.BASE_DIR, 'static', 'qr', filename)
-    img.save(save_path)
-
-    context = {
-        'user': user,
-        'profile': profile,
-        'qr': img,
-        'form': form,
-    }
-
-    return render(request, 'users/user.html', context)
 
 
 

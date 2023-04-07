@@ -51,7 +51,6 @@ class Profile(models.Model):
     dp = models.ImageField(blank=True, null=True, upload_to= 'dp/', default="dp/default.png")
     coverimage = models.ImageField(blank=True, null=True, upload_to= 'cover/', default="cover/default.jpg")
     location = models.CharField(max_length=200, blank=True, null=True)
-    username = models.CharField(max_length=200, blank=True, null=True)
     facebook = models.CharField(max_length=200, blank=True, null=True)
     linkedin = models.CharField(max_length=200, blank=True, null=True)
     twitter = models.CharField(max_length=200, blank=True, null=True)
