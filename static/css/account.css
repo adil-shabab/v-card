@@ -172,15 +172,33 @@ body{
     outline: none;
     border: 1px solid #c6c6c6;
 }
-.card_section  .input_div.email input{
+.card_section #all_emails .input_div input{
     width: 68%;
     border-left: none;
+    font-size: 14px;
     border-radius: unset;
 }
-.card_section #all_emails .input_div.email label{
+.card_section #all_emails .input_div label{
     left: 157px;
 }
-
+.card_section #all_emails .input_div .trash{
+    position: absolute;
+    cursor: pointer;
+    right: 40px;
+    font-size: 20px;
+}
+.card_section #all_emails .input_div .edit{
+    position: absolute;
+    cursor: pointer;
+    right: 68px;
+    font-size: 20px;
+}
+.card_section #all_emails .input_div .update{
+    position: absolute;
+    cursor: pointer;
+    right: 40px;
+    font-size: 20px;
+}
 
 
 

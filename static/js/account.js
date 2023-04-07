@@ -13,7 +13,7 @@ function getAccessToken() {
                     .then((response) => response.json())
                     .then((data) => {
                         return data.token;
-                    });
+                });
             }
         });
 }
@@ -45,6 +45,69 @@ function EmailId() {
 
 
 
+    // update email 
+    function updateEmail(access_token, id, data) {
+
+        console.log(data)
+        return fetch(`${baseUrl}/user/email-id/${id}/`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Token ${access_token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to update Email field.');
+                }
+            })
+            .then(data => {
+                return getallemail(access_token);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+
+
+
+    // get email by id 
+    function getEmailbyId(access_token, email_id) {
+
+        let id = email_id.id
+        let input_parent = document.getElementById(`email_${id}`)
+        let update_btn = input_parent.querySelector('.update')
+
+        input_parent.querySelector('.edit').classList.add('d-none')
+        input_parent.querySelector('.trash').classList.add('d-none')
+        update_btn.classList.remove('d-none')
+
+        update_btn.addEventListener('click', function(){
+
+            if (! input_parent.querySelector('input').checkValidity()) {
+                input_parent.querySelector('input').reportValidity()
+            }
+
+            const data = {
+                email_type : input_parent.querySelector('select').value,
+                email_id : input_parent.querySelector('input').value
+            }
+
+            getAccessToken()
+            .then(access_token => updateEmail(access_token, id, data));
+        })
+
+        input_parent.querySelector('input').removeAttribute('disabled')
+        input_parent.querySelector('select').removeAttribute('disabled')     
+    
+    }
+
+
+    // get all email 
     function getallemail(access_token) {
         fetch(`${baseUrl}/user/email-id/`, {
             headers: {
@@ -54,20 +117,18 @@ function EmailId() {
             .then((response) => response.json())
             .then((data) => {
                 insertEmail(data);
-                console.log(data);
 
-                // document.querySelectorAll(".edit_email_btn").forEach((item) =>
-                //     item.addEventListener("click", function () {
-                //         const id = item.getAttribute("value");
-                //         const email_id = data.find((email) => email.id == id);
-                //         console.log(email_id);
-                //         if (email_id) {
-                //             getAccessToken().then((access_token) => getEmailbyId(access_token, email_id));
-                //         } else {
-                //             console.log(`Email id with id ${id} not found`);
-                //         }
-                //     })
-                // );
+                document.querySelectorAll("#all_emails .edit").forEach((item) =>
+                    item.addEventListener("click", function () {
+                        const id = item.getAttribute("value");
+                        const email_id = data.find((email) => email.id == id);
+                        if (email_id) {
+                            getAccessToken().then((access_token) => getEmailbyId(access_token, email_id));
+                        } else {
+                            console.log(`Email id with id ${id} not found`);
+                        }
+                    })
+                );
 
                 // document.querySelectorAll(".trash_email_btn").forEach((item) =>
                 //     item.addEventListener("click", function () {
@@ -90,57 +151,36 @@ function EmailId() {
     function insertEmail(data) {
         parent_div.innerHTML = "";
 
-        console.log(data)
-        for (let i = 0; i < data.length; i++) {
-            const div = document.createElement("div");
-            div.classList.add("email_id_parent");
-            div.setAttribute("id", `email_${data[i].id}`);
+        for (let i=0; i<data.length; i++){
 
-            const email_type = document.createElement("input");
-            email_type.classList.add("email_type_edit");
-            email_type.setAttribute("value", data[i].email_type);
-            email_type.setAttribute("type", "text");
-            email_type.setAttribute("disabled", "");
-            email_type.style.width = "30%";
+            const input_div = document.createElement('div')
+            input_div.classList.add('input_div')
+            input_div.setAttribute('id', `email_${data[i].id}`)
+        
+            input_div.innerHTML = `
+                <select value="${data[i].email_type}" name="" id="select_email_${data[i].id}" disabled>
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Home">Home</option>
+                    <option value="Company">Company</option>
+                </select>
+                <input value="${data[i].email_id}" disabled type="email">
+                <label for="">Email : </label>
+                <i value="${data[i].id}" class="edit fa-solid fa-pen-to-square"></i>
+                <i value="${data[i].id}" class="trash fa-solid fa-trash"></i>
+                <i value="${data[i].id}" class="d-none update fa-solid fa-check"></i>
+            `
+        
+            input_div.querySelectorAll('select option').forEach((item)=> {
+                if(item.value == data[i].email_type){
+                    item.setAttribute('selected','')
+                }
+            })
+            parent_div.append(input_div)
 
-            const select_option = document.createElement("div");
-            select_option.classList.add("select_option_parent");
-            select_option.innerHTML = `                    
-                                        <select name="" id="email_type_edit">
-                                            <option value="Work">Work</option>
-                                            <option value="Personal">Personal</option>
-                                            <option value="Home">Home</option>
-                                            <option value="Company">Company</option>
-                                        </select>`;
-
-            const email_id = document.createElement("input");
-            email_id.classList.add("email_id_edit");
-            email_id.setAttribute("value", data[i].email_id);
-            email_id.setAttribute("type", "email");
-            email_id.setAttribute("required", "");
-            email_id.setAttribute("disabled", "");
-            email_id.style.width = "70%";
-
-            const edit_icon = document.createElement("i");
-            edit_icon.classList.add("fa-regular");
-            edit_icon.classList.add("fa-pen-to-square");
-            edit_icon.classList.add("edit_email_btn");
-            edit_icon.setAttribute("value", data[i].id);
-
-            const trash_icon = document.createElement("i");
-            trash_icon.classList.add("fa-solid");
-            trash_icon.classList.add("fa-trash");
-            trash_icon.classList.add("trash_email_btn");
-            trash_icon.setAttribute("value", data[i].id);
-
-            div.appendChild(email_type);
-            div.appendChild(email_id);
-            div.appendChild(edit_icon);
-            div.appendChild(trash_icon);
-            div.appendChild(select_option);
-
-            parent_div.appendChild(div);
         }
+        
+    
     }
 
     // function createEmail(access_token, data) {
