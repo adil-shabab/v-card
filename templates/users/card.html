@@ -12,67 +12,136 @@
 
 {% block content %}
   <div class="card_section">
-    <h3 class="head">Edit Profile</h3>
-
-    <form action="">
-        <h4 class="personal_head">Personal Information</h4>
-        <div class="input_div">
-            {{form.name.label_tag }}
-            {{form.name}}    
-        </div>
-        <div class="input_div">
-            {{form.company.label_tag }}
-            {{form.company}}    
-        </div>
-        <div class="input_div">
-            {{form.designation.label_tag }}
-            {{form.designation}}    
-        </div>
-
-        <h4 class="contact_head">Contact Information</h4>
-        <div id="all_emails">
-            
-        </div>
-
-        <div id="add_email_div" class="d-none">
+      
+        <form class="slider" action="">
+          <div class="slide active personal">
+            <h3 class="head">Edit Profile</h3>
+            <h4 class="personal_head">Personal Information</h4>
             <div class="input_div">
-                <select name="" id="">
-                    <option value="Work">Work</option>
-                    <option value="Personal">Personal</option>
-                    <option value="Home">Home</option>
-                    <option value="Company">Company</option>
-                </select>
-                <input required type="email">
-                <label for="">Email : </label>
-                <i class="update fa-solid fa-check"></i>
-                <i class="trash fa-solid fa-xmark"></i>
+                {{form.name.label_tag }}
+                {{form.name}}    
             </div>
-        </div>
+            <div class="input_div">
+                {{form.company.label_tag }}
+                {{form.company}}    
+            </div>
+            <div class="input_div">
+                {{form.designation.label_tag }}
+                {{form.designation}}    
+            </div>
 
-        <div id="email_add_btn" class="add_btn"><span>+</span> Add New Email</div>
+            <h4 class="contact_head">Contact Information</h4>
+            <div id="all_emails">
+                
+            </div>
+
+            <div id="add_email_div" class="d-none">
+                <div class="input_div">
+                    <select name="" id="">
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Home">Home</option>
+                        <option value="Company">Company</option>
+                    </select>
+                    <input required type="email">
+                    <label for="">Email : </label>
+                    <i class="update fa-solid fa-check"></i>
+                    <i class="trash fa-solid fa-xmark"></i>
+                </div>
+            </div>
+
+            <div id="email_add_btn" class="add_btn"><span>+</span> Add New Email</div>
+            
+            
+            <div id="all_numbers">
+                
+            </div>
+
+            <div id="add_number_div" class="d-none">
+                <div class="input_div">
+                    <select name="" id="">
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Home">Home</option>
+                        <option value="Company">Company</option>
+                    </select>
+                    <input required type="text">
+                    <label for="">Number : </label>
+                    <i class="update fa-solid fa-check"></i>
+                    <i class="trash fa-solid fa-xmark"></i>
+                </div>
+            </div>
+
+            <div id="number_add_btn" class="add_btn"><span>+</span> Add New Number</div>
+
+
+            <div class="input_div">
+                {{form.website.label_tag }}
+                {{form.website}}    
+            </div>
+
+            <div class="input_div">
+                {{form.whatsapp.label_tag }}
+                {{form.whatsapp}}    
+            </div>
+            <div class="input_div">
+                {{form.address.label_tag }}
+                {{form.address}}    
+            </div>
+
+            <div class="next">Next</div>
+        </div>
+          
         
         
-        <div id="all_numbers">
-            
-        </div>
+        
+        <div class="slide social_media">
+            <h3 class="head">Edit Profile</h3>
+            <h4 class="social_head">Social Media Links</h4>
 
-        <div id="add_number_div" class="d-none">
             <div class="input_div">
-                <select name="" id="">
-                    <option value="Work">Work</option>
-                    <option value="Personal">Personal</option>
-                    <option value="Home">Home</option>
-                    <option value="Company">Company</option>
-                </select>
-                <input required type="text">
-                <label for="">Number : </label>
-                <i class="update fa-solid fa-check"></i>
-                <i class="trash fa-solid fa-xmark"></i>
+                {{form.facebook.label_tag }}
+                {{form.facebook}}    
+                <div class="pre_icon">
+                    <i class="fa-brands fa-facebook"></i>
+                </div>
+            </div>
+            <div class="input_div">
+                {{form.twitter.label_tag }}
+                {{form.twitter}}    
+                <div class="pre_icon">
+                    <i class="fa-brands fa-twitter"></i>
+                </div>
+            </div>
+            <div class="input_div">
+                {{form.linkedin.label_tag }}
+                {{form.linkedin}}    
+                <div class="pre_icon">
+                    <i class="fa-brands fa-linkedin"></i>
+                </div>
+            </div>
+            <div class="input_div">
+                {{form.instagram.label_tag }}
+                {{form.instagram}}    
+                <div class="pre_icon">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
+            </div>
+
+            <div id="social_add_btn" class="add_btn"><span>+</span> Add New Field</div>
+
+
+
+            <div class="pagination">
+                <div class="next">Next</div>
+                <div class="prev">Prev</div>
             </div>
         </div>
-
-        <div id="number_add_btn" class="add_btn"><span>+</span> Add New Number</div>
-
+        <div class="slide">
+            <h1>Third page</h1>
+            Third page
+            <div class="prev">Prev</div>
+        </div>
     </form>
 
 

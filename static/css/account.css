@@ -106,6 +106,92 @@ body{
 .card_section{
     padding: 40px 0px;
 }
+.card_section .slider{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 83vh;
+}
+.card_section .slider .slide{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    overflow-y: scroll;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    transition: 0.3s;
+}
+.card_section .slider .slide:not(.active){
+    transform: translateX(100%);
+}
+
+.card_section .slider .slide .pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 45px auto 14px;
+    width: 90%;
+}
+.card_section .slider .slide .pagination .next{
+    width: fit-content;
+    background: #07074c;
+    padding: 6px 25px;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    margin: unset;
+}
+.card_section .slider .slide .pagination .prev{
+    width: fit-content;
+    background: #07074c;
+    padding: 6px 25px;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    right: 93px;
+    margin: unset;
+}
+
+
+.card_section .slider .slide .next{
+    width: fit-content;
+    background: #07074c;
+    padding: 6px 25px;
+    color: white;
+    margin-bottom: 14px;
+    margin-left: auto;
+    margin-right: 5%;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+/* width */
+.card_section .slider .slide::-webkit-scrollbar {
+    width: 4px;
+}
+  
+  /* Track */
+.card_section .slider .slide::-webkit-scrollbar-track {
+    background: #e4e4e4;
+}
+  
+  /* Handle */
+.card_section .slider .slide::-webkit-scrollbar-thumb {
+    background: #07074c9a;
+}
+  
+  /* Handle on hover */
+.card_section .slider .slide::-webkit-scrollbar-thumb:hover {
+    background: #05053abb;
+}
+
+
+
 .card_section .head{
     font-size: 26px;
     font-weight: 600;
@@ -113,14 +199,14 @@ body{
     margin-bottom: 35px;
     text-align: center;
 }
-.card_section .personal_head, .card_section .contact_head{
+.card_section .personal_head, .card_section .contact_head, .card_section .social_head{
     font-size: 18px;
     width: 90%;
     margin: 25px auto 25px;
     padding-left: 42px;
     position: relative;
 }
-.card_section .personal_head::before, .card_section .contact_head::before{
+.card_section .personal_head::before, .card_section .contact_head::before, .card_section .social_head::before{
     background: #07074c;
     color: white;
     position: absolute;
@@ -137,6 +223,25 @@ body{
     content: '2';
     padding: 5px 10px;
 }
+.card_section .social_head::before{
+    content: '3';
+    padding: 5px 10px;
+}
+
+.card_section .slide.social_media .input_div label{
+    left: 85px;
+}
+.card_section .slide.social_media .input_div input{
+    padding-left: 65px;
+}
+.card_section .input_div .pre_icon{
+    position: absolute;
+    left: 5%;
+    padding: 0px 14px;
+    font-size: 20px;
+    top: 11px;
+    border-right: 0.5px solid #b4b4b4;
+}
 .card_section .input_div{
     width: 100%;
     display: flex;
@@ -145,7 +250,8 @@ body{
     position: relative;
     margin-bottom: 20px;
 }
-.card_section .input_div input{
+.card_section .input_div input,
+.card_section .input_div textarea{
     width: 90%;
     height: 50px;
     padding: 15px;
@@ -153,6 +259,9 @@ body{
     border: 1px solid rgb(198, 198, 198);
     border-radius: 5px;
     font-size: 15px;
+}
+.card_section .input_div textarea{
+    height: 120px;
 }
 .card_section .input_div label{
     position: absolute;
@@ -224,6 +333,9 @@ body{
 .card_section .add_btn span{
     font-size: 15px;
     margin-right: 3px;
+}
+.card_section .add_btn#number_add_btn{
+    margin-bottom: 28px;
 }
 
 

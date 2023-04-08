@@ -494,6 +494,31 @@ function PhoneNumber() {
 PhoneNumber();
 
 
+
+
+
+var slides = document.querySelectorAll('.card_section .slider .slide');
+var currentSlide = 0;
+
+document.querySelectorAll('.next').forEach((item) => item.addEventListener('click', nextSlide));
+document.querySelectorAll('.prev').forEach((item) => item.addEventListener('click', prevSlide));
+
+function nextSlide() {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (currentSlide + 1) % slides.length;
+  slides[currentSlide].classList.add('active');
+}
+
+function prevSlide() {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  slides[currentSlide].classList.add('active');
+}
+
+
+
+
+
 // footer box click events 
 function removeAllCurrentActiveClass(){
     document.querySelectorAll('.footer_box .box').forEach((item)=>item.querySelector('i').classList.remove('active'))
