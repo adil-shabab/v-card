@@ -282,10 +282,10 @@ function PhoneNumber() {
                     }
                 })
                 .then(response => {
-                    return getallnumbers(access_token);
                     swal("Poof! Your Phone Number has been deleted!", {
                         icon: "success",
                     });
+                    return getallnumbers(access_token);
                 })
                 .catch(error => console.error(error));
               
@@ -497,6 +497,600 @@ PhoneNumber();
 
 
 
+
+function withSocial(){
+
+    const form = document.getElementById('add_custom_btn_social');
+    const parent_div = document.getElementById('add_on_field_social');
+
+    function insertIcon(data){
+        let modal_body = document.querySelectorAll('.modal-body.social form')
+        
+        modal_body.forEach((item)=>{
+
+            let listHtml = '<ul id="social_media_ul">';
+
+            data.forEach(icon => {
+                listHtml += `<li class="social_media_icon" id="${icon.id}">${icon.icon_html}</li>`;
+            });
+
+            listHtml += '</ul>';
+
+            let div = item.querySelector('.social_parent_form')
+            
+            div.innerHTML = listHtml
+
+        })
+
+        document.querySelectorAll('.social_media_icon').forEach((item) => {
+
+        item.addEventListener('click', function() {
+        // remove the 'active' class from all the icons
+        document.querySelectorAll('.social_media_icon').forEach((element) => {
+            element.classList.remove('active');
+        });
+
+        // check if the current icon was the last clicked icon
+        const itemId = item.id;
+        const lastItemId = localStorage.getItem('IconID');
+
+        if (itemId === lastItemId) {
+            // the user has clicked on this icon before
+            localStorage.removeItem('IconID'); // remove the ID from local storage
+        } else {
+            // the user has clicked on a new icon
+            localStorage.setItem('IconID', itemId); // set the new ID in local storage
+            item.classList.add('active'); // add the 'active' class to the clicked icon
+        }
+        });
+        });
+    }
+
+
+    
+    function getAllIcons(access_token) {
+        fetch(`${baseUrl}/user/icons/`, {
+            headers: {
+            'Authorization': `Token ${access_token}`
+            }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                insertIcon(data)
+            })
+            .catch(error => console.error(error));
+        }
+
+    getAccessToken()
+        .then(access_token => getAllIcons(access_token));
+
+
+
+
+
+
+    function createExtraField(access_token, data) {
+        return fetch(`${baseUrl}/user/extrafields/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Token ${access_token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to create extra field.');
+                }
+            })
+            .then(data => {
+                getallextra(access_token);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    function insertData(data) {
+
+        parent_div.innerHTML=""
+        for (let i = 0; i < data.length; i++) {
+
+            
+            const div = document.createElement('div');
+            div.classList.add('input_div');
+
+
+            div.innerHTML = 
+            `
+                <label>${data[i].name}</label>
+                <input type="text" value="${data[i].description}" disabled />    
+                <div class="pre_icon">
+                    
+                </div>
+                <i class="fa-regular fa-pen-to-square edit__btn" data-bs-toggle="modal" data-bs-target="#socail_media_modal_update" value="${data[i].id}"></i>
+                <i class="fa-solid fa-trash trash__btn" value="${data[i].id}" ></i>     
+            `
+
+            
+
+            function getIcon(access_token) {
+                fetch(`${baseUrl}/user/icons/`, {
+                    headers: {
+                    'Authorization': `Token ${access_token}`
+                    }
+                })
+                .then(response => response.json())
+                .then(file=> {
+                    const icon = file.find(item => item.id === data[i].icon);
+                    // do something with the icon
+                    div.querySelector('.pre_icon').innerHTML = icon.icon_html
+                })
+                .catch(error => console.error(error));
+            }
+
+
+            getAccessToken()
+            .then(access_token => {
+            getIcon(access_token);
+            });
+
+            parent_div.appendChild(div);
+        }
+    }
+
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const data = {
+            name: form.querySelector('#name').value,
+            description: form.querySelector('#description').value,
+            is_social: true
+        };
+
+        // check if IconID is stored in local storage
+        const iconId = localStorage.getItem('IconID');
+        if (iconId) {
+            data.icon = iconId; // add iconId as an extra field to the data object
+        }
+
+        getAccessToken()
+            .then(access_token => {
+            createExtraField(access_token, data);
+        });
+
+        form.querySelector('#name').value = "";
+        form.querySelector('#description').value = "";
+    
+    });
+
+
+
+
+
+
+
+
+
+    function getExtrabyId(access_token, extraField) {
+        
+        let form = document.querySelector('#socail_media_modal_update form');
+        form.querySelector('#name').value = extraField.name;
+        form.querySelector('#description').value = extraField.description;
+
+        document.querySelectorAll('.social_media_icon').forEach((item)=>{
+            item.classList.remove('active')
+            if(item.id == extraField.icon){
+                item.classList.add('active')
+                localStorage.setItem('IconID', item.id); // set the new ID in local storage
+
+            }
+        })            
+    }
+
+
+
+
+
+
+
+
+
+
+    function getallextra(access_token) {
+        fetch(`${baseUrl}/user/extrafields/`, {
+            headers: {
+            'Authorization': `Token ${access_token}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                const filteredData = data.filter(extra => extra.is_social === true);
+                insertData(filteredData);
+
+            document.querySelectorAll('.edit__btn').forEach((item) => item.addEventListener('click', function(){
+                const id = item.getAttribute('value')
+                localStorage.setItem('id', id)
+                const extraField = data.find(extra => extra.id == id)
+
+                console.log(extraField)
+                if (extraField) {
+                getAccessToken()
+                    .then(access_token => getExtrabyId(access_token, extraField));
+                } else {
+                console.log(`Extra field with id ${id} not found`)
+                }
+            }));
+            
+            document.querySelectorAll('.trash__btn').forEach((item) => item.addEventListener('click', function(){
+                const id = item.getAttribute('value')
+                localStorage.setItem('id', id)
+                const extraField = data.find(extra => extra.id == id)
+                console.log(extraField)
+                if (extraField) {
+                getAccessToken()
+                    .then(access_token => deleteExtraById(access_token, extraField.id));
+                } else {
+                console.log(`Extra field with id ${id} not found`)
+                }
+            }));
+
+
+            })
+            .catch(error => console.error(error));
+    }
+
+    getAccessToken()
+        .then(access_token => getallextra(access_token));
+
+
+
+
+
+
+
+
+
+    const updateForm = document.getElementById('add_custom_btn_social_update');
+    function updateExtraField(access_token, id, data) {
+        return fetch(`${baseUrl}/user/extrafields/${id}/`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Token ${access_token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to update extra field.');
+                }
+            })
+            .then(data => {
+                console.log(data); // Do something with the updated extra field data
+                return getallextra(access_token);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    updateForm.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const id = localStorage.getItem('id')
+        const data = {
+            name: updateForm.querySelector('#name').value,
+            description: updateForm.querySelector('#description').value,
+            is_social: true
+        };
+
+        // check if IconID is stored in local storage
+        const iconId = localStorage.getItem('IconID');
+        if (iconId) {
+            data.icon = iconId; // add iconId as an extra field to the data object
+        }
+
+        getAccessToken()
+            .then(access_token => updateExtraField(access_token, id, data));
+    });
+
+
+
+
+
+
+
+
+    function deleteExtraById(access_token, id) {
+
+        swal({
+            title: "Are you sure?",
+            text: "Are you sure to delete this Field",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                fetch(`${baseUrl}/user/extrafields/${id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Token ${access_token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    swal("Poof! Your Field has been deleted!", {
+                        icon: "success",
+                    });
+                    return getallextra(access_token);
+                })
+                .catch(error => console.error(error));
+              
+            } else {
+              swal("Your Field is safe!");
+            }
+        });
+        
+    }
+
+   }
+
+   withSocial()
+
+
+
+
+
+
+   function withoutSocial(){
+
+    const parent_div = document.getElementById('add_on_field_without_social_media')
+    const form = document.getElementById('add_custom_btn_social_without_icon')
+
+
+    function getallextra(access_token) {
+        return fetch(`${baseUrl}/user/extrafields/`, {
+            headers: {
+            'Authorization': `Token ${access_token}`
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const filteredData = data.filter(extra => extra.is_social === false);
+            console.log(data);
+            console.log(filteredData)
+            insertData(filteredData)
+
+            document.querySelectorAll('.edit__btn').forEach((item) => item.addEventListener('click', function(){
+                const id = item.getAttribute('value')
+                localStorage.setItem('id', id)
+                const extraField = data.find(extra => extra.id == id)
+
+                console.log(extraField)
+                if (extraField) {
+                getAccessToken()
+                    .then(access_token => getExtrabyId(access_token, extraField));
+                } else {
+                console.log(`Extra field with id ${id} not found`)
+                }
+            }));
+            
+            document.querySelectorAll('.trash__btn').forEach((item) => item.addEventListener('click', function(){
+                const id = item.getAttribute('value')
+                localStorage.setItem('id', id)
+                const extraField = data.find(extra => extra.id == id)
+                console.log(extraField)
+                if (extraField) {
+                getAccessToken()
+                    .then(access_token => deleteExtraById(access_token, extraField.id));
+                } else {
+                console.log(`Extra field with id ${id} not found`)
+                }
+            }));
+
+
+        })
+        .catch(error => console.error(error));
+    }
+
+    getAccessToken()
+        .then(access_token => getallextra(access_token));
+
+
+
+
+
+
+    function createExtraField(access_token, data) {
+        return fetch(`${baseUrl}/user/extrafields/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Token ${access_token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Failed to create extra field.');
+            }
+        })
+        .then(data => {
+            console.log(data)
+            getallextra(access_token);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+
+
+
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const data = {
+            name: form.querySelector('#name').value,
+            description: form.querySelector('#description').value,
+            is_social: false,
+            icon_html : "<i class='fa-solid fa-link'></i>"
+        };
+
+
+        getAccessToken()
+            .then(access_token => {
+            createExtraField(access_token, data);
+        });
+
+        form.querySelector('#name').value = "";
+        form.querySelector('#description').value = "";
+    
+    });
+
+    
+    function insertData(data) {
+
+        parent_div.innerHTML=""
+        for (let i = 0; i < data.length; i++) {
+
+            const div = document.createElement('div');
+            div.classList.add('input_div');
+
+
+            div.innerHTML = 
+            `
+                <label>${data[i].name}</label>
+                <input type="text" value="${data[i].description}" disabled />    
+                <div class="pre_icon">
+                    ${data[i].icon_html}
+                </div>
+                <i class="fa-regular fa-pen-to-square edit__btn" data-bs-toggle="modal" data-bs-target="#socail_media_modal_update_without_icon" value="${data[i].id}"></i>
+                <i class="fa-solid fa-trash trash__btn" value="${data[i].id}" ></i>     
+            `
+
+            parent_div.appendChild(div);
+        }
+    }
+
+
+
+
+
+    
+    function getExtrabyId(access_token, extraField) {
+        let form = document.querySelector('#socail_media_modal_update_without_icon form');
+        form.querySelector('#name').value = extraField.name;
+        form.querySelector('#description').value = extraField.description;           
+    }
+
+
+
+
+    
+
+
+    const updateForm = document.getElementById('update_extra_field_form_without_social');
+    function updateExtraField(access_token, id, data) {
+        return fetch(`${baseUrl}/user/extrafields/${id}/`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Token ${access_token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to update extra field.');
+                }
+            })
+            .then(data => {
+                console.log(data); // Do something with the updated extra field data
+                return getallextra(access_token);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    updateForm.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const id = localStorage.getItem('id')
+
+        const data = {
+            name: updateForm.querySelector('#name').value,
+            description: updateForm.querySelector('#description').value,
+            is_social: false,
+            icon_html : "<i class='fa-solid fa-link'></i>"
+        };
+
+        getAccessToken()
+            .then(access_token => updateExtraField(access_token, id, data));
+    });
+
+
+    function deleteExtraById(access_token, id) {
+
+        swal({
+            title: "Are you sure?",
+            text: "Are you sure to delete this Field",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                fetch(`${baseUrl}/user/extrafields/${id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Token ${access_token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                
+                .then(response => {
+                    swal("Poof! Your Field has been deleted!", {
+                        icon: "success",
+                    });
+                    return getallextra(access_token);  // THIS CODE IS NOT WORKING
+                })
+                .catch(error => console.error(error));
+              
+            } else {
+              swal("Your Field is safe!");
+            }
+        });
+        
+    }
+
+   }
+
+   
+
+
+   withoutSocial()
+
+
+
+
+
+
+   
+
 var slides = document.querySelectorAll('.card_section .slider .slide');
 var currentSlide = 0;
 
@@ -514,6 +1108,11 @@ function prevSlide() {
   currentSlide = (currentSlide - 1 + slides.length) % slides.length;
   slides[currentSlide].classList.add('active');
 }
+
+
+
+
+
 
 
 

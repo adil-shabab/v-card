@@ -13,6 +13,66 @@ a:hover{
 body{
     font-family: 'Poppins', sans-serif !important;
 }
+.modal form{
+    padding-top: 20px;
+}
+.modal form .modal-footer{
+    margin-top: 20px;
+}
+.modal form input{
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 0.5px solid rgb(194, 194, 194);
+    padding: 8px 15px;
+    outline: none;
+}
+.btn-close:focus{
+    box-shadow: none !important;
+}
+.modal form .btn_success{
+    background: #07074c;
+    color: white;
+    border: 1px solid #07074c;
+    font-size: 14px;
+    padding: 10px 15px
+}
+.modal form .btn_close{
+    background: #07074c8e;
+    border: 1px solid #07074c61;
+    color: white;
+    font-size: 14px;
+    padding: 10px 15px
+}
+.modal form .btn_success:hover,
+.modal form .btn_close:hover{
+    border-color: unset;
+}
+.social_parent_form #social_media_ul{
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.social_parent_form #social_media_ul li{
+    list-style: none;
+    margin-right: 8px;
+    margin-top: 8px;
+}
+.social_parent_form #social_media_ul .social_media_icon{
+    font-size: 20px;
+    padding: 7px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid #0d6efd;
+    color: #0d6efd;
+}
+.social_parent_form #social_media_ul .social_media_icon.active{
+    background: #0d6efd;
+    color: white;
+}
+
+
 
 
 
@@ -97,6 +157,7 @@ body{
 
 
 
+
 .register_section{
     padding: 50px 0px;
 }
@@ -105,6 +166,7 @@ body{
 
 .card_section{
     padding: 40px 0px;
+    margin-bottom: 55px;
 }
 .card_section .slider{
     position: relative;
@@ -156,6 +218,15 @@ body{
     right: 93px;
     margin: unset;
 }
+.card_section .slider .slide .pagination button{
+    position: absolute;
+    right: 0px;
+    padding: 6px 25px;
+    border: none;
+    outline: none;
+    color: white;
+    background: #07074c;
+}
 
 
 .card_section .slider .slide .next{
@@ -199,14 +270,14 @@ body{
     margin-bottom: 35px;
     text-align: center;
 }
-.card_section .personal_head, .card_section .contact_head, .card_section .social_head{
+.card_section .personal_head, .card_section .contact_head, .card_section .social_head, .card_section .details_head{
     font-size: 18px;
     width: 90%;
     margin: 25px auto 25px;
     padding-left: 42px;
     position: relative;
 }
-.card_section .personal_head::before, .card_section .contact_head::before, .card_section .social_head::before{
+.card_section .personal_head::before, .card_section .contact_head::before, .card_section .social_head::before, .card_section .details_head::before{
     background: #07074c;
     color: white;
     position: absolute;
@@ -227,11 +298,15 @@ body{
     content: '3';
     padding: 5px 10px;
 }
+.card_section .details_head::before{
+    content: '4';
+    padding: 5px 10px;
+}
 
-.card_section .slide.social_media .input_div label{
+.card_section .social_media .input_div label{
     left: 85px;
 }
-.card_section .slide.social_media .input_div input{
+.card_section .social_media .input_div input{
     padding-left: 65px;
 }
 .card_section .input_div .pre_icon{
@@ -375,6 +450,23 @@ body{
     right: 66px;
     font-size: 20px;
 }
+
+
+.input_div .edit__btn{
+    position: absolute;
+    right: 8%;
+    font-size: 18px;
+    cursor: pointer;
+}
+.input_div .trash__btn{
+    position: absolute;
+    right: 15%;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
+
 
 
 .footer_box{

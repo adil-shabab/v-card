@@ -1033,7 +1033,7 @@
 
 
         
-     function getAllIcons(access_token) {
+    function getAllIcons(access_token) {
         console.log('asdfa')
          fetch(`${baseUrl}/user/icons/`, {
              headers: {
@@ -1047,7 +1047,7 @@
             .catch(error => console.error(error));
         }
 
-     getAccessToken()
+    getAccessToken()
          .then(access_token => getAllIcons(access_token));
 
 

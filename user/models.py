@@ -18,6 +18,7 @@ class ExtraField(models.Model):
     name = models.CharField(max_length=150)
     description = models.CharField(max_length=180)
     is_social = models.BooleanField(default=False)
+    icon_html = models.CharField(max_length=150, null=True, blank=True)
 
     icon = models.OneToOneField(Icon, on_delete=models.CASCADE, null=True, blank=True)
 

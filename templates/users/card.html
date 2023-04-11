@@ -128,7 +128,10 @@
                 </div>
             </div>
 
-            <div id="social_add_btn" class="add_btn"><span>+</span> Add New Field</div>
+
+            <div id="add_on_field_social"></div>
+
+            <div data-bs-toggle="modal" data-bs-target="#socail_media_modal" id="social_add_btn" class="add_btn"><span>+</span> Add New Field</div>
 
 
 
@@ -137,13 +140,131 @@
                 <div class="prev">Prev</div>
             </div>
         </div>
-        <div class="slide">
-            <h1>Third page</h1>
-            Third page
-            <div class="prev">Prev</div>
+
+        
+        <div class="slide ">
+            <h3 class="head">Edit Profile</h3>
+            <h4 class="details_head">Details Section</h4>
+            <div class="input_div">
+                {{form.location.label_tag }}
+                {{form.location}}    
+            </div>
+            <div class="input_div">
+                {{form.bio.label_tag }}
+                {{form.bio}}    
+            </div>
+            <div class="input_div">
+                {{form.vedio.label_tag }}
+                {{form.vedio}}    
+            </div>
+
+            <div class="social_media" id="add_on_field_without_social_media"></div>
+
+            <div data-bs-toggle="modal" data-bs-target="#socail_media_modal_without_icon" id="social_add_btn_without_icon" class="add_btn"><span>+</span> Add New Field</div>
+
+            <div class="pagination">
+                <div class="prev" style="right: 120px;">Prev</div>
+                <button type="submit">Submit</button>
+            </div>
+
         </div>
     </form>
 
 
   </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="socail_media_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add New Field</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body social">
+                  <form id="add_custom_btn_social">
+                      <div class="social_parent_form"></div>
+                      <input required id="name" type="text" placeholder="Name">
+                      <input required id="description" type="text" placeholder="Description">
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn_close" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn_success" data-bs-dismiss="modal">Save changes</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="socail_media_modal_update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Field</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body social">
+                  <form id="add_custom_btn_social_update">
+                      <div class="social_parent_form"></div>
+                      <input required id="name" type="text" placeholder="Name">
+                      <input required id="description" type="text" placeholder="Description">
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn_close" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn_success" data-bs-dismiss="modal">Save changes</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="socail_media_modal_without_icon" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New Field</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add_custom_btn_social_without_icon">
+                    <input required id="name" type="text" placeholder="Name">
+                    <input required id="description" type="text" placeholder="Description">
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn_close" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn_success" data-bs-dismiss="modal">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="socail_media_modal_update_without_icon" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Field</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="update_extra_field_form_without_social">
+                    <input required id="name" type="text" placeholder="Name">
+                    <input required id="description" type="text" placeholder="Description">
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn_close" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn_success" data-bs-dismiss="modal">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
