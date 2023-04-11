@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -12,29 +13,21 @@ from allauth.socialaccount.models import SocialAccount
 import requests
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-# from .serializers import ExtraFieldSerializer
 from django.contrib.auth.hashers import make_password
-
-
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import ExtraField
 from .serializers import *
-
-
-
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework.authentication import TokenAuthentication
+from .serializers import ExtraFieldSerializer
+from django.utils.text import slugify
 
 
 # Create your views here.
@@ -65,7 +58,6 @@ def user_login(request):
 
 
 
-from django.utils.text import slugify
 
 def user_signup(request):
     form = CustomUserCreationForm()
@@ -115,8 +107,6 @@ def logout_user(request):
 
 
 
-import os
-from django.conf import settings
 
 @login_required(login_url='user-login')
 def update_card(request, slug):
@@ -159,7 +149,35 @@ def update_card(request, slug):
         'form': form,
     }
 
-    return render(request, 'users/user.html', context)
+
+
+    import glob
+    from jinja2 import Environment, FileSystemLoader
+
+    # Define the directory containing the templates
+    template_dir = os.path.join(settings.BASE_DIR, 'templates', 'cards')
+
+    # Create a Jinja2 environment with the directory as the loader
+    env = Environment(loader=FileSystemLoader(template_dir))
+
+    # Get a list of all the template files in the directory
+    template_files = glob.glob(os.path.join(template_dir, 'template-*.html'))
+
+    # Render each template
+    for template_file in template_files:
+        # Get the template numbers by extracting the digits after "template-"
+        template_number = int(os.path.basename(template_file).split('template-')[1].split('.')[0])
+
+        # Render the template with the template number as a context variable
+        print(template_number)
+
+        # Do something with the rendered HTML, such as returning it as a response
+        # For example:
+        # return HttpResponse(html)
+
+    # Return a response indicating that all templates were rendered
+
+    return render(request, 'users/profile.html', context)
 
 
 
@@ -174,6 +192,7 @@ def home(request):
     form = ProfileForm(instance=profile)
 
     if request.method == 'POST':
+        print('hello')
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
@@ -206,13 +225,6 @@ def home(request):
 
 
 
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import ExtraField
-from .serializers import ExtraFieldSerializer
 
 class ExtraFieldView(APIView):
     authentication_classes = [TokenAuthentication]
@@ -273,10 +285,7 @@ class ObtainAuthToken(APIView):
 
 
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from allauth.socialaccount.models import SocialAccount
+
 
 class MyAPIView(APIView):
     # permission_classes = (IsAuthenticated,)

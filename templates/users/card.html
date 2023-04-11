@@ -13,7 +13,10 @@
 {% block content %}
   <div class="card_section">
       
-        <form class="slider" action="">
+        <form class="slider" action="" method="POST" enctype="multipart/form-data" >
+            {% csrf_token %}
+
+            
           <div class="slide active personal">
             <h3 class="head">Edit Profile</h3>
             <h4 class="personal_head">Personal Information</h4>
@@ -38,12 +41,12 @@
             <div id="add_email_div" class="d-none">
                 <div class="input_div">
                     <select name="" id="">
-                        <option value="Work">Work</option>
                         <option value="Personal">Personal</option>
+                        <option value="Work">Work</option>
                         <option value="Home">Home</option>
                         <option value="Company">Company</option>
                     </select>
-                    <input required type="email">
+                    <input type="email">
                     <label for="">Email : </label>
                     <i class="update fa-solid fa-check"></i>
                     <i class="trash fa-solid fa-xmark"></i>
@@ -60,12 +63,12 @@
             <div id="add_number_div" class="d-none">
                 <div class="input_div">
                     <select name="" id="">
-                        <option value="Work">Work</option>
                         <option value="Personal">Personal</option>
+                        <option value="Work">Work</option>
                         <option value="Home">Home</option>
                         <option value="Company">Company</option>
                     </select>
-                    <input required type="text">
+                    <input type="text">
                     <label for="">Number : </label>
                     <i class="update fa-solid fa-check"></i>
                     <i class="trash fa-solid fa-xmark"></i>
