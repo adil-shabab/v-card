@@ -526,6 +526,16 @@ function withSocial() {
 
     getAccessToken().then((access_token) => getAllIcons(access_token));
 
+
+
+
+
+
+
+
+
+
+
     function createExtraField(access_token, data) {
         return fetch(`${baseUrl}/user/extrafields/`, {
             method: "POST",
@@ -535,20 +545,23 @@ function withSocial() {
             },
             body: JSON.stringify(data),
         })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Failed to create extra field.");
-                }
-            })
-            .then((data) => {
-                getallextra(access_token);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        .then((response) => {
+            if (!response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Failed to create extra field.");
+            }
+        })
+        .then((data) => {
+            console.log(data);
+            getallextra(access_token);
+        })
+        .catch((error) => {
+            console.error(`Failed to create extra field: ${error.message}`);
+        });
     }
+    
+
 
     function insertData(data) {
         parent_div.innerHTML = "";

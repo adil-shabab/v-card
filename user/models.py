@@ -20,7 +20,7 @@ class ExtraField(models.Model):
     is_social = models.BooleanField(default=False)
     icon_html = models.CharField(max_length=150, null=True, blank=True)
 
-    icon = models.OneToOneField(Icon, on_delete=models.CASCADE, null=True, blank=True)
+    icon = models.ManyToManyField(Icon, null=True, blank=True)
 
 
 class PhoneNumber(models.Model):
