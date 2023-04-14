@@ -1,3 +1,5 @@
+import glob
+from jinja2 import Environment, FileSystemLoader
 import os
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -129,9 +131,7 @@ def update_card(request, slug):
             first_email.save()            
 
             form.save()
-            
-
-
+                
     import qrcode
     # Generate QR code image
     data = f'http://127.0.0.1:8000/user/get/{slug}'
@@ -150,35 +150,28 @@ def update_card(request, slug):
     }
 
 
-
-    import glob
-    from jinja2 import Environment, FileSystemLoader
-
-    # Define the directory containing the templates
     template_dir = os.path.join(settings.BASE_DIR, 'templates', 'cards')
 
-    # Create a Jinja2 environment with the directory as the loader
     env = Environment(loader=FileSystemLoader(template_dir))
-
-    # Get a list of all the template files in the directory
     template_files = glob.glob(os.path.join(template_dir, 'template-*.html'))
 
+    templates = []
+    template_numbers = []
     # Render each template
     for template_file in template_files:
-        # Get the template numbers by extracting the digits after "template-"
         template_number = int(os.path.basename(template_file).split('template-')[1].split('.')[0])
 
-        # Render the template with the template number as a context variable
-        print(template_number)
+        template_name = 'cards/template-' + str(template_number) + '.html'
 
-        # Do something with the rendered HTML, such as returning it as a response
-        # For example:
-        # return HttpResponse(html)
+        templates.append(template_name)
+        template_numbers.append(template_number)
 
-    # Return a response indicating that all templates were rendered
+    context['templates'] = templates
+    context['template_numbers'] = template_numbers
+
+    
 
     return render(request, 'users/profile.html', context)
-
 
 
 

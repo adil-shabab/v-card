@@ -1,5 +1,72 @@
-const baseUrl = "http://127.0.0.1:8000";
+// render tempaltes 
+if(document.querySelector('.all_templates') != null){
 
+
+    let numbers = document.getElementById('template_numbers').dataset.value.split(',');
+    let names = document.getElementById('template_names').dataset.value.split(',');
+    
+
+    let template_btns = document.querySelectorAll('.all_templates .template_btn')
+    template_btns.forEach((item)=> item.addEventListener('click', function(){
+        template_btns.forEach((item)=> item.classList.remove('active'))
+        item.classList.add('active')
+        localStorage.setItem('template_id', item.getAttribute('id'))
+        changeCard()
+    }))
+
+
+    
+    localStorage.setItem('template_id', template_btns[0].getAttribute('id'))
+    template_btns[0].classList.add('active')
+    
+
+    let first_template_id = names[0]
+    if (names[0].startsWith('[')) {
+        first_template_id = names[0].substring(1);
+    }
+    
+    first_template_id = first_template_id.substring(1, first_template_id.length - 1);
+
+
+    document.getElementById(first_template_id).classList.remove('d-none')
+    
+    function changeCard() {
+
+        let template_id = localStorage.getItem('template_id');
+        let boxes = document.querySelectorAll('.profile_section .box .inner_box')
+
+        
+
+        boxes.forEach((item)=> {
+            let current_id = item.getAttribute('id')
+            let updated_id = current_id.replace('/','-')
+            updated_id = updated_id.replace(".html", "");
+            item.removeAttribute('id')
+            item.setAttribute('id', updated_id)
+        })
+
+      
+        template_id = 'cards/template-' + template_id;
+        let updated_id = template_id.replace('/', '-');
+
+
+
+        console.log(updated_id)
+
+
+
+      
+        document.querySelectorAll('.profile_section .box div').forEach((item)=> item.classList.add('d-none'));
+        document.querySelector(`.profile_section .box #${updated_id}`).classList.remove('d-none');
+      }
+      
+      
+}    
+
+
+
+
+const baseUrl = "http://127.0.0.1:8000";
 function getAccessToken() {
     return fetch(`${baseUrl}/user/get/google/token/`)
         .then((response) => response.json())
@@ -526,16 +593,6 @@ function withSocial() {
 
     getAccessToken().then((access_token) => getAllIcons(access_token));
 
-
-
-
-
-
-
-
-
-
-
     function createExtraField(access_token, data) {
         return fetch(`${baseUrl}/user/extrafields/`, {
             method: "POST",
@@ -545,23 +602,20 @@ function withSocial() {
             },
             body: JSON.stringify(data),
         })
-        .then((response) => {
-            if (!response.ok) {
-                return response.json();
-            } else {
-                throw new Error("Failed to create extra field.");
-            }
-        })
-        .then((data) => {
-            console.log(data);
-            getallextra(access_token);
-        })
-        .catch((error) => {
-            console.error(`Failed to create extra field: ${error.message}`);
-        });
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Failed to create extra field.");
+                }
+            })
+            .then((data) => {
+                getallextra(access_token);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
-    
-
 
     function insertData(data) {
         parent_div.innerHTML = "";
@@ -587,7 +641,8 @@ function withSocial() {
                 })
                     .then((response) => response.json())
                     .then((file) => {
-                        const icon = file.find((item) => item.id === data[i].icon);
+                        const icon = file.find((item) => item.id === data[i].icon[0]);
+                        console.log(icon)
                         // do something with the icon
                         div.querySelector(".pre_icon").innerHTML = icon.icon_html;
                     })
@@ -613,8 +668,10 @@ function withSocial() {
 
         // check if IconID is stored in local storage
         const iconId = localStorage.getItem("IconID");
+        const icon = []
         if (iconId) {
-            data.icon = iconId; // add iconId as an extra field to the data object
+            icon.push(iconId)
+            data.icon = icon; // add iconId as an extra field to the data object
         }
 
         getAccessToken().then((access_token) => {
@@ -721,9 +778,11 @@ function withSocial() {
         };
 
         // check if IconID is stored in local storage
+        let icon = []
         const iconId = localStorage.getItem("IconID");
         if (iconId) {
-            data.icon = iconId; // add iconId as an extra field to the data object
+            icon.push(iconId)
+            data.icon = icon; // add iconId as an extra field to the data object
         }
 
         getAccessToken().then((access_token) => updateExtraField(access_token, id, data));
@@ -969,9 +1028,24 @@ document.querySelectorAll(".next").forEach((item) => item.addEventListener("clic
 document.querySelectorAll(".prev").forEach((item) => item.addEventListener("click", prevSlide));
 
 function nextSlide() {
-    slides[currentSlide].classList.remove("active");
-    currentSlide = (currentSlide + 1) % slides.length;
-    slides[currentSlide].classList.add("active");
+
+    if(document.getElementById('id_company') != null){
+        document.getElementById('id_company').setAttribute('required','')
+        if (!document.getElementById("id_company").checkValidity()) {
+            document.getElementById("id_company").reportValidity();
+        }
+        else{
+            document.getElementById('id_designation').setAttribute('required','')
+            if (!document.getElementById("id_designation").checkValidity()) {
+
+                document.getElementById("id_designation").reportValidity();
+            }else{
+                slides[currentSlide].classList.remove("active");
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add("active");
+            }
+        }
+    }
 }
 
 function prevSlide() {

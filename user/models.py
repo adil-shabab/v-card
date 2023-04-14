@@ -22,6 +22,9 @@ class ExtraField(models.Model):
 
     icon = models.ManyToManyField(Icon, null=True, blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class PhoneNumber(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -74,6 +77,9 @@ class Profile(models.Model):
 
     bg_gradient = models.CharField(max_length=350, null=True, blank=True)
     qr_status = models.BooleanField(default=True)
+
+
+    template = models.IntegerField(default=1)
 
 
 
