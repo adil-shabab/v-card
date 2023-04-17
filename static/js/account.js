@@ -4,33 +4,24 @@ if(document.querySelector('.all_templates') != null){
     let numbers = document.getElementById('template_numbers').dataset.value.split(',');
     let names = document.getElementById('template_names').dataset.value.split(',');
     let boxes = document.querySelectorAll('.profile_section .box .inner_box')
-    
+    let current_template_id = document.getElementById('template').innerHTML
+    let first_template_btn
 
     let template_btns = document.querySelectorAll('.all_templates .template_btn')
     template_btns.forEach((item)=> item.addEventListener('click', function(){
         template_btns.forEach((item)=> item.classList.remove('active'))
         item.classList.add('active')
-        console.log(item)
         localStorage.setItem('template_id', item.getAttribute('id'))
         changeCard()
     }))
-
-    
-    let current_template_id = document.getElementById('template').innerHTML
-    console.log(current_template_id)
-
         
     localStorage.setItem('template_id', current_template_id)
-    let first_template_btn
 
     Array.from(template_btns).filter(element => {
         if(element.id === current_template_id){
             first_template_btn = element
         }
-        console.log(element.id, typeof(element.id))
-        console.log(current_template_id, typeof(current_template_id))
     }); 
-
 
     first_template_btn.classList.add('active')    
     
@@ -50,12 +41,10 @@ if(document.querySelector('.all_templates') != null){
     function changeCard() {
 
         let template_id = localStorage.getItem('template_id');
-
         let template = parseInt(template_id)
         
         getAccessToken().then((access_token) => changeTemplate(template,access_token));
         
-
         boxes.forEach((item)=> {
             let current_id = item.getAttribute('id')
             let updated_id = current_id.replace('/','-')
@@ -64,16 +53,8 @@ if(document.querySelector('.all_templates') != null){
             item.setAttribute('id', updated_id)
         })
 
-      
         template_id = 'cards/template-' + template_id;
         let updated_id = template_id.replace('/', '-');
-
-
-
-        console.log(updated_id)
-
-
-
       
         document.querySelectorAll('.profile_section .box .inner_box').forEach((item)=> item.classList.add('d-none'));
         document.querySelector(`.profile_section .box #${updated_id}`).classList.remove('d-none');
@@ -106,7 +87,6 @@ function getAccessToken() {
 
 function changeTemplate(template, access_token) {
 
-    console.log(access_token,template,typeof(template))
     const url = `${baseUrl}/user/change-template/`;
     const data = { 'template': template };
     fetch(url, {
@@ -118,7 +98,7 @@ function changeTemplate(template, access_token) {
       body: JSON.stringify(data),
     })
       .then(response => {
-        console.log(response);
+        // console.log(response);
         // Handle the response here
       })
       .catch(error => {
