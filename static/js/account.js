@@ -1,40 +1,59 @@
 // render tempaltes 
 if(document.querySelector('.all_templates') != null){
-
-
+    
     let numbers = document.getElementById('template_numbers').dataset.value.split(',');
     let names = document.getElementById('template_names').dataset.value.split(',');
+    let boxes = document.querySelectorAll('.profile_section .box .inner_box')
     
 
     let template_btns = document.querySelectorAll('.all_templates .template_btn')
     template_btns.forEach((item)=> item.addEventListener('click', function(){
         template_btns.forEach((item)=> item.classList.remove('active'))
         item.classList.add('active')
+        console.log(item)
         localStorage.setItem('template_id', item.getAttribute('id'))
         changeCard()
     }))
 
-
     
-    localStorage.setItem('template_id', template_btns[0].getAttribute('id'))
-    template_btns[0].classList.add('active')
+    let current_template_id = document.getElementById('template').innerHTML
+    console.log(current_template_id)
+
+        
+    localStorage.setItem('template_id', current_template_id)
+    let first_template_btn
+
+    Array.from(template_btns).filter(element => {
+        if(element.id === current_template_id){
+            first_template_btn = element
+        }
+        console.log(element.id, typeof(element.id))
+        console.log(current_template_id, typeof(current_template_id))
+    }); 
+
+
+    first_template_btn.classList.add('active')    
+    
+    boxes.forEach((item)=> {
+        let current_id = item.getAttribute('id')
+        let updated_id = current_id.replace('/','-')
+        updated_id = updated_id.replace(".html", "");
+        item.removeAttribute('id')
+        item.setAttribute('id', updated_id)
+    })
     
 
-    let first_template_id = names[0]
-    if (names[0].startsWith('[')) {
-        first_template_id = names[0].substring(1);
-    }
-    
-    first_template_id = first_template_id.substring(1, first_template_id.length - 1);
+    let first_template = document.querySelector(`.profile_section .box #cards-template-${current_template_id}`)
+    first_template.classList.remove('d-none')
 
-
-    document.getElementById(first_template_id).classList.remove('d-none')
     
     function changeCard() {
 
         let template_id = localStorage.getItem('template_id');
-        let boxes = document.querySelectorAll('.profile_section .box .inner_box')
 
+        let template = parseInt(template_id)
+        
+        getAccessToken().then((access_token) => changeTemplate(template,access_token));
         
 
         boxes.forEach((item)=> {
@@ -56,7 +75,7 @@ if(document.querySelector('.all_templates') != null){
 
 
       
-        document.querySelectorAll('.profile_section .box div').forEach((item)=> item.classList.add('d-none'));
+        document.querySelectorAll('.profile_section .box .inner_box').forEach((item)=> item.classList.add('d-none'));
         document.querySelector(`.profile_section .box #${updated_id}`).classList.remove('d-none');
       }
       
@@ -64,9 +83,9 @@ if(document.querySelector('.all_templates') != null){
 }    
 
 
-
-
 const baseUrl = "http://127.0.0.1:8000";
+
+
 function getAccessToken() {
     return fetch(`${baseUrl}/user/get/google/token/`)
         .then((response) => response.json())
@@ -82,6 +101,33 @@ function getAccessToken() {
             }
         });
 }
+
+
+
+function changeTemplate(template, access_token) {
+
+    console.log(access_token,template,typeof(template))
+    const url = `${baseUrl}/user/change-template/`;
+    const data = { 'template': template };
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Token ${access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        console.log(response);
+        // Handle the response here
+      })
+      .catch(error => {
+        console.error(error);
+        // Handle the error here
+    });
+}
+  
+
 
 
 function EmailId() {

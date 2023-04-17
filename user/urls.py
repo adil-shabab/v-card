@@ -21,6 +21,7 @@ urlpatterns = [
     path('phone-number/', PhoneView.as_view(), name='phone-number-list-create'),
     path('phone-number/<int:id>/', PhoneView.as_view(), name='phone-number-detail'),
     path('email-id/', EmailView.as_view(), name='email-id-list-create'),
+    path('change-template/', TemplateView.as_view(), name='template-view'),
     path('email-id/<int:id>/', EmailView.as_view(), name='email-id-detail'),
     path('get/token/', ObtainAuthToken.as_view(), name='token_obtain'),
     path('get/google/token/', MyAPIView.as_view(), name='token_google'),

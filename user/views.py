@@ -305,9 +305,21 @@ class MyAPIView(APIView):
 
 
 
+class TemplateView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
+    def post(self, request):
+        data = request.data
+        user = request.user
 
-
+        try:
+            profile = Profile.objects.get(user=user)
+            profile.template = data['template']
+            profile.save()
+            return Response({'success': True})
+        except Profile.DoesNotExist:
+            return Response({'success': False, 'message': 'Profile does not exist'})
 
 
 
