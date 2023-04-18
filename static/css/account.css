@@ -501,10 +501,27 @@ body{
 }
 .profile_section .card{
     padding: 15px;
+    margin: 4px;
 }
 
 
+
  
+
+.current_template .heading{
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+.current_template .change_template_btn{
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background: #07074c;
+    color: white;
+    margin-top: 20px;
+}
 
 
 .footer_box{
@@ -541,4 +558,156 @@ body{
 }
 .footer_box .box > .user.active{
     padding: 12px 14px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.template_one .image_section{
+    height: 25vh;
+    background-position: center !important;
+    background-size: cover !important;
+}
+.template_one .text_section{
+    background: white;
+    padding: 0px 0px 50px 0px;
+    margin-top: -43px;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.template_one .text_section .dp{
+    height: 100px;
+    width: 100px;
+    margin-top: -50px;
+}
+.template_one .text_section .dp .dp_image{
+    background-position: center !important;
+    background-size: cover !important;
+    box-shadow: 1px 4px 5px 1px rgba(41, 38, 38, 0.04);
+    border-radius: 20px;
+    height: 100px;
+    width: 100px;
+}
+.template_one  .text_section #id_name{
+    margin-top: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 0px 10px;
+    text-align: center;
+    border: none;
+    outline: none;
+}
+.template_one .text_section #id_designation{
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: 18px;
+    padding: 0px 10px;
+    text-align: center;
+    border: none;
+    outline: none;
+}
+.template_one .text_section #id_company{
+    font-size: 16px;
+    padding: 0px 10px;
+    text-align: center;
+    border: none;
+    outline: none;
+}
+.template_one .text_section .icons{
+    margin-top: 35px;
+    padding: 20px 30px;
+    border-top: 1px solid gray;
+}
+.template_one .text_section .icons a{
+    text-decoration: none;
+    color: black;
+}
+.template_one .text_section .icons a:hover{
+    text-decoration: none;
+    color: black;
+}
+.template_one .text_section .icons i{
+    font-size: 22px;
+    margin-right: 20px;
+}
+.template_one .text_section .sm_parent{
+    margin-top: 25px;
+    width: 80%;
+}
+.template_one .text_section .sm_parent .sm_box{
+    display: flex;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.template_one .text_section .sm_parent .sm_box i{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 10%;
+    border-radius: 5px;
+    border: 1px solid rgb(203, 203, 203);
+    margin-right: 3%;
+}
+.template_one .text_section .sm_parent .sm_box span{
+    height: 100%;
+    background: rgb(244 244 244);
+    padding: 7px 10px;
+    width: 87%;
+}
+.template_one .text_section .bio{
+    width: 83%;
+    margin-top: 30px;
+}
+.template_one .text_section .bio p{
+    font-size: 14px;
+}
+.template_one .text_section .location{
+    width: 83%;
+    margin-top: 20px;
+}
+.template_one .text_section .location i{
+    margin-right: 10px;
+    font-size: 20px;
+}
+.template_one .text_section .contact_btn{
+    width: 83%;
+    margin-top: 30px;
+}
+.template_one .text_section .save{
+    border: 2px solid;
+    outline: none;
+    padding: 13px 20px;
+    width: 70%;
+    margin-right: 3%;
+    background: white;
+    border-radius: 5px;
+}
+.template_one .text_section .save i{
+    margin-right: 15px;
+
+}
+.template_one .text_section .share{
+    width: 20%;
+    border: 2px solid;
+    outline: none;
+    padding: 13px 20px;
+    background: white;
+    border-radius: 5px;
 }

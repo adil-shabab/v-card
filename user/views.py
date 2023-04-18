@@ -107,16 +107,26 @@ def logout_user(request):
 
 
 
+def get_user(request, slug):
+    profile = Profile.objects.filter(slug=slug)[0]
+    print(profile)
+    context = {
+        'profile': profile
+    }
+    return render(request, 'users/get-user.html', context)
 
 
 
 @login_required(login_url='user-login')
-def update_card(request, slug):
+def update_card(request):
     
     # profile = Profile.objects.get(user=request.user)
     user = User.objects.get(pk=request.user.pk)
-    profile = Profile.objects.get(slug=slug)
+    profile = Profile.objects.get(user=user)
     form = ProfileForm(instance=profile)
+
+    phone_number = PhoneNumber.objects.filter(user=user)[0]
+    email_id = EmailId.objects.filter(user=user)[0]
 
     if request.method == 'POST':
         phone = request.POST.get('phone_number')
@@ -134,7 +144,7 @@ def update_card(request, slug):
                 
     import qrcode
     # Generate QR code image
-    data = f'http://127.0.0.1:8000/user/get/{slug}'
+    data = f'http://127.0.0.1:8000/user/get/{user.username}'
     img = qrcode.make(data)
 
     # Save image to /media/qr directory
@@ -147,6 +157,8 @@ def update_card(request, slug):
         'profile': profile,
         'qr': img,
         'form': form,
+        'phone': phone_number,
+        'email': email_id
     }
 
 
@@ -174,6 +186,51 @@ def update_card(request, slug):
     return render(request, 'users/profile.html', context)
 
 
+@login_required(login_url='user-login')
+def change_template(request):
+    
+    # profile = Profile.objects.get(user=request.user)
+    user = User.objects.get(pk=request.user.pk)
+    profile = Profile.objects.get(user=user)
+    form = ProfileForm(instance=profile)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+
+
+    context = {
+        'user': user,
+        'profile': profile,
+        'form': form,
+    }
+
+
+    template_dir = os.path.join(settings.BASE_DIR, 'templates', 'cards')
+
+    env = Environment(loader=FileSystemLoader(template_dir))
+    template_files = glob.glob(os.path.join(template_dir, 'template-*.html'))
+
+    templates = []
+    template_numbers = []
+    # Render each template
+    for template_file in template_files:
+        template_number = int(os.path.basename(template_file).split('template-')[1].split('.')[0])
+
+        template_name = 'cards/template-' + str(template_number) + '.html'
+
+        templates.append(template_name)
+        template_numbers.append(template_number)
+
+    context['templates'] = templates
+    context['template_numbers'] = template_numbers
+
+    
+
+    return render(request, 'users/change-template.html', context)
+
+
 
 
 
@@ -190,7 +247,7 @@ def home(request):
         if form.is_valid():
             form.save()
             
-            return redirect('get-user', profile.slug)
+            return redirect('update-card')
 
 
     if request.user.is_authenticated:

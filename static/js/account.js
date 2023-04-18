@@ -1,3 +1,35 @@
+
+// home page doctor carousel 
+if(document.querySelector('.card_carousel') !== null){
+    $('.card_carousel').slick({
+      
+      dots: true,
+      infinite: true,
+      autoPlayTimeout:2000,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+    });
+  }
+
+
+if(document.querySelector('.current_template')!=null){
+    
+    let current_template_id = document.getElementById('template').innerHTML
+    let template_box = document.querySelectorAll('.current_template .inner_box')
+    
+    template_box.forEach((item)=> {
+        let current_id = item.getAttribute('id')
+        let updated_id = current_id.replace('/','-')
+        updated_id = updated_id.replace(".html", "");
+        item.removeAttribute('id')
+        item.setAttribute('id', updated_id)
+    })
+
+    let current_template = document.querySelector(`.current_template  #cards-template-${current_template_id}`)
+    current_template.classList.remove('d-none')
+}
+
 // render tempaltes 
 if(document.querySelector('.all_templates') != null){
     

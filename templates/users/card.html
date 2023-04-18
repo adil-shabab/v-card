@@ -21,6 +21,14 @@
             <h3 class="head">Edit Profile</h3>
             <h4 class="personal_head">Personal Information</h4>
             <div class="input_div">
+                <label for="">Profile Image</label>
+                <input type="file" name="dp" accept="image/*" id="id_dp">
+            </div>
+            <div class="input_div">
+                <label for="">Cover Image</label>
+                <input type="file" name="coverimage" accept="image/*" id="id_coverimage">
+            </div>
+            <div class="input_div">
                 {{form.name.label_tag }}
                 {{form.name}}    
             </div>

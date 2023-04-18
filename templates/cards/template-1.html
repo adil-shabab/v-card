@@ -1,8 +1,72 @@
-<div class="card">
-    <h4>Template 1</h4>
-    <h5>{{profile.name}}</h5>
-    <h6>{{profile.designation}}</h6>
-    <p>{{profile.company}}</p>
+<div class="template_one">
+    <div style="background: url('{{profile.coverimage.url}}')" class="image_section"></div>
+    <div class="text_section">
+        <div class="dp">
+            <div class="dp_image" style="background: url('{{profile.dp.url}}')"></div>
+        </div>
+
+        {{form.name}}
+        {{form.designation}}
+        {{form.company}}
+
+
+        <div class="icons">
+            {% if profile.whatsapp %}
+            <a href="https://wa.me/{{profile.whatsapp}}"><i class="fa-brands fa-whatsapp"></i></a>
+            {% else %}
+            <i class="fa-brands fa-whatsapp"></i>
+            {% endif %}
+            {% if profile.facebook %}
+            <a href="{{profile.facebook}}"><i class="fa-brands fa-facebook"></i></a>
+            {% else %}
+            <i class="fa-brands fa-facebook"></i>
+            {% endif %}
+            {% if profile.linkedin %}
+            <a href="{{profile.linkedin}}"><i class="fa-brands fa-linkedin"></i></a>
+            {% else %}
+            <i class="fa-brands fa-linkedin"></i>
+            {% endif %}
+            {% if profile.twitter %}
+            <a href="{{profile.twitter}}"><i class="fa-brands fa-twitter"></i></a>
+            {% else %}
+            <i class="fa-brands fa-twitter"></i>
+            {% endif %}
+            {% if profile.instagram %}
+            <a href="{{profile.instagram}}"><i class="fa-brands fa-instagram"></i></a>
+            {% else %}
+            <i class="fa-brands fa-instagram"></i>
+            {% endif %}
+        </div>
+
+        <div class="sm_parent">
+            <div class="phone sm_box">
+                <i class="fa-solid fa-phone-volume"></i>
+                <span>+91 {{phone.phone_number}}</span>
+            </div>
+            <div class="email sm_box">
+                <i class="fa-solid fa-envelope"></i>
+                <span>{{email.email_id}}</span>
+            </div>
+            <div class="website sm_box">
+                <i class="fa-solid fa-globe"></i>
+                <span>{{profile.website}}</span>
+            </div>
+        </div>
+
+        <div class="bio">
+            <h5 class="head">About Me</h5>
+            <p>{{profile.bio}}</p>
+        </div>
+
+        <div class="location">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Metro City, Malappuram</span>
+        </div>
+
+        <div class="contact_btn">
+            <button class="save"><i class="fa-solid fa-download"></i>Save Contact</button>
+            <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
+        </div>
+
+    </div>
 </div>
-
-
