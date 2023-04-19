@@ -10,7 +10,25 @@ if(document.querySelector('.card_carousel') !== null){
       slidesToScroll: 1,
       arrows: false,
     });
-  }
+}
+
+
+
+if(document.querySelector('.user_box')!=null){
+    let current_template_id = document.getElementById('template').innerHTML
+    let template_box = document.querySelectorAll('.user_box .box')
+    
+    template_box.forEach((item)=> {
+        let current_id = item.getAttribute('id')
+        let updated_id = current_id.replace('/','-')
+        updated_id = updated_id.replace(".html", "");
+        item.removeAttribute('id')
+        item.setAttribute('id', updated_id)
+    })
+
+    let current_template = document.querySelector(`.user_box  #cards-template-${current_template_id}`)
+    current_template.classList.remove('d-none')
+}
 
 
 if(document.querySelector('.current_template')!=null){

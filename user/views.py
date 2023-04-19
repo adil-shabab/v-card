@@ -108,11 +108,38 @@ def logout_user(request):
 
 
 def get_user(request, slug):
+    
+    user = User.objects.get(pk=request.user.pk)
     profile = Profile.objects.filter(slug=slug)[0]
+    phone_number = PhoneNumber.objects.filter(user=user)[0]
+    email_id = EmailId.objects.filter(user=user)[0]
     print(profile)
     context = {
-        'profile': profile
+        'profile': profile,
+        'phone': phone_number,
+        'email': email_id
     }
+
+    template_dir = os.path.join(settings.BASE_DIR, 'templates', 'cards')
+
+    env = Environment(loader=FileSystemLoader(template_dir))
+    template_files = glob.glob(os.path.join(template_dir, 'template-*.html'))
+
+    templates = []
+    template_numbers = []
+    # Render each template
+    for template_file in template_files:
+        template_number = int(os.path.basename(template_file).split('template-')[1].split('.')[0])
+
+        template_name = 'cards/template-' + str(template_number) + '.html'
+
+        templates.append(template_name)
+        template_numbers.append(template_number)
+
+    context['templates'] = templates
+    context['template_numbers'] = template_numbers
+
+
     return render(request, 'users/get-user.html', context)
 
 
@@ -194,6 +221,9 @@ def change_template(request):
     profile = Profile.objects.get(user=user)
     form = ProfileForm(instance=profile)
 
+    phone_number = PhoneNumber.objects.filter(user=user)[0]
+    email_id = EmailId.objects.filter(user=user)[0]
+
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
@@ -204,6 +234,8 @@ def change_template(request):
         'user': user,
         'profile': profile,
         'form': form,
+        'phone': phone_number,
+        'email': email_id
     }
 
 

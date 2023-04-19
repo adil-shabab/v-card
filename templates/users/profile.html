@@ -12,9 +12,9 @@
 {% block content %}
 <div class="d-none" id="template">{{profile.template}}</div>
 <div class="current_template">
-    <!-- <h3 class="heading">Current Template Design</h3> -->
+    <h3 class="heading">Current Template Design</h3>
     {% for x in templates %}
-    <div class="d-none inner_box h-100" id="{{ x }}" >
+    <div class="d-none inner_box" id="{{ x }}" >
         {% include x %}
     </div>            
     {% endfor %}

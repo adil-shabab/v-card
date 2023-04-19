@@ -497,7 +497,16 @@ body{
 
 
 .profile_section{
-    padding: 30px 0px;
+    padding: 23px 0px;
+}
+.profile_section .back_btn{
+    background: #07074c;
+    color: white;
+    padding: 7px 31px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-bottom: 19px;
 }
 .profile_section .card{
     padding: 15px;
@@ -507,20 +516,44 @@ body{
 
 
  
-
+/* width */
+*::-webkit-scrollbar {
+    width: 4px;
+}
+  
+  /* Track */
+*::-webkit-scrollbar-track {
+    background: #e4e4e4;
+}
+  
+  /* Handle */
+*::-webkit-scrollbar-thumb {
+    background: #07074c9a;
+}
+  
+  /* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+    background: #05053abb;
+}
+.current_template{
+    height: 85vh;
+    margin-top: 20px;
+}
 .current_template .heading{
     font-size: 20px;
     margin-bottom: 15px;
-    text-transform: uppercase;
 }
 .current_template .change_template_btn{
-    padding: 8px 15px;
+    padding: 14px 15px;
     border-radius: 5px;
     border: none;
     outline: none;
+    margin: auto;
     background: #07074c;
     color: white;
-    margin-top: 20px;
+    margin-bottom: 110px;
+    width: 92%;
+    margin-left: 4%;
 }
 
 
@@ -604,30 +637,19 @@ body{
     height: 100px;
     width: 100px;
 }
-.template_one  .text_section #id_name{
+.template_one  .text_section .name{
     margin-top: 15px;
     font-size: 25px;
     font-weight: bold;
-    padding: 0px 10px;
-    text-align: center;
-    border: none;
-    outline: none;
 }
-.template_one .text_section #id_designation{
+.template_one .text_section .designation{
     margin-bottom: 5px;
     margin-top: 10px;
-    font-size: 18px;
-    padding: 0px 10px;
-    text-align: center;
-    border: none;
-    outline: none;
+    font-size: 17px;
 }
-.template_one .text_section #id_company{
-    font-size: 16px;
+.template_one .text_section .company{
+    font-size: 14px;
     padding: 0px 10px;
-    text-align: center;
-    border: none;
-    outline: none;
 }
 .template_one .text_section .icons{
     margin-top: 35px;
@@ -710,4 +732,20 @@ body{
     padding: 13px 20px;
     background: white;
     border-radius: 5px;
+}
+
+
+@media screen and (max-width: 2500px) and (min-width: 450px) {
+    .user_box{
+        max-width: 450px;
+        margin: auto;
+        margin-bottom: 25px;
+        border-radius: 15px;
+        margin-top: 25px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }    
+    .user_box .template_one .image_section{
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+    }
 }

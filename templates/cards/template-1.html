@@ -5,10 +5,16 @@
             <div class="dp_image" style="background: url('{{profile.dp.url}}')"></div>
         </div>
 
-        {{form.name}}
-        {{form.designation}}
-        {{form.company}}
 
+        <h4 class="name">
+            {{profile.name}}
+        </h4>
+        <p class="designation">
+            {{profile.designation}}
+        </p>
+        <p class="company">
+            {{profile.company}}
+        </p>
 
         <div class="icons">
             {% if profile.whatsapp %}
