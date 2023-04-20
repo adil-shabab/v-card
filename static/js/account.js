@@ -1,4 +1,124 @@
 
+
+
+function getBase64Image(url) {
+    return new Promise(function(resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        var reader = new FileReader();
+        reader.onloadend = function() {
+          resolve(reader.result);
+        };
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.onerror = reject;
+      xhr.open('GET', url);
+      xhr.responseType = 'blob';
+      xhr.send();
+    });
+}
+  
+async function createVcard() {
+
+    let card_parent;
+    document.querySelectorAll('.user_box .box').forEach((item)=> {
+        if(item.classList.contains('d-none')){} else{
+            card_parent = item
+        }
+    })
+
+
+    // Contact information
+    var name = card_parent.querySelector('.name').innerText;
+    var email = card_parent.querySelector('.sm_parent .email span').innerText;
+    var phone = card_parent.querySelector('.sm_parent .phone span').innerText;
+    var address = card_parent.querySelector('.location span').innerText;
+    var website = card_parent.querySelector('.sm_parent .website span').innerText;
+    var photoUrl = card_parent.querySelector('.dp #img').src
+    // Load the image and encode it as base64
+    var base64Image = await getBase64Image(photoUrl);
+    var title = card_parent.querySelector('.designation').innerText
+
+
+    if (document.querySelector('.icons #whatsapp')!=null){
+        let whatsapp = card_parent.querySelector('#whatsapp').value; // Replace with your WhatsApp URL
+    }else{
+        let whatsapp = phone
+    }
+    var org = card_parent.querySelector('.company').innerText; // new property
+    
+  
+  
+  
+    // Generate the vCard file contents with the encoded image
+    var vcard = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "N:" + name,
+        "FN:" + name,
+        "EMAIL:" + email,
+        "TEL;TYPE=WORK:" + phone,
+        "TEL;TYPE=WHATSAPP:" + whatsapp,
+        "ADR;TYPE=HOME:;;" + address,
+        "URL:" + website,
+        "PHOTO;TYPE=JPEG;ENCODING=BASE64:" + base64Image.split(',')[1],
+        "ORG;CHARSET=utf-8:" + org,
+        "TITLE;CHARSET=utf-8:"+title,
+        "END:VCARD"
+      ].join("\n");
+  
+    // Prompt the user to download the vCard file
+    var blob = new Blob([vcard], { type: "text/x-vcard" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = name + ".vcf";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+
+
+
+
+
+
+
+
+if (document.querySelector(".contact_btn .save")!=null){
+
+    document.querySelector(".contact_btn .save").addEventListener("click", createVcard);
+    
+    let shareButton = document.querySelector('.contact_btn .share')
+
+
+    function shareLink(link) {
+        if (navigator.canShare && navigator.canShare({ text: link })) {
+            shareButton.addEventListener('click', () => {
+                navigator.share({
+                    text: link,
+                })
+                .then(() => console.log('Link shared successfully.'))
+                .catch((error) => console.error('Error sharing link:', error));
+            });
+        } else {
+            console.error('Link sharing not supported on this device.');
+        }
+    }
+    
+    // Example usage
+    const link = window.location.href;
+    shareLink(link);
+}
+
+
+
+
+
+
+
 // home page doctor carousel 
 if(document.querySelector('.card_carousel') !== null){
     $('.card_carousel').slick({

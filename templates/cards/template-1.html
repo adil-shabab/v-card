@@ -1,8 +1,9 @@
 <div class="template_one">
     <div style="background: url('{{profile.coverimage.url}}')" class="image_section"></div>
     <div class="text_section">
-        <div class="dp">
+        <div class="dp" value="{{profile.dp.url}}">
             <div class="dp_image" style="background: url('{{profile.dp.url}}')"></div>
+            <img class="d-none" src="{{profile.dp.url}}" alt="" id="img">
         </div>
 
 
@@ -18,7 +19,7 @@
 
         <div class="icons">
             {% if profile.whatsapp %}
-            <a href="https://wa.me/{{profile.whatsapp}}"><i class="fa-brands fa-whatsapp"></i></a>
+            <a id="whatsapp" value="{{profile.whatsapp}}" href="https://wa.me/{{profile.whatsapp}}"><i class="fa-brands fa-whatsapp"></i></a>
             {% else %}
             <i class="fa-brands fa-whatsapp"></i>
             {% endif %}
