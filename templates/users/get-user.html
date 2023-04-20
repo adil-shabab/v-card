@@ -22,10 +22,11 @@
   <div class="user_box">
     {% for x in templates %}
     <div class="d-none box" id="{{ x }}" >
-        {% include x %}
+      {% include x %}
     </div>            
     {% endfor %}
   </div>
+
 
 
   <script src="{% static 'js/account.js' %}"></script>

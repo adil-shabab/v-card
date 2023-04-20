@@ -16,6 +16,7 @@ function getBase64Image(url) {
 }
 
 async function createVcard() {
+
     let card_parent;
     document.querySelectorAll(".user_box .box").forEach((item) => {
         if (item.classList.contains("d-none")) {
@@ -23,8 +24,6 @@ async function createVcard() {
             card_parent = item;
         }
     });
-
-
 
     // Contact information    
     var name = card_parent.querySelector(".name").innerText;
@@ -38,7 +37,7 @@ async function createVcard() {
     var title = card_parent.querySelector(".designation").innerText;
 
     if (document.querySelector(".icons #whatsapp") != null) {
-        let whatsapp = card_parent.querySelector("#whatsapp").value; // Replace with your WhatsApp URL
+        let whatsapp = card_parent.querySelector("#whatsapp").value;
     } else {
         let whatsapp = phone;
     }
@@ -1200,26 +1199,21 @@ function prevSlide() {
     slides[currentSlide].classList.add("active");
 }
 
-if (document.querySelector(".login_section") != null) {
-    removeAllCurrentActiveClass();
-    let icons = document.querySelectorAll(".footer_box i");
-    icons[0].classList.add("active");
-}
-if (document.querySelector(".register_section") != null) {
-    removeAllCurrentActiveClass();
-    let icons = document.querySelectorAll(".footer_box i");
-    icons[0].classList.add("active");
-}
-if (document.querySelector(".card_section") != null) {
-    removeAllCurrentActiveClass();
-    let icons = document.querySelectorAll(".footer_box i");
-    icons[1].classList.add("active");
-}
-if (document.querySelector(".profile_section") != null) {
-    removeAllCurrentActiveClass();
-    let icons = document.querySelectorAll(".footer_box i");
-    icons[2].classList.add("active");
-}
+const sections = [
+    {selector: ".login_section", index: 0},
+    {selector: ".register_section", index: 0},
+    {selector: ".card_section", index: 1},
+    {selector: ".profile_section", index: 2},
+    {selector: ".current_template", index: 2},
+];
+  
+sections.forEach(({selector, index}) => {
+    if (document.querySelector(selector)) {
+      removeAllCurrentActiveClass();
+      const icons = document.querySelectorAll(".footer_box i");
+      icons[index].classList.add("active");
+    }
+});
 
 // footer box click events
 function removeAllCurrentActiveClass() {
