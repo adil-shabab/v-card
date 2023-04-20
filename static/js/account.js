@@ -1,55 +1,49 @@
-
-
-
 function getBase64Image(url) {
-    return new Promise(function(resolve, reject) {
-      var xhr = new XMLHttpRequest();
-      xhr.onload = function() {
-        var reader = new FileReader();
-        reader.onloadend = function() {
-          resolve(reader.result);
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            var reader = new FileReader();
+            reader.onloadend = function () {
+                resolve(reader.result);
+            };
+            reader.readAsDataURL(xhr.response);
         };
-        reader.readAsDataURL(xhr.response);
-      };
-      xhr.onerror = reject;
-      xhr.open('GET', url);
-      xhr.responseType = 'blob';
-      xhr.send();
+        xhr.onerror = reject;
+        xhr.open("GET", url);
+        xhr.responseType = "blob";
+        xhr.send();
     });
 }
-  
+
 async function createVcard() {
-
     let card_parent;
-    document.querySelectorAll('.user_box .box').forEach((item)=> {
-        if(item.classList.contains('d-none')){} else{
-            card_parent = item
+    document.querySelectorAll(".user_box .box").forEach((item) => {
+        if (item.classList.contains("d-none")) {
+        } else {
+            card_parent = item;
         }
-    })
+    });
 
 
-    // Contact information
-    var name = card_parent.querySelector('.name').innerText;
-    var email = card_parent.querySelector('.sm_parent .email span').innerText;
-    var phone = card_parent.querySelector('.sm_parent .phone span').innerText;
-    var address = card_parent.querySelector('.location span').innerText;
-    var website = card_parent.querySelector('.sm_parent .website span').innerText;
-    var photoUrl = card_parent.querySelector('.dp #img').src
+
+    // Contact information    
+    var name = card_parent.querySelector(".name").innerText;
+    var email = card_parent.querySelector(".sm_parent .email span").innerText;
+    var phone = card_parent.querySelector(".sm_parent .phone span").innerText;
+    var address = card_parent.querySelector(".location span").innerText;
+    var website = card_parent.querySelector(".sm_parent .website span").innerText;
+    var photoUrl = card_parent.querySelector(".dp #img").src;
     // Load the image and encode it as base64
     var base64Image = await getBase64Image(photoUrl);
-    var title = card_parent.querySelector('.designation').innerText
+    var title = card_parent.querySelector(".designation").innerText;
 
-
-    if (document.querySelector('.icons #whatsapp')!=null){
-        let whatsapp = card_parent.querySelector('#whatsapp').value; // Replace with your WhatsApp URL
-    }else{
-        let whatsapp = phone
+    if (document.querySelector(".icons #whatsapp") != null) {
+        let whatsapp = card_parent.querySelector("#whatsapp").value; // Replace with your WhatsApp URL
+    } else {
+        let whatsapp = phone;
     }
-    var org = card_parent.querySelector('.company').innerText; // new property
-    
-  
-  
-  
+    var org = card_parent.querySelector(".company").innerText; // new property
+
     // Generate the vCard file contents with the encoded image
     var vcard = [
         "BEGIN:VCARD",
@@ -61,12 +55,12 @@ async function createVcard() {
         "TEL;TYPE=WHATSAPP:" + whatsapp,
         "ADR;TYPE=HOME:;;" + address,
         "URL:" + website,
-        "PHOTO;TYPE=JPEG;ENCODING=BASE64:" + base64Image.split(',')[1],
+        "PHOTO;TYPE=JPEG;ENCODING=BASE64:" + base64Image.split(",")[1],
         "ORG;CHARSET=utf-8:" + org,
-        "TITLE;CHARSET=utf-8:"+title,
-        "END:VCARD"
-      ].join("\n");
-  
+        "TITLE;CHARSET=utf-8:" + title,
+        "END:VCARD",
+    ].join("\n");
+
     // Prompt the user to download the vCard file
     var blob = new Blob([vcard], { type: "text/x-vcard" });
     var url = URL.createObjectURL(blob);
@@ -79,163 +73,137 @@ async function createVcard() {
     URL.revokeObjectURL(url);
 }
 
-
-
-
-
-
-
-
-
-if (document.querySelector(".contact_btn .save")!=null){
-
+if (document.querySelector(".contact_btn .save") != null) {
     document.querySelector(".contact_btn .save").addEventListener("click", createVcard);
-    
-    let shareButton = document.querySelector('.contact_btn .share')
 
+    let shareButton = document.querySelector(".contact_btn .share");
 
     function shareLink(link) {
         if (navigator.canShare && navigator.canShare({ text: link })) {
-            shareButton.addEventListener('click', () => {
-                navigator.share({
-                    text: link,
-                })
-                .then(() => console.log('Link shared successfully.'))
-                .catch((error) => console.error('Error sharing link:', error));
+            shareButton.addEventListener("click", () => {
+                navigator
+                    .share({
+                        text: link,
+                    })
+                    .then(() => console.log("Link shared successfully."))
+                    .catch((error) => console.error("Error sharing link:", error));
             });
         } else {
-            console.error('Link sharing not supported on this device.');
+            console.error("Link sharing not supported on this device.");
         }
     }
-    
+
     // Example usage
     const link = window.location.href;
     shareLink(link);
 }
 
-
-
-
-
-
-
-// home page doctor carousel 
-if(document.querySelector('.card_carousel') !== null){
-    $('.card_carousel').slick({
-      
-      dots: true,
-      infinite: true,
-      autoPlayTimeout:2000,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      arrows: false,
+// home page doctor carousel
+if (document.querySelector(".card_carousel") !== null) {
+    $(".card_carousel").slick({
+        dots: true,
+        infinite: true,
+        autoPlayTimeout: 2000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
     });
 }
 
+if (document.querySelector(".user_box") != null) {
+    let current_template_id = document.getElementById("template").innerHTML;
+    let template_box = document.querySelectorAll(".user_box .box");
 
-
-if(document.querySelector('.user_box')!=null){
-    let current_template_id = document.getElementById('template').innerHTML
-    let template_box = document.querySelectorAll('.user_box .box')
-    
-    template_box.forEach((item)=> {
-        let current_id = item.getAttribute('id')
-        let updated_id = current_id.replace('/','-')
+    template_box.forEach((item) => {
+        let current_id = item.getAttribute("id");
+        let updated_id = current_id.replace("/", "-");
         updated_id = updated_id.replace(".html", "");
-        item.removeAttribute('id')
-        item.setAttribute('id', updated_id)
-    })
+        item.removeAttribute("id");
+        item.setAttribute("id", updated_id);
+    });
 
-    let current_template = document.querySelector(`.user_box  #cards-template-${current_template_id}`)
-    current_template.classList.remove('d-none')
+    let current_template = document.querySelector(`.user_box  #cards-template-${current_template_id}`);
+    current_template.classList.remove("d-none");
 }
 
+if (document.querySelector(".current_template") != null) {
+    let current_template_id = document.getElementById("template").innerHTML;
+    let template_box = document.querySelectorAll(".current_template .inner_box");
 
-if(document.querySelector('.current_template')!=null){
-    
-    let current_template_id = document.getElementById('template').innerHTML
-    let template_box = document.querySelectorAll('.current_template .inner_box')
-    
-    template_box.forEach((item)=> {
-        let current_id = item.getAttribute('id')
-        let updated_id = current_id.replace('/','-')
+    template_box.forEach((item) => {
+        let current_id = item.getAttribute("id");
+        let updated_id = current_id.replace("/", "-");
         updated_id = updated_id.replace(".html", "");
-        item.removeAttribute('id')
-        item.setAttribute('id', updated_id)
-    })
+        item.removeAttribute("id");
+        item.setAttribute("id", updated_id);
+    });
 
-    let current_template = document.querySelector(`.current_template  #cards-template-${current_template_id}`)
-    current_template.classList.remove('d-none')
+    let current_template = document.querySelector(`.current_template  #cards-template-${current_template_id}`);
+    current_template.classList.remove("d-none");
 }
 
-// render tempaltes 
-if(document.querySelector('.all_templates') != null){
-    
-    let numbers = document.getElementById('template_numbers').dataset.value.split(',');
-    let names = document.getElementById('template_names').dataset.value.split(',');
-    let boxes = document.querySelectorAll('.profile_section .box .inner_box')
-    let current_template_id = document.getElementById('template').innerHTML
-    let first_template_btn
+// render tempaltes
+if (document.querySelector(".all_templates") != null) {
+    let numbers = document.getElementById("template_numbers").dataset.value.split(",");
+    let names = document.getElementById("template_names").dataset.value.split(",");
+    let boxes = document.querySelectorAll(".profile_section .box .inner_box");
+    let current_template_id = document.getElementById("template").innerHTML;
+    let first_template_btn;
 
-    let template_btns = document.querySelectorAll('.all_templates .template_btn')
-    template_btns.forEach((item)=> item.addEventListener('click', function(){
-        template_btns.forEach((item)=> item.classList.remove('active'))
-        item.classList.add('active')
-        localStorage.setItem('template_id', item.getAttribute('id'))
-        changeCard()
-    }))
-        
-    localStorage.setItem('template_id', current_template_id)
-
-    Array.from(template_btns).filter(element => {
-        if(element.id === current_template_id){
-            first_template_btn = element
-        }
-    }); 
-
-    first_template_btn.classList.add('active')    
-    
-    boxes.forEach((item)=> {
-        let current_id = item.getAttribute('id')
-        let updated_id = current_id.replace('/','-')
-        updated_id = updated_id.replace(".html", "");
-        item.removeAttribute('id')
-        item.setAttribute('id', updated_id)
-    })
-    
-
-    let first_template = document.querySelector(`.profile_section .box #cards-template-${current_template_id}`)
-    first_template.classList.remove('d-none')
-
-    
-    function changeCard() {
-
-        let template_id = localStorage.getItem('template_id');
-        let template = parseInt(template_id)
-        
-        getAccessToken().then((access_token) => changeTemplate(template,access_token));
-        
-        boxes.forEach((item)=> {
-            let current_id = item.getAttribute('id')
-            let updated_id = current_id.replace('/','-')
-            updated_id = updated_id.replace(".html", "");
-            item.removeAttribute('id')
-            item.setAttribute('id', updated_id)
+    let template_btns = document.querySelectorAll(".all_templates .template_btn");
+    template_btns.forEach((item) =>
+        item.addEventListener("click", function () {
+            template_btns.forEach((item) => item.classList.remove("active"));
+            item.classList.add("active");
+            localStorage.setItem("template_id", item.getAttribute("id"));
+            changeCard();
         })
+    );
 
-        template_id = 'cards/template-' + template_id;
-        let updated_id = template_id.replace('/', '-');
-      
-        document.querySelectorAll('.profile_section .box .inner_box').forEach((item)=> item.classList.add('d-none'));
-        document.querySelector(`.profile_section .box #${updated_id}`).classList.remove('d-none');
-      }
-      
-      
-}    
+    localStorage.setItem("template_id", current_template_id);
 
+    Array.from(template_btns).filter((element) => {
+        if (element.id === current_template_id) {
+            first_template_btn = element;
+        }
+    });
+
+    first_template_btn.classList.add("active");
+
+    boxes.forEach((item) => {
+        let current_id = item.getAttribute("id");
+        let updated_id = current_id.replace("/", "-");
+        updated_id = updated_id.replace(".html", "");
+        item.removeAttribute("id");
+        item.setAttribute("id", updated_id);
+    });
+
+    let first_template = document.querySelector(`.profile_section .box #cards-template-${current_template_id}`);
+    first_template.classList.remove("d-none");
+
+    function changeCard() {
+        let template_id = localStorage.getItem("template_id");
+        let template = parseInt(template_id);
+
+        getAccessToken().then((access_token) => changeTemplate(template, access_token));
+
+        boxes.forEach((item) => {
+            let current_id = item.getAttribute("id");
+            let updated_id = current_id.replace("/", "-");
+            updated_id = updated_id.replace(".html", "");
+            item.removeAttribute("id");
+            item.setAttribute("id", updated_id);
+        });
+
+        template_id = "cards/template-" + template_id;
+        let updated_id = template_id.replace("/", "-");
+
+        document.querySelectorAll(".profile_section .box .inner_box").forEach((item) => item.classList.add("d-none"));
+        document.querySelector(`.profile_section .box #${updated_id}`).classList.remove("d-none");
+    }
+}
 
 const baseUrl = "http://127.0.0.1:8000";
-
 
 function getAccessToken() {
     return fetch(`${baseUrl}/user/get/google/token/`)
@@ -253,32 +221,26 @@ function getAccessToken() {
         });
 }
 
-
-
 function changeTemplate(template, access_token) {
-
     const url = `${baseUrl}/user/change-template/`;
-    const data = { 'template': template };
+    const data = { template: template };
     fetch(url, {
-      method: 'POST',
-      headers: {
-        Authorization: `Token ${access_token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+        method: "POST",
+        headers: {
+            Authorization: `Token ${access_token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
     })
-      .then(response => {
-        // console.log(response);
-        // Handle the response here
-      })
-      .catch(error => {
-        console.error(error);
-        // Handle the error here
-    });
+        .then((response) => {
+            // console.log(response);
+            // Handle the response here
+        })
+        .catch((error) => {
+            console.error(error);
+            // Handle the error here
+        });
 }
-  
-
-
 
 function EmailId() {
     const parent_div = document.getElementById("all_emails");
@@ -449,8 +411,7 @@ function EmailId() {
         .querySelector(".trash")
         .addEventListener("click", function () {
             document.getElementById("add_email_div").classList.add("d-none");
-            document.getElementById("add_email_div").querySelector('input').setAttribute('required','')
-
+            document.getElementById("add_email_div").querySelector("input").setAttribute("required", "");
         });
 
     document
@@ -471,7 +432,7 @@ function EmailId() {
                     console.log(data); // Do something with the newly created email ID data
 
                     document.getElementById("add_email_div").classList.add("d-none");
-                    document.getElementById("add_email_div").querySelector('input').removeAttribute('required')
+                    document.getElementById("add_email_div").querySelector("input").removeAttribute("required");
 
                     getAccessToken().then((access_token) => getallemail(access_token));
                 })
@@ -503,7 +464,6 @@ function EmailId() {
         });
     }
 }
-
 
 function PhoneNumber() {
     const parent_div = document.getElementById("all_numbers");
@@ -667,7 +627,7 @@ function PhoneNumber() {
 
     document.getElementById("number_add_btn").addEventListener("click", function () {
         document.getElementById("add_number_div").classList.remove("d-none");
-        document.getElementById("add_number_div").querySelector('input').setAttribute('required','')
+        document.getElementById("add_number_div").querySelector("input").setAttribute("required", "");
     });
 
     document
@@ -675,8 +635,7 @@ function PhoneNumber() {
         .querySelector(".trash")
         .addEventListener("click", function () {
             document.getElementById("add_number_div").classList.add("d-none");
-            document.getElementById("add_number_div").querySelector('input').removeAttribute('required')
-
+            document.getElementById("add_number_div").querySelector("input").removeAttribute("required");
         });
 
     document
@@ -727,7 +686,6 @@ function PhoneNumber() {
         });
     }
 }
-
 
 function withSocial() {
     const form = document.getElementById("add_custom_btn_social");
@@ -838,7 +796,7 @@ function withSocial() {
                     .then((response) => response.json())
                     .then((file) => {
                         const icon = file.find((item) => item.id === data[i].icon[0]);
-                        console.log(icon)
+                        console.log(icon);
                         // do something with the icon
                         div.querySelector(".pre_icon").innerHTML = icon.icon_html;
                     })
@@ -864,9 +822,9 @@ function withSocial() {
 
         // check if IconID is stored in local storage
         const iconId = localStorage.getItem("IconID");
-        const icon = []
+        const icon = [];
         if (iconId) {
-            icon.push(iconId)
+            icon.push(iconId);
             data.icon = icon; // add iconId as an extra field to the data object
         }
 
@@ -974,10 +932,10 @@ function withSocial() {
         };
 
         // check if IconID is stored in local storage
-        let icon = []
+        let icon = [];
         const iconId = localStorage.getItem("IconID");
         if (iconId) {
-            icon.push(iconId)
+            icon.push(iconId);
             data.icon = icon; // add iconId as an extra field to the data object
         }
 
@@ -1013,7 +971,6 @@ function withSocial() {
         });
     }
 }
-
 
 function withoutSocial() {
     const parent_div = document.getElementById("add_on_field_without_social_media");
@@ -1206,16 +1163,12 @@ function withoutSocial() {
     }
 }
 
-
-
-
-if(document.querySelector('.card_section') != null){
-    PhoneNumber()
-    EmailId()
-    withSocial()
-    withoutSocial()
+if (document.querySelector(".card_section") != null) {
+    PhoneNumber();
+    EmailId();
+    withSocial();
+    withoutSocial();
 }
-
 
 var slides = document.querySelectorAll(".card_section .slider .slide");
 var currentSlide = 0;
@@ -1224,18 +1177,15 @@ document.querySelectorAll(".next").forEach((item) => item.addEventListener("clic
 document.querySelectorAll(".prev").forEach((item) => item.addEventListener("click", prevSlide));
 
 function nextSlide() {
-
-    if(document.getElementById('id_company') != null){
-        document.getElementById('id_company').setAttribute('required','')
+    if (document.getElementById("id_company") != null) {
+        document.getElementById("id_company").setAttribute("required", "");
         if (!document.getElementById("id_company").checkValidity()) {
             document.getElementById("id_company").reportValidity();
-        }
-        else{
-            document.getElementById('id_designation').setAttribute('required','')
+        } else {
+            document.getElementById("id_designation").setAttribute("required", "");
             if (!document.getElementById("id_designation").checkValidity()) {
-
                 document.getElementById("id_designation").reportValidity();
-            }else{
+            } else {
                 slides[currentSlide].classList.remove("active");
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add("active");
@@ -1250,28 +1200,26 @@ function prevSlide() {
     slides[currentSlide].classList.add("active");
 }
 
-
-if(document.querySelector('.login_section') != null){
-    removeAllCurrentActiveClass()
-    let icons = document.querySelectorAll('.footer_box i')
-    icons[0].classList.add('active')
+if (document.querySelector(".login_section") != null) {
+    removeAllCurrentActiveClass();
+    let icons = document.querySelectorAll(".footer_box i");
+    icons[0].classList.add("active");
 }
-if(document.querySelector('.register_section') != null){
-    removeAllCurrentActiveClass()
-    let icons = document.querySelectorAll('.footer_box i')
-    icons[0].classList.add('active')
+if (document.querySelector(".register_section") != null) {
+    removeAllCurrentActiveClass();
+    let icons = document.querySelectorAll(".footer_box i");
+    icons[0].classList.add("active");
 }
-if(document.querySelector('.card_section') != null){
-    removeAllCurrentActiveClass()
-    let icons = document.querySelectorAll('.footer_box i')
-    icons[1].classList.add('active')
+if (document.querySelector(".card_section") != null) {
+    removeAllCurrentActiveClass();
+    let icons = document.querySelectorAll(".footer_box i");
+    icons[1].classList.add("active");
 }
-if(document.querySelector('.profile_section') != null){
-    removeAllCurrentActiveClass()
-    let icons = document.querySelectorAll('.footer_box i')
-    icons[2].classList.add('active')
+if (document.querySelector(".profile_section") != null) {
+    removeAllCurrentActiveClass();
+    let icons = document.querySelectorAll(".footer_box i");
+    icons[2].classList.add("active");
 }
-
 
 // footer box click events
 function removeAllCurrentActiveClass() {

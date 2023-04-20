@@ -113,7 +113,6 @@ def get_user(request, slug):
     profile = Profile.objects.filter(slug=slug)[0]
     phone_number = PhoneNumber.objects.filter(user=user)[0]
     email_id = EmailId.objects.filter(user=user)[0]
-    print(profile)
     context = {
         'profile': profile,
         'phone': phone_number,
