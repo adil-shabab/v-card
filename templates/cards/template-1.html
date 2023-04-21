@@ -3,23 +3,23 @@
     <div class="text_section">
         <div class="dp" value="{{profile.dp.url}}">
             <div class="dp_image" style="background: url('{{profile.dp.url}}')"></div>
-            <img class="d-none" src="{{profile.dp.url}}" alt="" id="img">
+            <img class="d-none" src="{{profile.dp.url}}" alt="" id="dp_">
         </div>
 
 
-        <h4 class="name">
+        <h4 id="name_" class="name">
             {{profile.name}}
         </h4>
-        <p class="designation">
+        <p id="designation_" class="designation">
             {{profile.designation}}
         </p>
-        <p class="company">
+        <p id="company_" class="company">
             {{profile.company}}
         </p>
 
         <div class="icons">
             {% if profile.whatsapp %}
-            <a id="whatsapp" value="{{profile.whatsapp}}" href="https://wa.me/{{profile.whatsapp}}"><i class="fa-brands fa-whatsapp"></i></a>
+            <a id="whatsapp_" value="{{profile.whatsapp}}" href="https://wa.me/{{profile.whatsapp}}"><i class="fa-brands fa-whatsapp"></i></a>
             {% else %}
             <i class="fa-brands fa-whatsapp"></i>
             {% endif %}
@@ -49,19 +49,19 @@
             {% if phone %}  
             <div class="phone sm_box">
                 <i class="fa-solid fa-phone-volume"></i>
-                <span>+91 {{phone.phone_number}}</span>
+                <span id="phone_">+91 {{phone.phone_number}}</span>
             </div>
             {% endif %}
             {% if email %}  
             <div class="email sm_box">
                 <i class="fa-solid fa-envelope"></i>
-                <span>{{email.email_id}}</span>
+                <span id="email_">{{email.email_id}}</span>
             </div>
             {% endif %}
             {% if profile.website %}              
             <div class="website sm_box">
                 <i class="fa-solid fa-globe"></i>
-                <span>{{profile.website}}</span>
+                <span id="website_">{{profile.website}}</span>
             </div>
             {% endif %}
         </div>
@@ -69,20 +69,20 @@
         {% if profile.bio %}          
         <div class="bio">
             <h5 class="head">About Me</h5>
-            <p>{{profile.bio}}</p>
+            <p id="bio_">{{profile.bio}}</p>
         </div>
         {% endif %}
 
         {% if profile.location %}          
         <div class="location">
             <i class="fa-solid fa-location-dot"></i>
-            <span>Metro City, Malappuram</span>
+            <span id="location_">{{profile.location}}</span>
         </div>
         {% endif %}
 
         <div class="contact_btn">
-            <button class="save"><i class="fa-solid fa-download"></i>Save Contact</button>
-            <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
+            <button id="save_btn_" class="save"><i class="fa-solid fa-download"></i>Save Contact</button>
+            <button id="share_btn_" class="share"><i class="fa-solid fa-share-nodes"></i></button>
         </div>
 
     </div>

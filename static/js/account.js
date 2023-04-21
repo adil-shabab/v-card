@@ -25,23 +25,51 @@ async function createVcard() {
         }
     });
 
+
     // Contact information    
-    var name = card_parent.querySelector(".name").innerText;
-    var email = card_parent.querySelector(".sm_parent .email span").innerText;
-    var phone = card_parent.querySelector(".sm_parent .phone span").innerText;
-    var address = card_parent.querySelector(".location span").innerText;
-    var website = card_parent.querySelector(".sm_parent .website span").innerText;
-    var photoUrl = card_parent.querySelector(".dp #img").src;
+    var name = card_parent.querySelector("#name_").innerText;
+    var email = card_parent.querySelector("#email_").innerText;
+    let phone
+    let address
+    let website
+    let title
+    let org
+    let whatsapp
+
+    var photoUrl = card_parent.querySelector("#dp_").src;
     // Load the image and encode it as base64
     var base64Image = await getBase64Image(photoUrl);
-    var title = card_parent.querySelector(".designation").innerText;
 
-    if (document.querySelector(".icons #whatsapp") != null) {
-        let whatsapp = card_parent.querySelector("#whatsapp").value;
+    if (document.querySelector("#whatsapp_") != null) {
+        whatsapp = card_parent.querySelector("#whatsapp_").value;
     } else {
-        let whatsapp = phone;
+        whatsapp = phone;
     }
-    var org = card_parent.querySelector(".company").innerText; // new property
+    if (document.querySelector("#location_") != null) {
+        address = card_parent.querySelector("#location_").innerText;
+    } else {
+        address = ""
+    }
+    if (document.querySelector("#website_") != null) {
+        website = card_parent.querySelector("#website_").innerText;
+    } else {
+        website = ""
+    }
+    if (document.querySelector("#phone_") != null) {
+        phone = card_parent.querySelector("#phone_").innerText;
+    } else {
+        phone = ""
+    }
+    if (document.querySelector("#designation_") != null) {
+        title = card_parent.querySelector("#designation_").innerText;
+    } else {
+        title = ""
+    }
+    if (document.querySelector("#company_") != null) {
+        org = card_parent.querySelector("#company_").innerText;
+    } else {
+        org = ""
+    }
 
     // Generate the vCard file contents with the encoded image
     var vcard = [
@@ -72,10 +100,10 @@ async function createVcard() {
     URL.revokeObjectURL(url);
 }
 
-if (document.querySelector(".contact_btn .save") != null) {
-    document.querySelector(".contact_btn .save").addEventListener("click", createVcard);
+if (document.querySelector("#save_btn_") != null) {
+    document.querySelector("#save_btn_").addEventListener("click", createVcard);
 
-    let shareButton = document.querySelector(".contact_btn .share");
+    let shareButton = document.querySelector("#share_btn_");
 
     function shareLink(link) {
         if (navigator.canShare && navigator.canShare({ text: link })) {

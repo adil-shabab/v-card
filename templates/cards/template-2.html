@@ -1,6 +1,72 @@
-<div class="card">
-    <h4>Template 2</h4>
-    <h5>{{profile.name}}</h5>
-    <h6>{{profile.designation}}</h6>
-    <p>{{profile.company}}</p>
+<div class="template_two">
+    <div class="img_section" style="background: url('{{profile.coverimage.url}}');">
+        <img id="dp_" class="img-fluid" src="{{profile.dp.url}}" alt="">
+        <div class="clip_path">
+            <div class="icons">
+                {% if profile.whatsapp %}
+                <a id="whatsapp_" value="{{profile.whatsapp}}" href="https://wa.me/{{profile.whatsapp}}"><i class="fa-brands fa-whatsapp"></i></a>
+                {% else %}
+                <i class="fa-brands fa-whatsapp"></i>
+                {% endif %}
+                {% if profile.facebook %}
+                <a href="{{profile.facebook}}"><i class="fa-brands fa-facebook"></i></a>
+                {% else %}
+                <i class="fa-brands fa-facebook"></i>
+                {% endif %}
+                {% if profile.linkedin %}
+                <a href="{{profile.linkedin}}"><i class="fa-brands fa-linkedin"></i></a>
+                {% else %}
+                <i class="fa-brands fa-linkedin"></i>
+                {% endif %}
+                {% if profile.twitter %}
+                <a href="{{profile.twitter}}"><i class="fa-brands fa-twitter"></i></a>
+                {% else %}
+                <i class="fa-brands fa-twitter"></i>
+                {% endif %}
+                {% if profile.instagram %}
+                <a href="{{profile.instagram}}"><i class="fa-brands fa-instagram"></i></a>
+                {% else %}
+                <i class="fa-brands fa-instagram"></i>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="name">
+        <h3 id="name_">{{profile.name}}</h3>
+        <h6 id="designation_">{{profile.designation}}</h6>
+        <span id="company_">{{profile.company}}</span>
+    </div>
+
+
+    <div class="contact">
+        <div class="phone">
+            <i class="fa-solid fa-phone"></i>
+            <span id="phone_">{{phone.phone_number}}</span>
+        </div>
+        <div class="phone">
+            <i class="fa-solid fa-envelope"></i>
+            <span id="email_">{{email.email_id}}</span>
+        </div>
+        <div class="phone">
+            <i class="fa-solid fa-globe"></i>
+            <span id="website_">{{profile.website}}</span>
+        </div>
+    </div>
+
+    <div class="bio">
+        <h4 class="head">About Me</h4>
+        <span id="bio_">{{profile.bio}}</span>
+    </div>
+
+
+    <div class="location">
+        <div class="location_box">
+            <i class="fa-solid fa-location-dot"></i>
+            <span id="location_">{{profile.location}}</span>
+        </div>
+    </div>
+
+    <div class="buttons_">
+        <button id="save_btn_" class="save"><i class="fa-solid fa-download"></i>Save Contact</button>
+    </div>
 </div>

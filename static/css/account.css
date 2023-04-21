@@ -748,3 +748,138 @@ body{
         border-top-left-radius: 15px;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.template_two .img_section{
+    height: 40vh;
+    background-size: cover !important;
+    position: relative;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.template_two .img_section .clip_path{
+    width: 100%;
+    height: 59%;
+    position: absolute;
+    bottom: -3px;
+    background: rgb(247, 247, 247);
+    clip-path: polygon(100% 0, 0 99%, 100% 100%);
+}
+.template_two .img_section #dp_{
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    right: 25px;
+    z-index: 1;
+    bottom: 25%;
+}
+.template_two .img_section .icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 25px;
+    right: 15px;
+}
+.template_two .img_section .icons a{
+    text-decoration: none;
+}
+.template_two .img_section .icons a:hover{
+    text-decoration: none;
+}
+.template_two .img_section .icons i{
+    font-size: 25px;
+    color: #152F8C;
+    margin-left: 13px;
+}
+.template_two .name{
+    background: rgb(247, 247, 247);
+    padding: 40px 25px;
+}
+.template_two .name #name_{
+    font-size: 30px;
+    color: #152F8C;
+}
+.template_two .name #designation_{
+    font-size: 18px;
+    color: #152F8C;
+}
+.template_two .name #company_{
+    font-size: 16px;
+    color: #152F8C;
+}
+.template_two .contact{
+    padding: 35px 25px 0px;
+}
+.template_two .contact .phone{
+    display: flex;
+    margin-bottom: 8px;
+    align-items: center;
+}
+.template_two .contact .phone i{
+    font-size: 20px;
+    padding: 10px;
+    background: #07074c;
+    border-radius: 10px;
+    color: white;
+    margin-right: 15px;
+}
+.template_two .contact .phone span{
+    font-size: 20px;
+    padding: 5px;
+}
+.template_two .bio{
+    padding: 10px 25px;
+    margin-top: 30px;
+}
+.template_two .bio .head{
+    font-synthesis: 22px;
+}
+.template_two .bio #bio_{
+    font-size: 14px;
+}
+.template_two .location{
+    padding: 10px 25px;
+    margin-top: 15px;
+}
+.template_two .location .location_box i{
+    font-synthesis: 20px;
+    margin-right: 15px;
+}
+.template_two .location .location_box #location_{
+    font-size: 16px;
+}
+.template_two .buttons_{
+    margin-top: 20px;
+    margin-bottom: 0;
+    width: 100%;
+}
+.template_two .buttons_ #save_btn_{
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    outline: none;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #07074c;
+    color: white;
+}
+.template_two .buttons_ #save_btn_ i{
+    margin-right: 15px;
+}
