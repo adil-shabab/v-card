@@ -1,6 +1,88 @@
-<div class="card">
-    <h4>Template 3</h4>
-    <h5>{{profile.name}}</h5>
-    <h6>{{profile.designation}}</h6>
-    <p>{{profile.company}}</p>
+<div class="template_three">
+    <div class="image_section" style="background: url('{{profile.coverimage.url}}')">
+        
+        <div class="box">
+            <h3 id="name_">{{profile.name}}</h3>
+            <h4 id="designation_">{{profile.designation}}</h4>
+            <h5 id="company_">{{profile.company}}</h5>
+        </div>
+        <div class="dp_box">
+            <img id="dp_" src="{{profile.dp.url}}" alt="" class="dp img-fluid">
+        </div>
+    </div>
+
+    <div class="contact_box">
+        {% if phone %}
+          {% for x in phone %}
+          <div class="phone box">
+              <i class="fa-solid fa-phone"></i>
+              <span class="phone_">+91{{x.phone_number}}</span>
+              <span class="phone_type d-none">+91{{x.phone_type}}</span>
+          </div>
+          {% endfor %}
+        {% endif %}
+        {% if email %}
+          {% for x in email %}
+          <div class="email box">
+              <i class="fa-solid fa-envelope"></i>
+              <span class="email_">{{x.email_id}}</span>
+              <span class="email_type d-none">{{x.email_id}}</span>
+          </div>
+          {% endfor %}
+        {% endif %}
+
+        {% if profile.website %}          
+        <div class="website box">
+            <i class="fa-solid fa-globe"></i>
+            <span id="website_">{{profile.website}}</span>
+        </div>
+        {% endif %}
+    </div>
+
+
+    <div class="icons_box">
+        {% if profile.whatsapp %}
+        <a id="whatsapp_" value="{{profile.whatsapp}}" href="https://wa.me/{{profile.whatsapp}}"><i class="fa-brands fa-whatsapp"></i></a>
+        {% else %}
+        <i class="fa-brands fa-whatsapp"></i>
+        {% endif %}
+        {% if profile.facebook %}
+        <a href="{{profile.facebook}}"><i class="fa-brands fa-facebook"></i></a>
+        {% else %}
+        <i class="fa-brands fa-facebook"></i>
+        {% endif %}
+        {% if profile.linkedin %}
+        <a href="{{profile.linkedin}}"><i class="fa-brands fa-linkedin"></i></a>
+        {% else %}
+        <i class="fa-brands fa-linkedin"></i>
+        {% endif %}
+        {% if profile.twitter %}
+        <a href="{{profile.twitter}}"><i class="fa-brands fa-twitter"></i></a>
+        {% else %}
+        <i class="fa-brands fa-twitter"></i>
+        {% endif %}
+        {% if profile.instagram %}
+        <a href="{{profile.instagram}}"><i class="fa-brands fa-instagram"></i></a>
+        {% else %}
+        <i class="fa-brands fa-instagram"></i>
+        {% endif %}
+    </div>
+
+    <div class="about_box">
+        {% if profile.bio %}
+        <h5>About Me</h5>
+        <p>{{profile.bio}}</p>
+          
+        {% endif %}
+
+        {% if profile.location %}          
+        <div class="location">
+            <i class="fa-solid fa-location-dot"></i>
+            <span id="location_">{{profile.location}}</span>
+        </div>
+        {% endif %}
+    </div>
+
+
+    <button class="save_btn_"><i class="fa-solid fa-user-plus"></i>Add to Contacts</button>
 </div>

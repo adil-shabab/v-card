@@ -19,9 +19,9 @@
 
 
   <div class="d-none" id="template">{{profile.template}}</div>
-  <div class="user_box">
+  <div class="user_box" id="parent">
     {% for x in templates %}
-    <div class="d-none box" id="{{ x }}" >
+    <div class="d-none box__" id="{{ x }}" >
       {% include x %}
     </div>            
     {% endfor %}

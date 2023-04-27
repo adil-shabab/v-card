@@ -67,8 +67,10 @@ def user_signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
+
+
             user = form.save(commit = False)
-            
+            # user.username = form.email
             user.backend = 'django.contrib.auth.backends.ModelBackend'  # set the backend attribute
             user.save()
 
@@ -111,8 +113,8 @@ def get_user(request, slug):
     
     user = User.objects.get(pk=request.user.pk)
     profile = Profile.objects.filter(slug=slug)[0]
-    phone_number = PhoneNumber.objects.filter(user=user)[0]
-    email_id = EmailId.objects.filter(user=user)[0]
+    phone_number = PhoneNumber.objects.filter(user=user)
+    email_id = EmailId.objects.filter(user=user)
     context = {
         'profile': profile,
         'phone': phone_number,
@@ -129,6 +131,7 @@ def get_user(request, slug):
     # Render each template
     for template_file in template_files:
         template_number = int(os.path.basename(template_file).split('template-')[1].split('.')[0])
+        print(template_number)
 
         template_name = 'cards/template-' + str(template_number) + '.html'
 
@@ -151,8 +154,8 @@ def update_card(request):
     profile = Profile.objects.get(user=user)
     form = ProfileForm(instance=profile)
 
-    phone_number = PhoneNumber.objects.filter(user=user)[0]
-    email_id = EmailId.objects.filter(user=user)[0]
+    phone_number = PhoneNumber.objects.filter(user=user)
+    email_id = EmailId.objects.filter(user=user)
 
     if request.method == 'POST':
         phone = request.POST.get('phone_number')
@@ -220,8 +223,8 @@ def change_template(request):
     profile = Profile.objects.get(user=user)
     form = ProfileForm(instance=profile)
 
-    phone_number = PhoneNumber.objects.filter(user=user)[0]
-    email_id = EmailId.objects.filter(user=user)[0]
+    phone_number = PhoneNumber.objects.filter(user=user)
+    email_id = EmailId.objects.filter(user=user)
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)

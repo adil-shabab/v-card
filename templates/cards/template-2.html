@@ -39,34 +39,52 @@
 
 
     <div class="contact">
+        {% if phone %}
+        {% for x in phone %}        
         <div class="phone">
             <i class="fa-solid fa-phone"></i>
-            <span id="phone_">{{phone.phone_number}}</span>
+            <span class="phone_">{{x.phone_number}}</span>
+            <span class="phone_type d-none">{{x.phone_type}}</span>
         </div>
+        {% endfor %}
+        {% endif %}
+        {% if email %}
+        {% for x in email %}        
         <div class="phone">
             <i class="fa-solid fa-envelope"></i>
-            <span id="email_">{{email.email_id}}</span>
+            <span class="email_">{{x.email_id}}</span>
+            <span class="email_type d-none">{{x.email_type}}</span>
         </div>
+        {% endfor %}
+        {% endif %}
+
+        {% if profile.location %}        
         <div class="phone">
             <i class="fa-solid fa-globe"></i>
             <span id="website_">{{profile.website}}</span>
         </div>
+        {% endif %}
     </div>
 
+
+    {% if profile.bio %}    
     <div class="bio">
         <h4 class="head">About Me</h4>
         <span id="bio_">{{profile.bio}}</span>
     </div>
+    {% endif %}
 
 
+    {% if profile.location %}
     <div class="location">
         <div class="location_box">
             <i class="fa-solid fa-location-dot"></i>
             <span id="location_">{{profile.location}}</span>
         </div>
     </div>
+    {% endif %}
 
     <div class="buttons_">
-        <button id="save_btn_" class="save"><i class="fa-solid fa-download"></i>Save Contact</button>
+        <button id="save_btn_" class="save save_btn_"><i class="fa-solid fa-user-plus"></i>Save Contact</button>
     </div>
 </div>

@@ -682,7 +682,7 @@ body{
     justify-content: center;
     align-content: center;
     flex-wrap: wrap;
-    width: 10%;
+    width: 15%;
     border-radius: 5px;
     border: 1px solid rgb(203, 203, 203);
     margin-right: 3%;
@@ -691,7 +691,7 @@ body{
     height: 100%;
     background: rgb(244 244 244);
     padding: 7px 10px;
-    width: 87%;
+    width: 82%;
 }
 .template_one .text_section .bio{
     width: 83%;
@@ -715,7 +715,7 @@ body{
 .template_one .text_section .save{
     border: 2px solid;
     outline: none;
-    padding: 13px 20px;
+    padding: 13px 0px;
     width: 70%;
     margin-right: 3%;
     background: white;
@@ -728,7 +728,7 @@ body{
     width: 20%;
     border: 2px solid;
     outline: none;
-    padding: 13px 20px;
+    padding: 13px;
     background: white;
     border-radius: 5px;
 }
@@ -762,7 +762,7 @@ body{
 
 
 .template_two .img_section{
-    height: 40vh;
+    height: 35vh;
     background-size: cover !important;
     position: relative;
     max-width: 100%;
@@ -774,7 +774,7 @@ body{
     height: 59%;
     position: absolute;
     bottom: -3px;
-    background: rgb(247, 247, 247);
+    background: #EDEDED;
     clip-path: polygon(100% 0, 0 99%, 100% 100%);
 }
 .template_two .img_section #dp_{
@@ -792,7 +792,7 @@ body{
     justify-content: center;
     align-items: center;
     position: absolute;
-    bottom: 25px;
+    bottom: 0px;
     right: 15px;
 }
 .template_two .img_section .icons a{
@@ -807,7 +807,7 @@ body{
     margin-left: 13px;
 }
 .template_two .name{
-    background: rgb(247, 247, 247);
+    background: #EDEDED;
     padding: 40px 25px;
 }
 .template_two .name #name_{
@@ -831,15 +831,15 @@ body{
     align-items: center;
 }
 .template_two .contact .phone i{
-    font-size: 20px;
+    font-size: 17px;
     padding: 10px;
     background: #07074c;
-    border-radius: 10px;
+    border-radius: 50%;
     color: white;
-    margin-right: 15px;
+    margin-right: 9px;
 }
 .template_two .contact .phone span{
-    font-size: 20px;
+    font-size: 17px;
     padding: 5px;
 }
 .template_two .bio{
@@ -870,7 +870,7 @@ body{
 }
 .template_two .buttons_ #save_btn_{
     width: 100%;
-    padding: 12px 15px;
+    padding: 15px;
     border: none;
     outline: none;
     font-size: 17px;
@@ -882,4 +882,155 @@ body{
 }
 .template_two .buttons_ #save_btn_ i{
     margin-right: 15px;
+}
+
+
+
+
+
+
+
+
+.template_three{
+    background: linear-gradient(165.25deg, #132B42 0.82%, rgba(40, 92, 140, 0.81) 100%);
+    padding: 30px 20px;
+}
+.template_three .image_section{
+    height: 28vh;
+    border-radius: 10px;
+    padding: 30px 15px;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    display: flex;
+    justify-content: space-between;
+}
+.template_three .image_section .box{
+    color: white;
+    background: rgba(82, 76, 76, 0.59);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 15px 25px;
+    width: fit-content;
+    height: fit-content;
+}
+.template_three .image_section .box h3{
+    font-size: 20px;
+}
+.template_three .image_section .box h4{
+    font-size: 14px;
+}
+.template_three .image_section .box h5{
+    font-size: 11px;
+}
+.template_three .image_section .dp_box{
+    padding: 11px;
+    background: rgba(82, 76, 76, 0.59);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    height: fit-content;
+}
+.template_three .image_section .dp_box img{
+    width: 80px;
+    object-fit: cover;
+    height: 80px;
+    border-radius: 15px;
+}
+.template_three .contact_box{
+    background: white;
+    margin-top: 30px;
+    color: #0B4B86;
+    padding: 30px 10px 15px;
+    border-radius: 20px;
+}
+.template_three .contact_box .box{
+    border-bottom: 2px solid #aac9e580;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+.template_three .contact_box .box i{
+    padding: 0px 15px;
+    position: relative;
+}
+.template_three .contact_box .box i::after{
+    content: '';
+    width: 2px;
+    height: 35px;
+    position: absolute;
+    right: -4px;
+    top: -6px;
+    background: #aac9e580;
+}
+.template_three .contact_box .box span{
+    font-size: 16px;
+    padding-left: 10px;
+}
+.template_three .icons_box{
+    display: flex;
+    background: white;
+    padding: 10px 18px;
+    margin-top: 25px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.template_three .icons_box i{
+    width: 20%;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    color: #0B4B86;
+}
+.template_three .icons_box a{
+    width: 20%;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    color: #0B4B86;
+}
+.template_three .icons_box i:not(:last-child){
+    border-right: 2px solid #aac9e580;
+}
+.template_three .icons_box a:not(:last-child){
+    border-right: 2px solid #aac9e580;
+}
+.template_three .about_box{
+    background: white;
+    padding: 25px 15px;
+    margin-top: 25px;
+    border-radius: 20px;
+    color: #0B4B86;
+}
+.template_three .about_box h5{
+    font-synthesis: 20px;
+    margin-bottom: 10px;
+}
+.template_three .about_box p{
+    font-size: 14px;
+}
+.template_three .about_box .location{
+    display: flex;
+    align-items: center;
+}
+.template_three .about_box .location i{
+    font-synthesis: 16px;
+    margin-right: 15px;
+}
+.template_three .save_btn_{
+    width: 100%;
+    font-size: 17px;
+    padding: 13px;
+    border-radius: 10px;
+    border: none;
+    background: white;
+    color: #0B4B86;
+    outline: none;
+    margin-top: 25px;
+}
+.template_three .save_btn_ i{
+    margin-right: 13px;
 }

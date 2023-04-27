@@ -46,17 +46,23 @@
         </div>
 
         <div class="sm_parent">
-            {% if phone %}  
+            {% if phone %}
+            {% for x in phone %}            
             <div class="phone sm_box">
                 <i class="fa-solid fa-phone-volume"></i>
-                <span id="phone_">+91 {{phone.phone_number}}</span>
+                <span class="phone_">+91 {{x.phone_number}}</span>
+                <span class="d-none phone_type">{{x.phone_type}}</span>
             </div>
+            {% endfor %}  
             {% endif %}
             {% if email %}  
+            {% for x in email %}
             <div class="email sm_box">
                 <i class="fa-solid fa-envelope"></i>
-                <span id="email_">{{email.email_id}}</span>
+                <span class="email_">{{x.email_id}}</span>
+                <span class="d-none email_type">{{x.email_type}}</span>
             </div>
+            {% endfor %}
             {% endif %}
             {% if profile.website %}              
             <div class="website sm_box">
@@ -81,8 +87,8 @@
         {% endif %}
 
         <div class="contact_btn">
-            <button id="save_btn_" class="save"><i class="fa-solid fa-download"></i>Save Contact</button>
-            <button id="share_btn_" class="share"><i class="fa-solid fa-share-nodes"></i></button>
+            <button id="save_btn_" class="save save_btn_"><i class="fa-solid fa-download"></i>Save Contact</button>
+            <button id="share_btn_" class="share share_btn_"><i class="fa-solid fa-share-nodes"></i></button>
         </div>
 
     </div>

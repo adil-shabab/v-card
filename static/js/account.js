@@ -18,7 +18,7 @@ function getBase64Image(url) {
 async function createVcard() {
 
     let card_parent;
-    document.querySelectorAll(".user_box .box").forEach((item) => {
+    document.querySelectorAll(".user_box .box__").forEach((item) => {
         if (item.classList.contains("d-none")) {
         } else {
             card_parent = item;
@@ -28,8 +28,8 @@ async function createVcard() {
 
     // Contact information    
     var name = card_parent.querySelector("#name_").innerText;
-    var email = card_parent.querySelector("#email_").innerText;
-    let phone
+    let emails =[]
+    let phones =[]
     let address
     let website
     let title
@@ -55,10 +55,23 @@ async function createVcard() {
     } else {
         website = ""
     }
-    if (document.querySelector("#phone_") != null) {
-        phone = card_parent.querySelector("#phone_").innerText;
+    if (document.querySelector(".phone_") != null) {
+        card_parent.querySelectorAll(".phone_").forEach(element => {
+            let phone = element.innerText
+            let type = element.parentNode.querySelector('.phone_type').innerText
+            phones.push({ number: phone, type: type });
+        });
     } else {
-        phone = ""
+        let phone = ""
+    }
+    if (document.querySelector(".email_") != null) {
+        card_parent.querySelectorAll(".email_").forEach(element => {
+            let email = element.innerText
+            let type = element.parentNode.querySelector('.email_type').innerText
+            emails.push({ email: email, type: type });
+        });
+    } else {
+        let email = ""
     }
     if (document.querySelector("#designation_") != null) {
         title = card_parent.querySelector("#designation_").innerText;
@@ -71,22 +84,35 @@ async function createVcard() {
         org = ""
     }
 
+    console.log(phones,emails)
+
     // Generate the vCard file contents with the encoded image
-    var vcard = [
+    var vcardLines = [
         "BEGIN:VCARD",
         "VERSION:3.0",
         "N:" + name,
         "FN:" + name,
-        "EMAIL:" + email,
-        "TEL;TYPE=WORK:" + phone,
-        "TEL;TYPE=WHATSAPP:" + whatsapp,
         "ADR;TYPE=HOME:;;" + address,
         "URL:" + website,
         "PHOTO;TYPE=JPEG;ENCODING=BASE64:" + base64Image.split(",")[1],
         "ORG;CHARSET=utf-8:" + org,
         "TITLE;CHARSET=utf-8:" + title,
-        "END:VCARD",
-    ].join("\n");
+    ];
+
+    // Iterate over the array of phone number objects and add a "TEL" line for each one
+    for (var i = 0; i < phones.length; i++) {
+        var phoneLine = "TEL;TYPE=" + phones[i].type.toUpperCase() + ":" + phones[i].number;
+        vcardLines.push(phoneLine);
+    }
+    for (var i = 0; i < emails.length; i++) {
+        var emailLine = "TEL;TYPE=" + emails[i].type.toUpperCase() + ":" + emails[i].email;
+        vcardLines.push(emailLine);
+    }
+
+    vcardLines.push("TEL;TYPE=WHATSAPP:" + whatsapp);
+    vcardLines.push("END:VCARD");
+
+    var vcard = vcardLines.join("\n");
 
     // Prompt the user to download the vCard file
     var blob = new Blob([vcard], { type: "text/x-vcard" });
@@ -100,26 +126,28 @@ async function createVcard() {
     URL.revokeObjectURL(url);
 }
 
-if (document.querySelector("#save_btn_") != null) {
-    document.querySelector("#save_btn_").addEventListener("click", createVcard);
+if (document.querySelector(".save_btn_") != null) {
+    document.querySelectorAll(".save_btn_").forEach((item)=> item.addEventListener("click", createVcard));
+}
 
-    let shareButton = document.querySelector("#share_btn_");
 
+if(document.querySelector('.share_btn_')!=null){
+    let shareButton = document.querySelectorAll(".share_btn_");
     function shareLink(link) {
         if (navigator.canShare && navigator.canShare({ text: link })) {
-            shareButton.addEventListener("click", () => {
+            shareButton.forEach((item)=>item.addEventListener("click", () => {
                 navigator
                     .share({
                         text: link,
                     })
                     .then(() => console.log("Link shared successfully."))
                     .catch((error) => console.error("Error sharing link:", error));
-            });
+            }));
         } else {
             console.error("Link sharing not supported on this device.");
         }
     }
-
+    
     // Example usage
     const link = window.location.href;
     shareLink(link);
@@ -139,14 +167,16 @@ if (document.querySelector(".card_carousel") !== null) {
 
 if (document.querySelector(".user_box") != null) {
     let current_template_id = document.getElementById("template").innerHTML;
-    let template_box = document.querySelectorAll(".user_box .box");
+    let template_box = document.querySelectorAll(".user_box .box__");
 
     template_box.forEach((item) => {
         let current_id = item.getAttribute("id");
-        let updated_id = current_id.replace("/", "-");
-        updated_id = updated_id.replace(".html", "");
-        item.removeAttribute("id");
-        item.setAttribute("id", updated_id);
+        if(current_id != null){
+            let updated_id = current_id.replace("/", "-");
+            updated_id = updated_id.replace(".html", "");
+            item.removeAttribute("id");
+            item.setAttribute("id", updated_id);
+        }
     });
 
     let current_template = document.querySelector(`.user_box  #cards-template-${current_template_id}`);
