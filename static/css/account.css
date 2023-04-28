@@ -153,7 +153,22 @@ body{
 .register_section form .signup_txt a{
     text-decoration: none;
 }
-
+@media screen and (min-width: 450px) {
+    .login_section, .register_section{
+        max-width: 600px;
+        border: 2px solid #07074c22;
+        margin-top: 3% !important;
+        margin: auto;
+    }
+    .register_section{
+        padding-bottom: 15px !important;
+        margin-top: 3% !important;
+    }
+    .login_section form .submit_btn,
+    .register_section form .submit_btn{
+        padding: 12px 105px;
+    }
+}
 
 
 
@@ -173,6 +188,7 @@ body{
     overflow: hidden;
     height: 83vh;
 }
+
 .card_section .slider .slide{
     position: absolute;
     width: 100%;
@@ -187,6 +203,9 @@ body{
 }
 .card_section .slider .slide:not(.active){
     transform: translateX(100%);
+}
+.card_section .slider .slide.active{
+    position: relative !important;
 }
 
 .card_section .slider .slide .pagination{
@@ -301,7 +320,148 @@ body{
     content: '4';
     padding: 5px 10px;
 }
-
+@media screen and (min-width: 500px) {
+    .card_section .slider{
+        overflow-x: hidden;
+        min-height: unset;
+        height: auto;
+    }
+    .card_section .slider .slide{
+        overflow-y: hidden;
+    }
+    .card_section .personal_head, .card_section .contact_head, .card_section .social_head, .card_section .details_head{
+        padding-left: 10px;
+    }
+    .card_section .personal_head::before, .card_section .contact_head::before, .card_section .social_head::before, .card_section .details_head::before{
+        left: -30px;
+    }
+    .input_div.desktop{
+        width: 33% !important;
+    }
+    .card_section #all_emails, .card_section #all_numbers{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .input_div.address{
+        width: 100% !important;
+    }
+    .input_div.address textarea{
+        width: 99% !important;
+    }
+    .card_section .add_btn {
+        display: flex;
+        margin-left: 23px !important;
+        padding: 8px 15px !important;
+        margin-bottom: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+    .card_section #add_email_div .input_div select, .card_section #add_number_div .input_div select {
+        width: 27% !important;
+    }
+    .card_section #all_emails .input_div select, .card_section #all_numbers .input_div select {
+        width: 27% !important;
+    }
+    .card_section .input_div input, .card_section .input_div textarea {
+        width: 97% !important;
+    }
+    .card_section #all_emails .input_div input, .card_section #all_numbers .input_div input{
+        width: 68% !important;
+    }
+    .card_section .personal_head, .card_section .contact_head, .card_section .social_head, .card_section .details_head {
+        margin: 15px auto 28px !important;
+    }
+    .card_section #add_email_div .input_div input, .card_section #add_number_div .input_div input{
+        width: 68% !important;
+    }
+    .input_div.address{
+        width: 100% !important;
+    }
+    .input_div.address textarea{
+        width: 99% !important;
+    }
+    .input_div.bio{
+        width: 100% !important;
+    }
+    .input_div.bio textarea{
+        width: 97% !important;
+        margin-left: 8px;
+    }
+    #add_on_field_social{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .card_section .social_media .input_div input{
+        padding-left: 75px !important;
+    }
+    .card_section .slider .slide .next{
+        margin-right: 20px;
+    }
+    .card_section .slider .slide .pagination .prev {
+        right: 69px;
+        top: -27px;
+    }    
+    .card_section .slider .slide .pagination .next {
+        right: -29px;
+        top: -28px;
+    }
+    .card_section .slider .slide .pagination button {
+        right: -30px;
+        top: -35px;
+    }
+    .card_section .slider .slide .pagination .prev {
+        right: 90px !important;
+        top: -34px !important;
+    }
+    .card_section {
+        padding: 0px 0px 40px !important;
+    }
+    .navbar{
+        padding: 26px 0px;
+        border-bottom: 1px solid rgb(189, 189, 189);
+    }
+    .card_section .head {
+        margin-bottom: 10px;
+        margin-top: 40px;
+    }
+    #add_on_field_without_social_media{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    #previous{
+        right: 69px !important;
+        top: -28px !important;
+    }
+    .login_section form .input_div, .register_section form .input_div{
+        width: 100% !important;
+    }
+    .account_section .parent_box .profile_section .inner_box{
+        width: 600px;
+        margin: auto;
+    }
+    .account_section .all_templates{
+        width: 600px;
+        margin: 0px auto 20px;
+    }
+    .pare_nt{
+        display: flex;
+        margin-top: 40px;
+    }
+    .account_section .parent_box .current_template .inner_box{
+        width: 550px;
+        margin: auto;
+    }
+    .change__btn{
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .change__btn button{
+        width: 550px !important;
+    }
+}
 .card_section .social_media .input_div label{
     left: 85px;
 }
@@ -318,7 +478,7 @@ body{
 }
 .card_section .input_div{
     width: 100%;
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -493,7 +653,9 @@ body{
     background: #07074c;
     color: white;
 }
-
+.all_templates{
+    margin-bottom: 100px;
+}
 
 
 .profile_section{
@@ -503,6 +665,7 @@ body{
     background: #07074c;
     color: white;
     padding: 7px 31px;
+    margin-top: 15px;
     border: none;
     outline: none;
     border-radius: 5px;
@@ -551,12 +714,22 @@ body{
     margin: auto;
     background: #07074c;
     color: white;
+    width: 92%;
+    margin-left: 4%;
+}
+.current_template .download_btn{
+    padding: 13px 15px;
+    border-radius: 5px;
+    outline: none;
+    margin-top: 10px !important;
+    margin: auto;
+    border: 2px solid #07074c;
+    color: #07074c;
+    background-color: white;
     margin-bottom: 110px;
     width: 92%;
     margin-left: 4%;
 }
-
-
 .footer_box{
     width: 100%;
     padding: 6px 0px;
@@ -598,7 +771,16 @@ body{
 
 
 
-
+.logout_btn{
+    font-size: 20px;
+    position: absolute;
+    right: 21px;
+    padding: 10px;
+    background: #07074c;
+    border-radius: 50%;
+    color: white;
+    top: 9px;
+}
 
 
 
@@ -898,6 +1080,7 @@ body{
 .template_three .image_section{
     height: 28vh;
     border-radius: 10px;
+    gap: 7px;
     padding: 30px 15px;
     background-size: cover !important;
     background-repeat: no-repeat !important;
@@ -1033,4 +1216,72 @@ body{
 }
 .template_three .save_btn_ i{
     margin-right: 13px;
+}
+
+
+
+.desktop_form .heading{
+    font-size: 25px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.desktop_form .input_div{
+    width: 100%;
+    position: relative;
+    margin-bottom: 20px;
+}
+.desktop_form .input_div input,
+.desktop_form .input_div textarea{
+    width: 100%;
+    border-radius: 4px;
+    padding: 15px 10px 8px;
+    border: 1px solid rgb(189, 189, 189);
+    outline: none;
+    font-size: 15px;
+}
+.desktop_form .input_div textarea{
+    height: 100px;
+}
+.desktop_form .input_div label{
+    position: absolute;
+    font-size: 10px;
+    width: fit-content;
+    background: white;
+    padding: 3px 10px;
+    top: -7px;
+    left: 29px;
+}
+.desktop_form .count_heading{
+    font-size: 19px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    padding-left: 55px;
+    position: relative;
+}
+.desktop_form .count_heading::before{
+    padding: 6px 11px;
+    background: #07074c;
+    color: white;
+    border-radius: 50%;
+    font-size: 13px;
+    position: absolute;
+    left: 16px;
+    top: -2px;
+}
+.desktop_form .count_heading.first::before{
+    content: '1';
+}
+.desktop_form .count_heading.second::before{
+    content: '2';
+    padding: 6px 10px;
+}
+.desktop_form .add_btn{
+    padding: 9px 15px;
+    background: #07074c;
+    color: white;
+    width: fit-content;
+    font-size: 14px;
+    margin-left: 10px;
 }

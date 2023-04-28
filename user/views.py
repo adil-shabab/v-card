@@ -110,9 +110,8 @@ def logout_user(request):
 
 
 def get_user(request, slug):
-    
-    user = User.objects.get(pk=request.user.pk)
     profile = Profile.objects.filter(slug=slug)[0]
+    user = profile.user
     phone_number = PhoneNumber.objects.filter(user=user)
     email_id = EmailId.objects.filter(user=user)
     context = {

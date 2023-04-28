@@ -1,4 +1,4 @@
-<div class="footer_box">
+<div class="d-md-none d-block footer_box">
     <div class="row">
         <div class="col-4">
             <div class="box">
@@ -6,15 +6,18 @@
             </div>
         </div>
         <div class="col-4">
-            
-            <div class="box">
-                <i class="fa-solid fa-address-card"></i>
-            </div>
+            <a href="{% url 'home' %}">
+                <div class="box">
+                    <i class="fa-solid fa-address-card"></i>
+                </div>
+            </a>
         </div>
         <div class="col-4">
-            <div class="box">
-                <i class="qr fa-solid fa-qrcode"></i>
-            </div>
+            <a href="{% url 'update-card' %}">
+                <div class="box">
+                    <i class="qr fa-solid fa-qrcode"></i>
+                </div>
+            </a>
         </div>
     </div>
 </div>

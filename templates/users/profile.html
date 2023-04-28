@@ -10,19 +10,21 @@
 
 
 {% block content %}
+{% include "users/navbar.html" %}
 <div class="d-none" id="template">{{profile.template}}</div>
 <div class="current_template">
-    <h3 class="heading">Current Template Design</h3>
+    <i class="d-md-none d-block fa-solid fa-power-off logout_btn"></i>
+    <h3 class="d-md-none d-block heading">Current Template Design</h3>
     {% for x in templates %}
     <div class="d-none inner_box" id="{{ x }}" >
         {% include x %}
     </div>            
     {% endfor %}
-    <a href="{% url 'change-template' %}"><button style="margin-top: 25px;" class="change_template_btn">Change Template</button></a>
+    <a class="change__btn" href="{% url 'change-template' %}"><button style="margin-top: 35px;" class="mx-auto change_template_btn">Change Template</button></a>
+    <a class="change__btn" href="{% static 'qr/'|add:user.username|add:'.jpeg' %}" download=""><button class="mx-auto download_btn">Download QR Code</button></a>
 </div>
 
 
 
-<!-- <a href="{% static 'qr/'|add:user.username|add:'.jpeg' %}" download=""><button class="download_btn">Download QR Code</button></a> -->
 
 {% endblock content %}

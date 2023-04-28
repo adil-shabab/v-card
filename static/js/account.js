@@ -1,3 +1,16 @@
+// get the div element you want to add the class to
+const input_divs = document.querySelectorAll(".input_div");
+const slide = document.querySelectorAll(".card_section .slide");
+
+// check the screen width and add the class if it's desktop size
+if (window.innerWidth >= 500) {
+  input_divs.forEach((item)=> {
+    item.style.width = '33%'
+    })
+  slide.forEach((item)=>item.classList.add('row'))
+}
+
+
 function getBase64Image(url) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
@@ -98,21 +111,24 @@ async function createVcard() {
         "ORG;CHARSET=utf-8:" + org,
         "TITLE;CHARSET=utf-8:" + title,
     ];
-
+    
     // Iterate over the array of phone number objects and add a "TEL" line for each one
     for (var i = 0; i < phones.length; i++) {
         var phoneLine = "TEL;TYPE=" + phones[i].type.toUpperCase() + ":" + phones[i].number;
         vcardLines.push(phoneLine);
     }
+    
+    // Iterate over the array of email objects and add an "EMAIL" line for each one
     for (var i = 0; i < emails.length; i++) {
-        var emailLine = "TEL;TYPE=" + emails[i].type.toUpperCase() + ":" + emails[i].email;
+        var emailLine = "EMAIL;TYPE=PREF,INTERNET:" + emails[i].email;
         vcardLines.push(emailLine);
     }
-
+    
     vcardLines.push("TEL;TYPE=WHATSAPP:" + whatsapp);
     vcardLines.push("END:VCARD");
-
+    
     var vcard = vcardLines.join("\n");
+    
 
     // Prompt the user to download the vCard file
     var blob = new Blob([vcard], { type: "text/x-vcard" });
@@ -434,6 +450,10 @@ function EmailId() {
         for (let i = 0; i < data.length; i++) {
             const input_div = document.createElement("div");
             input_div.classList.add("input_div");
+            if (window.innerWidth >= 500) {
+                input_div.classList.add('desktop')
+            }
+              
             input_div.setAttribute("id", `email_${data[i].id}`);
 
             input_div.innerHTML = `
@@ -468,7 +488,7 @@ function EmailId() {
         .querySelector(".trash")
         .addEventListener("click", function () {
             document.getElementById("add_email_div").classList.add("d-none");
-            document.getElementById("add_email_div").querySelector("input").setAttribute("required", "");
+            document.getElementById("add_email_div").querySelector("input").removeAttribute("required");
         });
 
     document
@@ -657,6 +677,9 @@ function PhoneNumber() {
         for (let i = 0; i < data.length; i++) {
             const input_div = document.createElement("div");
             input_div.classList.add("input_div");
+            if (window.innerWidth >= 500) {
+                input_div.classList.add('desktop')
+            }
             input_div.setAttribute("id", `number_${data[i].id}`);
 
             input_div.innerHTML = `
@@ -833,6 +856,9 @@ function withSocial() {
         for (let i = 0; i < data.length; i++) {
             const div = document.createElement("div");
             div.classList.add("input_div");
+            if (window.innerWidth >= 500) {
+                div.classList.add('desktop')
+            }
 
             div.innerHTML = `
                 <label>${data[i].name}</label>
@@ -1128,6 +1154,10 @@ function withoutSocial() {
         for (let i = 0; i < data.length; i++) {
             const div = document.createElement("div");
             div.classList.add("input_div");
+
+            if (window.innerWidth >= 500) {
+                div.classList.add('desktop')
+            }
 
             div.innerHTML = `
                 <label>${data[i].name}</label>

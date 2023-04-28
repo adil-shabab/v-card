@@ -11,41 +11,44 @@
 
 {% block content %}
 
+{% include "users/navbar.html" %}
 
-<div class="profile_section">
-    <div class="container">
-        <a href="{% url 'update-card' %}"><button class="back_btn">Back</button></a>
-        <div class="box">
-            {% for x in templates %}
-            <div class="d-none inner_box" id="{{ x }}" >
-                {% include x %}
-            </div>            
-            {% endfor %}
+<div class="pare_nt">
+    <div class="profile_section">
+        <div class="container">
+            <a class="d-md-none d-block" href="{% url 'update-card' %}"><button class="back_btn">Back</button></a>
+            <div class="box">
+                {% for x in templates %}
+                <div class="d-none inner_box" id="{{ x }}" >
+                    {% include x %}
+                </div>            
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
-
-
-
-
-<div id="template_numbers" class="d-none" data-value="{{template_numbers}}"></div>
-<div id="template_names" class="d-none" data-value="{{templates}}"></div>
-<div class="d-none" id="template">{{profile.template}}</div>
-
-
-
-<div class="all_templates">
-    <div class="container">
-        <div class="row">
-            {% for x in template_numbers %} 
-            <div class="col-6">
-                <div class="box">
-                    <button id="{{x}}" class="template_btn">Template {{x}}</button> 
+    
+    
+    
+    
+    <div id="template_numbers" class="d-none" data-value="{{template_numbers}}"></div>
+    <div id="template_names" class="d-none" data-value="{{templates}}"></div>
+    <div class="d-none" id="template">{{profile.template}}</div>
+    
+    
+    
+    <div class="all_templates">
+        <div class="container">
+            <div class="row">
+                {% for x in template_numbers %} 
+                <div class="col-6">
+                    <div class="box">
+                        <button id="{{x}}" class="template_btn">Template {{x}}</button> 
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <a class="d-none" href="{% static 'qr/'|add:user.username|add:'.jpeg' %}" download=""><button class="download_btn">Download QR Code</button></a>
         </div>
-        <a href="{% static 'qr/'|add:user.username|add:'.jpeg' %}" download=""><button class="download_btn">Download QR Code</button></a>
     </div>
 </div>
 {% endblock content %}

@@ -12,7 +12,10 @@
 
 {% block content %}
   <div class="card_section">
-      
+    
+        {% include "users/navbar.html" %}
+
+
         <form class="slider" action="" method="POST" enctype="multipart/form-data" >
             {% csrf_token %}
 
@@ -85,7 +88,8 @@
 
             <div id="number_add_btn" class="add_btn"><span>+</span> Add New Number</div>
 
-
+            <div class="d-md-block d-none"></div>
+            
             <div class="input_div">
                 {{form.website.label_tag }}
                 {{form.website}}    
@@ -95,7 +99,7 @@
                 {{form.whatsapp.label_tag }}
                 {{form.whatsapp}}    
             </div>
-            <div class="input_div">
+            <div class="input_div address">
                 {{form.address.label_tag }}
                 {{form.address}}    
             </div>
@@ -148,7 +152,7 @@
 
             <div class="pagination">
                 <div class="next">Next</div>
-                <div class="prev">Prev</div>
+                <div id="previous" class="prev">Prev</div>
             </div>
         </div>
 
@@ -160,13 +164,17 @@
                 {{form.location.label_tag }}
                 {{form.location}}    
             </div>
-            <div class="input_div">
+            <div class="input_div d-md-none d-block">
                 {{form.bio.label_tag }}
                 {{form.bio}}    
             </div>
             <div class="input_div">
                 {{form.vedio.label_tag }}
                 {{form.vedio}}    
+            </div>
+            <div class="input_div d-md-block d-none bio">
+                {{form.bio.label_tag }}
+                {{form.bio}}    
             </div>
 
             <div class="social_media" id="add_on_field_without_social_media"></div>
@@ -183,6 +191,91 @@
 
 
   </div>
+
+
+
+
+  <!-- big screen  -->
+  <!-- <div class="d-md-block d-none desktop_form">
+    {% include "users/navbar.html" %}
+    <form class="row" action="" method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <h3 class="heading">Edit Profile</h3>
+        <h4 class="count_heading first">Personal Information</h4>
+        <div class="col-4">
+            <div class="input_div">
+                <label for="">Profile Image</label>
+                <input type="file" name="dp" accept="image/*" id="id_dp">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input_div">
+                <label for="">Cover Image</label>
+                <input type="file" name="coverimage" accept="image/*" id="id_coverimage">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input_div">
+                {{form.name.label_tag }}
+                {{form.name}}    
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input_div">
+                {{form.company.label_tag }}
+                {{form.company}}    
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input_div">
+                {{form.designation.label_tag }}
+                {{form.designation}}    
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input_div">
+                {{form.whatsapp.label_tag }}
+                {{form.whatsapp}}    
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="input_div">
+                {{form.address.label_tag }}
+                {{form.address}}    
+            </div>
+        </div>
+
+
+
+        <h4 class="count_heading second">Contact Information</h4>
+
+        <div id="all_emails">
+                
+        </div>
+
+        <div id="add_email_div" class="d-none">
+            <div class="input_div">
+                <select name="" id="">
+                    <option value="Personal">Personal</option>
+                    <option value="Work">Work</option>
+                    <option value="Home">Home</option>
+                    <option value="Company">Company</option>
+                </select>
+                <input type="email">
+                <label for="">Email : </label>
+                <i class="update fa-solid fa-check"></i>
+                <i class="trash fa-solid fa-xmark"></i>
+            </div>
+        </div>
+
+        <div id="email_add_btn" class="add_btn"><span>+</span> Add New Email</div>
+        
+
+    </form>
+  </div> -->
+
+
+
 
 
   <!-- Modal -->
@@ -278,4 +371,8 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- <script src="{% static 'js/desktop.js' %}"></script> -->
 {% endblock content %}
