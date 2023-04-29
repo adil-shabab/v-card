@@ -12,6 +12,15 @@ class Icon(models.Model):
         return self.icon_html
 
 
+class CardDesign(models.Model):
+    front = models.ImageField(upload_to='cards/')
+    back = models.ImageField(upload_to='cards/')
+
+    def __str__(self):
+        return f"Card {self.pk}"
+
+
+
 
 class ExtraField(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -46,7 +55,7 @@ class EmailId(models.Model):
 
 
 class Profile(models.Model):
-    slug = models.SlugField(unique=True, editable=False, null=True, blank=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     # email = models.EmailField(max_length=200, blank=True, null=True)
@@ -80,8 +89,15 @@ class Profile(models.Model):
 
 
     template = models.IntegerField(default=1)
+    card = models.IntegerField(null=True,blank=True)
+
 
 
 
     def __str__(self):
         return str(self.user.username)
+    
+
+
+
+

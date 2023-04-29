@@ -21,7 +21,7 @@
     </div>            
     {% endfor %}
     <a class="change__btn" href="{% url 'change-template' %}"><button style="margin-top: 35px;" class="mx-auto change_template_btn">Change Template</button></a>
-    <a class="change__btn" href="{% static 'qr/'|add:user.username|add:'.jpeg' %}" download=""><button class="mx-auto download_btn">Download QR Code</button></a>
+    <a class="change__btn" href="{% static 'qr/'|add:profile.slug|add:'.jpeg' %}" download=""><button class="mx-auto download_btn">Download QR Code</button></a>
 </div>
 
 

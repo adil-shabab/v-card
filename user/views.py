@@ -60,6 +60,9 @@ def user_login(request):
 
 
 
+from django.utils.text import slugify
+import random
+import string
 
 def user_signup(request):
     form = CustomUserCreationForm()
@@ -67,22 +70,24 @@ def user_signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-
-
-            user = form.save(commit = False)
-            # user.username = form.email
-            user.backend = 'django.contrib.auth.backends.ModelBackend'  # set the backend attribute
+            user = form.save(commit=False)
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             user.save()
 
-            slug  = slugify(user.full_name.lower())
+            full_name = form.cleaned_data.get('full_name')
+            slug = original_slug = slugify(full_name.lower())
 
-            user_profile = Profile(user = user,  name=user.full_name, slug = slug)
+            while Profile.objects.filter(slug=slug).exists():
+                # If the slug already exists, add a random string to it
+                slug = f"{original_slug}-{random_string()}"
+
+            user_profile = Profile(user=user, name=full_name, slug=slug)
             user_profile.save()
 
             token, created = Token.objects.get_or_create(user=user)
             request.session['env_token'] = token.key
 
-            EmailId.objects.create(user=user, email_type='Personal', email_id = user.email)
+            EmailId.objects.create(user=user, email_type='Personal', email_id=user.email)
 
             tokens = request.session.get('env_token', None)
 
@@ -92,11 +97,20 @@ def user_signup(request):
         else:
             for msg in form.error_messages:
                 mp.error(request, f"{msg}: {form.error_messages[msg]}")
-                print(msg)             
+                print(msg)
 
     context = {'form':form}
-
     return render(request, 'users/register-section.html', context)
+
+
+
+def random_string(length=6):
+    """Generate a random string of lowercase letters and digits."""
+    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=length))
+
+
+
+
 
 
 # logout 
@@ -172,11 +186,11 @@ def update_card(request):
                 
     import qrcode
     # Generate QR code image
-    data = f'http://127.0.0.1:8000/user/get/{user.username}'
+    data = f'http://127.0.0.1:8000/user/get/{profile.slug}'
     img = qrcode.make(data)
 
     # Save image to /media/qr directory
-    filename = f'{user.username}.jpeg'
+    filename = f'{profile.slug}.jpeg'
     save_path = os.path.join(settings.BASE_DIR, 'static', 'qr', filename)
     img.save(save_path)
 
@@ -273,6 +287,7 @@ def home(request):
 
     profile = Profile.objects.get(user=request.user)
     form = ProfileForm(instance=profile)
+    cards = CardDesign.objects.all()
 
     if request.method == 'POST':
         print('hello')
@@ -298,7 +313,7 @@ def home(request):
             return render(request, 'users/home.html', context)
 
 
-    context = {'user': request.user, 'profile':profile, 'form':form, }
+    context = {'user': request.user, 'profile':profile, 'form':form, 'cards': cards}
 
     return render(request, 'users/card.html', context)
 

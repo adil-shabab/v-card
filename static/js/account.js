@@ -1,3 +1,27 @@
+if(document.querySelector('.cards__')!=null){
+    $('.cards__').slick({
+        dots: true
+    });
+
+    document.querySelectorAll('.cards__').forEach((item)=> item.addEventListener('click', function(){
+        document.querySelectorAll('.cards__').forEach((element)=>element.classList.remove('active'))
+        item.classList.add('active')
+        
+        let id = parseInt(item.getAttribute('id'));
+        console.log(id)
+        console.log(document.getElementById('id_card'))
+        document.getElementById('id_card').setAttribute('value', id)
+        console.log(document.getElementById('id_card'))
+    }))
+
+
+    document.querySelector('.custom__design_btn').addEventListener('click', function(){
+        document.querySelectorAll('.cards__').forEach((element)=>element.classList.remove('active'))
+        document.getElementById('id_card').setAttribute('value', 0)
+        swal("Good job!", "Requested for Custom Design", "success");
+    })
+}
+
 // get the div element you want to add the class to
 const input_divs = document.querySelectorAll(".input_div");
 const slide = document.querySelectorAll(".card_section .slide");
@@ -1272,7 +1296,20 @@ function nextSlide() {
             document.getElementById("id_designation").setAttribute("required", "");
             if (!document.getElementById("id_designation").checkValidity()) {
                 document.getElementById("id_designation").reportValidity();
-            } else {
+            }
+
+
+            if(document.getElementById('add_number_div').querySelector('input[required]')!=null){
+                console.log('hai')
+                if (!document.getElementById('add_number_div').querySelector('input[required]').checkValidity()) {
+                    document.getElementById('add_number_div').querySelector('input[required]').reportValidity();
+                }
+            }
+
+
+            
+            else {
+                console.log(slides[currentSlide])
                 slides[currentSlide].classList.remove("active");
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add("active");

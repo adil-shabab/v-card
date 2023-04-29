@@ -1,6 +1,6 @@
 import pyautogui
 
-x = 1000
+x = 60 
 y= 0
 
 while y<x:

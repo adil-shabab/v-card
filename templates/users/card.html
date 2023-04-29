@@ -177,16 +177,64 @@
                 {{form.bio}}    
             </div>
 
+
             <div class="social_media" id="add_on_field_without_social_media"></div>
 
             <div data-bs-toggle="modal" data-bs-target="#socail_media_modal_without_icon" id="social_add_btn_without_icon" class="add_btn"><span>+</span> Add New Field</div>
 
+
+            {% if form.card.value %}  
+            <div class="pagination">
+                <div class="prev" style="right: 120px;">Prev</div>
+                <button type="submit">Submit</button>
+            </div>
+            {% else %}
+            <div class="pagination">
+                <div class="prev" >Prev</div>
+                <div class="next" style="right: -8px; top: -35px;">Next</div>
+            </div>
+            {% endif %}
+
+        </div>
+        
+        
+        
+
+
+        {% if form.card.value %}  
+        {% else %}
+        <div class="slide row">
+            <h3 class="head">Edit Profile</h3>
+            <h4 class="details_head">Select Card</h4>
+            <div class="d-none">
+                {{form.card}}
+            </div>
+
+
+
+            {% for x in cards %}
+            <div class="col-md-6 col-lg-4 col-12">
+                <div class="cards__" id="{{x.id}}">
+                    <div class="front_side">
+                        <img src="{{x.front.url}}" alt="" class="img-fluid">
+                    </div>
+                    <div class="back_side">
+                        <img src="{{x.back.url}}" alt="" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+            <div></div>
+            <div class="custom__design_btn">Request For Custom Design</div>
             <div class="pagination">
                 <div class="prev" style="right: 120px;">Prev</div>
                 <button type="submit">Submit</button>
             </div>
 
         </div>
+        {% endif %}
     </form>
 
 
